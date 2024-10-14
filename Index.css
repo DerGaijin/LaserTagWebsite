@@ -1,0 +1,78 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.ContentBoxList {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#ContentBox_Top {
+  width: 100%;
+  height: auto;
+  max-width: 900px;
+
+  margin-bottom: 50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 30px;
+}
+
+.ContentBox {
+  width: 500px;
+  height: 100%;
+
+  padding: 10px;
+  margin: 10px;
+
+  background-color: var(--ContentBoxBackground);
+  border-radius: 25px;
+
+  box-shadow: 10px 10px 20px black;
+}
+
+.ContentBoxTitle {
+  padding: 8px;
+  text-align: center;
+
+  border-bottom: 2px solid white;
+  margin-bottom: 15px;
+  font-size: 28px;
+
+  text-transform: uppercase;
+}
+
+.ContentBoxImage {
+  width: 100%;
+}
+
+#OpeningsTable {
+  display: grid;
+  grid-template-columns: 1fr 10px 1fr;
+}
+
+.OpeningsTableItem {
+  text-align: center;
+
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.OpeningNote {
+  width: 100%;
+  text-align: center;
+
+  margin-top: 20px;
+  font-size: 20px;
+}

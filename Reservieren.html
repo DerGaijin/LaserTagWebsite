@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="Shared.css" />
     <link rel="stylesheet" href="Reservieren.css" />
     <script src="Shared.js"></script>
+    <script src="Reservieren.js"></script>
   </head>
   <body>
     <header id="MainHeader">
@@ -25,7 +26,18 @@
       </div>
     </header>
 
-    <main></main>
+    <main>
+      <span id="Loading" class="loader"></span>
+      <iframe
+        id="BookingFrame"
+        scrolling="yes"
+        class="sb-widget-iframe"
+        width="100%"
+        frameborder="0"
+        src="https://buchung.verden-lasertag.de/v2/?widget-type=iframe&theme=Concise&timeline=modern_week&datepicker=top_calendar#book"
+        title="Buchungen"
+      ></iframe>
+    </main>
 
     <footer id="MainFooter">
       <a href="Impressum.html" class="MF_NavItem">Impressum</a>

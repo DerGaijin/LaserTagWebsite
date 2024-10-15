@@ -1,0 +1,124 @@
+main {
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.PriceBoxList {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.PriceBoxLayout {
+  flex: 1 1 450px;
+  min-width: 450px;
+  max-width: 600px;
+}
+
+.PriceBox {
+  height: 100%;
+
+  padding: 10px;
+  margin: 10px;
+
+  background-color: var(--ContentBoxBackground);
+  border-radius: 25px;
+
+  box-shadow: 10px 10px 20px black;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.PriceBoxRound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#BirthdayInfoBox {
+  flex: 1 1 100%;
+  max-width: 100%;
+  height: auto;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  display: flex;
+  justify-content: center;
+}
+
+#BirthdayInfoContent {
+  width: 800px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-left: 100px;
+  padding-right: 100px;
+
+  text-align: center;
+}
+
+.PriceBoxTitle {
+  grid-column: 1/3;
+  width: 100%;
+
+  font-size: 24px;
+  text-align: center;
+
+  margin-bottom: 10px;
+}
+
+.PB_Left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 10px;
+}
+
+.PB_Image {
+  height: 100%;
+  width: 100%;
+
+  border-radius: 50%;
+}
+
+.PB_Right {
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.PB_Text {
+  padding-bottom: 10px;
+}
+
+.PB_Date {
+  font-size: 20px;
+}
+
+.PB_Time {
+}
+
+.PB_Price {
+  font-size: 22px;
+}
+
+.PB_Note {
+  font-size: 14px;
+}
+
+.PB_Book {
+}

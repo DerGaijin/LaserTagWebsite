@@ -11,149 +11,138 @@
 	<body>
 		<header id="MainHeader">
 			<div id="MH_Content">
+				<div id="MH_MenuToggle" class="MH_Burger">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
 				<nav id="MH_Nav">
 					<a href="Aktuelles.html" class="MH_NavItemText">Aktuelles</a>
-					<a href="Preise.html" class="MH_NavItemText MH_NavItemText_Selected">Preise</a>
+					<a href="Preise.html" class="MH_NavItemText">Preise</a>
 					<a href="Reservieren.html" class="MH_NavItemText">Reservieren</a>
-					<a href="index.html" class="MH_NavItemLogo">
-						<img src="Images/LaserTagVerdenLogo.webp" alt="Logo" class="MH_Logo" />
-					</a>
+					<div class="MH_NavItemSpace"></div>
 					<a href="Galerie.html" class="MH_NavItemText">Galerie</a>
 					<a href="Über-Uns.html" class="MH_NavItemText">Über Uns</a>
 					<a href="Kontakt.html" class="MH_NavItemText">Kontakt</a>
 				</nav>
+				<a href="index.html" class="MH_NavItemLogo">
+					<img src="Images/LaserTagVerdenLogo.webp" alt="Logo" class="MH_Logo" />
+				</a>
 			</div>
 		</header>
 
 		<main>
 			<div class="PriceBoxList">
-				<div class="PriceBoxLayout">
-					<div class="PriceBox PriceBoxRound">
-						<h3 class="PriceBoxTitle">1. Runde</h3>
-						<p class="PB_Price PB_Text">7,50 €</p>
-						<p class="PB_Note PB_Text">(Member 6,50 €)</p>
-						<a href="Reservieren.html#/category/3/service/8/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
-					</div>
+				<div class="PriceBox PriceBoxSimple">
+					<h3 class="PriceBoxTitle">1. Runde</h3>
+					<p class="PB_Price PB_Text">7,50 €</p>
+					<p class="PB_Note PB_Text">(Member 6,50 €)</p>
+					<a href="Reservieren.html#/category/3/service/8/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
 				</div>
-				<div class="PriceBoxLayout">
-					<div class="PriceBox PriceBoxRound">
-						<h3 class="PriceBoxTitle">3. Runde</h3>
+				<div class="PriceBox PriceBoxSimple">
+					<h3 class="PriceBoxTitle">3. Runden</h3>
+					<p class="PB_Price PB_Text">22,00 €</p>
+					<p class="PB_Note PB_Text">(Member 19,00 €)</p>
+					<a href="Reservieren.html#/category/3/service/10/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
+				</div>
+				<div class="PriceBox PriceBoxSimple">
+					<h3 class="PriceBoxTitle">5. Runden</h3>
+					<p class="PB_Price PB_Text">32,00 €</p>
+					<p class="PB_Note PB_Text">(Member 31,00 €)</p>
+					<a href="Reservieren.html#/category/3/service/14/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
+				</div>
+			</div>
+			<div class="PriceBoxList">
+				<div class="PriceBox">
+					<h3 class="PriceBoxTitle">Flatrate - Prime Time</h3>
+					<div class="PB_Left">
+						<img src="Images/PrimeTimeIcon.webp" alt="PrimeTime" class="PB_Image" />
+					</div>
+					<div class="PB_Right">
+						<p class="PB_Date PB_Text">Dienstag - Freitag</p>
+						<p class="PB_Time PB_Text">15:00 - 18:00</p>
 						<p class="PB_Price PB_Text">22,00 €</p>
-						<p class="PB_Note PB_Text">(Member 19,00 €)</p>
-						<a href="Reservieren.html#/category/3/service/10/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
+						<p class="PB_Note PB_Text">Inkl. ein Getränk</p>
+						<p class="PB_Note PB_Text">*Ausgenommen 1L Flaschen</p>
+						<a href="Reservieren.html#/category/1/service/2/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
 					</div>
 				</div>
-				<div class="PriceBoxLayout">
-					<div class="PriceBox PriceBoxRound">
-						<h3 class="PriceBoxTitle">5. Runde</h3>
-						<p class="PB_Price PB_Text">32,00 €</p>
-						<p class="PB_Note PB_Text">(Member 31,00 €)</p>
-						<a href="Reservieren.html#/category/3/service/14/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
+				<div class="PriceBox">
+					<h3 class="PriceBoxTitle">Flatrate - Night Special</h3>
+					<div class="PB_Left">
+						<img src="Images/NightSpecialIcon.webp" alt="NightSpecial" class="PB_Image" />
+					</div>
+					<div class="PB_Right">
+						<p class="PB_Date PB_Text">Freitag - Samstag</p>
+						<p class="PB_Time PB_Text">18:00 - 21:00</p>
+						<p class="PB_Price PB_Text">22,00 €</p>
+						<p class="PB_Note PB_Text">Inkl. ein Getränk</p>
+						<p class="PB_Note PB_Text">*Ausgenommen 1L Flaschen</p>
+						<a href="Reservieren.html#/category/1/service/3/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
+					</div>
+				</div>
+				<div class="PriceBox">
+					<h3 class="PriceBoxTitle">Flatrate - Early Hour</h3>
+					<div class="PB_Left">
+						<img src="Images/EarlyHourIcon.webp" alt="EarlyHour" class="PB_Image" />
+					</div>
+					<div class="PB_Right">
+						<p class="PB_Date PB_Text">Sonntags</p>
+						<p class="PB_Time PB_Text">11:00 - 14:00</p>
+						<p class="PB_Price PB_Text">20,00 €</p>
+						<p class="PB_Note PB_Text">Inkl. ein Kaffee, Kakao, Tee</p>
+						<a href="Reservieren.html#/category/1/service/1/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
+					</div>
+				</div>
+				<div class="PriceBox">
+					<h3 class="PriceBoxTitle">Flatrate - Late Hour</h3>
+					<div class="PB_Left">
+						<img src="Images/LateHourIcon.webp" alt="LateHour" class="PB_Image" />
+					</div>
+					<div class="PB_Right">
+						<p class="PB_Date PB_Text">Sonntags</p>
+						<p class="PB_Time PB_Text">17:00 - 19:00</p>
+						<p class="PB_Price PB_Text">18,00 €</p>
+						<a href="Reservieren.html#/category/1/service/4/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
 					</div>
 				</div>
 			</div>
-
+			<div id="BirthdayInfoBox" class="PriceBoxLayout">
+				<div id="BirthdayInfoContent" class="PriceBox">
+					<h3 class="PriceBoxTitle">Was ist der Unterschied zwischen FLATS und GEBURTSTAGS ANGEBOTEN?</h3>
+					<p>
+						Die Flat ist dafür da, soviel Runden wie möglich zu spielen und seine Skills zu verbessern. Das Geburtstagsangebot ist dafür da, um in Gesellschaft bei Snacks, Essen und ein bisschen
+						spielen sich feiern zu lassen.
+					</p>
+				</div>
+			</div>
 			<div class="PriceBoxList">
-				<div class="PriceBoxLayout">
-					<div class="PriceBox">
-						<h3 class="PriceBoxTitle">Flatrate - Prime Time</h3>
-						<div class="PB_Left">
-							<img src="Images/PrimeTimeIcon.webp" alt="PrimeTime" class="PB_Image" />
-						</div>
-						<div class="PB_Right">
-							<p class="PB_Date PB_Text">Dienstag - Freitag</p>
-							<p class="PB_Time PB_Text">15:00 - 18:00</p>
-							<p class="PB_Price PB_Text">22,00 €</p>
-							<p class="PB_Note PB_Text">Inkl. ein Getränk</p>
-							<p class="PB_Note PB_Text">*Ausgenommen 1L Flaschen</p>
-							<a href="Reservieren.html#/category/1/service/2/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
-						</div>
+				<div class="PriceBox">
+					<h3 class="PriceBoxTitle">Geburtstags Angebot - Small</h3>
+					<div class="PB_Left">
+						<img src="Images/SmallIcon.webp" alt="Small" class="PB_Image" />
+					</div>
+					<div class="PB_Right">
+						<p class="PB_Date PB_Text">2 Runden</p>
+						<p class="PB_Text">+ ein Getränk</p>
+						<p class="PB_Text">+ ein kleinen Slushy für das Geburtstagskind</p>
+						<p class="PB_Price PB_Text">18,00 €</p>
+						<p class="PB_Note PB_Text">*Ausgenommen 1L Flaschen</p>
+						<a href="Reservieren.html#/category/2/service/5/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
 					</div>
 				</div>
-				<div class="PriceBoxLayout">
-					<div class="PriceBox">
-						<h3 class="PriceBoxTitle">Flatrate - Night Special</h3>
-						<div class="PB_Left">
-							<img src="Images/NightSpecialIcon.webp" alt="NightSpecial" class="PB_Image" />
-						</div>
-						<div class="PB_Right">
-							<p class="PB_Date PB_Text">Freitag - Samstag</p>
-							<p class="PB_Time PB_Text">18:00 - 21:00</p>
-							<p class="PB_Price PB_Text">22,00 €</p>
-							<p class="PB_Note PB_Text">Inkl. ein Getränk</p>
-							<p class="PB_Note PB_Text">*Ausgenommen 1L Flaschen</p>
-							<a href="Reservieren.html#/category/1/service/3/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
-						</div>
+				<div class="PriceBox">
+					<h3 class="PriceBoxTitle">Geburtstags Angebot - Large</h3>
+					<div class="PB_Left">
+						<img src="Images/LargeIcon.webp" alt="Large" class="PB_Image" />
 					</div>
-				</div>
-				<div class="PriceBoxLayout">
-					<div class="PriceBox">
-						<h3 class="PriceBoxTitle">Flatrate - Early Hour</h3>
-						<div class="PB_Left">
-							<img src="Images/EarlyHourIcon.webp" alt="EarlyHour" class="PB_Image" />
-						</div>
-						<div class="PB_Right">
-							<p class="PB_Date PB_Text">Sonntags</p>
-							<p class="PB_Time PB_Text">11:00 - 14:00</p>
-							<p class="PB_Price PB_Text">20,00 €</p>
-							<p class="PB_Note PB_Text">Inkl. ein Kaffee, Kakao, Tee</p>
-							<a href="Reservieren.html#/category/1/service/1/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
-						</div>
-					</div>
-				</div>
-				<div class="PriceBoxLayout">
-					<div class="PriceBox">
-						<h3 class="PriceBoxTitle">Flatrate - Late Hour</h3>
-						<div class="PB_Left">
-							<img src="Images/LateHourIcon.webp" alt="LateHour" class="PB_Image" />
-						</div>
-						<div class="PB_Right">
-							<p class="PB_Date PB_Text">Sonntags</p>
-							<p class="PB_Time PB_Text">17:00 - 19:00</p>
-							<p class="PB_Price PB_Text">18,00 €</p>
-							<a href="Reservieren.html#/category/1/service/4/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
-						</div>
-					</div>
-				</div>
-				<div id="BirthdayInfoBox" class="PriceBoxLayout">
-					<div id="BirthdayInfoContent" class="PriceBox">
-						<h3 class="PriceBoxTitle">Was ist der Unterschied zwischen FLATS und GEBURTSTAGS ANGEBOTE?</h3>
-						<p>
-							Die Flat ist dafür da, soviel Runden wie möglich zu spielen und seine Skills zu verbessern. Das Geburtstagsangebot ist dafür da, um in Gesellschaft bei Snacks, Essen und ein bisschen
-							spielen sich feiern zu lassen.
-						</p>
-					</div>
-				</div>
-				<div class="PriceBoxLayout">
-					<div class="PriceBox">
-						<h3 class="PriceBoxTitle">Geburtstags Angebot - Small</h3>
-						<div class="PB_Left">
-							<img src="Images/SmallIcon.webp" alt="Small" class="PB_Image" />
-						</div>
-						<div class="PB_Right">
-							<p class="PB_Date PB_Text">2 Runden</p>
-							<p class="PB_Text">+ ein Getränk</p>
-							<p class="PB_Text">+ ein kleinen Slushy für das Geburtstagskind</p>
-							<p class="PB_Price PB_Text">18,00 €</p>
-							<p class="PB_Note PB_Text">*Ausgenommen 1L Flaschen</p>
-							<a href="Reservieren.html#/category/2/service/5/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
-						</div>
-					</div>
-				</div>
-				<div class="PriceBoxLayout">
-					<div class="PriceBox">
-						<h3 class="PriceBoxTitle">Geburtstags Angebot - Large</h3>
-						<div class="PB_Left">
-							<img src="Images/LargeIcon.webp" alt="Large" class="PB_Image" />
-						</div>
-						<div class="PB_Right">
-							<p class="PB_Date PB_Text">4 Runden</p>
-							<p class="PB_Text">+ ein Getränk</p>
-							<p class="PB_Text">+ ein kleinen Slushy und Memberkarte für das Geburtstagskind</p>
-							<p class="PB_Price PB_Text">27,00 €</p>
-							<p class="PB_Note PB_Text">*Ausgenommen 1L Flaschen</p>
-							<a href="Reservieren.html#/category/2/service/6/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
-						</div>
+					<div class="PB_Right">
+						<p class="PB_Date PB_Text">4 Runden</p>
+						<p class="PB_Text">+ ein Getränk</p>
+						<p class="PB_Text">+ ein kleinen Slushy und Memberkarte für das Geburtstagskind</p>
+						<p class="PB_Price PB_Text">27,00 €</p>
+						<p class="PB_Note PB_Text">*Ausgenommen 1L Flaschen</p>
+						<a href="Reservieren.html#/category/2/service/6/count/1/provider/1/" class="Button_Book PB_Book">Jetzt Buchen</a>
 					</div>
 				</div>
 			</div>

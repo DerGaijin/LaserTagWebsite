@@ -1,38 +1,56 @@
 main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 100px;
-  padding-right: 100px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 100px;
+	padding-right: 100px;
 }
 
 .ContentBox {
-  width: 585px;
+	width: 585px;
 
-  padding: 10px;
-  margin: 10px;
+	padding: 10px;
+	margin: 10px;
 
-  background-color: var(--ContentBoxBackground);
-  border-radius: 25px;
+	background-color: var(--ContentBoxBackground);
+	border-radius: 25px;
 
-  box-shadow: 10px 10px 20px black;
+	box-shadow: 10px 10px 20px black;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .ContentBoxImage {
-  width: 100%;
-  border-radius: inherit;
+	width: 100%;
+	border-radius: inherit;
 }
 
 .Button_Book {
-  width: 400px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+	width: 400px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+@media screen and (max-width: 775px) {
+	main {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+
+	.ContentBox {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 1260px) {
+	main {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
 }

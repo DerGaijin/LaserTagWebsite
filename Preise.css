@@ -46,7 +46,7 @@ main {
 	margin-bottom: 10px;
 }
 
-#BirthdayInfoBox {
+.InfoBox {
 	flex: 1 1 100%;
 	max-width: 100%;
 	height: auto;
@@ -57,7 +57,7 @@ main {
 	justify-content: center;
 }
 
-#BirthdayInfoContent {
+.InfoContent {
 	max-width: 800px;
 
 	display: flex;
@@ -113,6 +113,7 @@ main {
 
 .PB_Note {
 	font-size: 14px;
+	text-align: center;
 }
 
 @media screen and (max-width: 775px) {

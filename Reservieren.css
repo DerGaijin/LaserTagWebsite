@@ -14,7 +14,7 @@ main {
 
 #BookingFrame {
 	width: 90%;
-	height: 1470px;
+	height: 100%;
 }
 
 .loader {
@@ -61,29 +61,5 @@ main {
 	}
 	100% {
 		transform: rotate(-360deg);
-	}
-}
-
-@media screen and (max-width: 1174px) {
-	#BookingFrame {
-		height: 1570px !important;
-	}
-}
-
-@media screen and (max-width: 888px) {
-	#BookingFrame {
-		height: 3010px !important;
-	}
-}
-
-@media screen and (max-width: 700px) {
-	#BookingFrame {
-		height: 2700px !important;
-	}
-}
-
-@media screen and (max-width: 500px) {
-	#BookingFrame {
-		height: 2300px !important;
 	}
 }

@@ -1,0 +1,71 @@
+main {
+	max-width: 1200px;
+
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 0fr 1fr;
+	grid-gap: 10px;
+
+	padding: 5px;
+	padding-top: 25px;
+	padding-bottom: 25px;
+
+	justify-self: center;
+}
+
+.ContentBox {
+	padding: 10px;
+
+	background-color: #222;
+
+	border-radius: 15px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.ContentBoxMap {
+	grid-column: 1/4;
+}
+
+.ContentBoxIcon {
+	width: 50px;
+}
+
+.ContentBoxIcon_Invert {
+	filter: invert();
+}
+
+.ContentTitle {
+	padding: 10px;
+	padding-top: 20px;
+}
+
+.ContentText {
+	text-decoration: none;
+	color: inherit;
+
+	padding: 5px;
+}
+
+#TimingTable {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+@media screen and (max-width: 850px) {
+	main {
+		padding: 5px;
+		padding-top: 25px;
+		padding-bottom: 25px;
+
+		justify-self: unset;
+
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr 1fr 1fr 2fr;
+	}
+	.ContentBoxMap {
+		grid-column: 1;
+	}
+}

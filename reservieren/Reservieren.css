@@ -63,3 +63,13 @@ main {
 		transform: rotate(-360deg);
 	}
 }
+
+@media screen and (max-width: 775px) {
+	main {
+		padding: 0px;
+	}
+
+	#BookingFrame {
+		width: 100%;
+	}
+}

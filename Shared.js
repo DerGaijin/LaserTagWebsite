@@ -1,20 +1,32 @@
-document.addEventListener("DOMContentLoaded", () => {
-	const icons = document.querySelectorAll(".MH_Burger");
-	icons.forEach((icon) => {
-		icon.addEventListener("click", (event) => {
-			icon.classList.toggle("MH_Burger_Open");
-		});
-	});
+(function () {
+	const MAX_W = 150; // px at the very top
+	const MIN_W = 100; // px when fully shrunk
+	const RANGE = 200; // px of scroll needed to reach MIN_W
 
-	const MH_MenuToggle = document.getElementById("MH_MenuToggle");
-	MH_MenuToggle.addEventListener("click", (event) => {
-		const MainHeader = document.getElementById("MainHeader");
-		MainHeader.classList.toggle("MainHeader_Open");
-	});
+	let ticking = false;
 
-	icons.forEach((icon) => {
-		icon.addEventListener("click", (event) => {
-			icon.classList.toggle("open");
-		});
-	});
-});
+	function clamp(n, min, max) {
+		return Math.max(min, Math.min(max, n));
+	}
+
+	function update() {
+		const y = window.scrollY || window.pageYOffset;
+		const p = clamp(y / RANGE, 0, 1);
+		const w = Math.round(MAX_W - (MAX_W - MIN_W) * p);
+		document.documentElement.style.setProperty("--logo-w", w + "px");
+		ticking = false;
+	}
+
+	window.addEventListener(
+		"scroll",
+		() => {
+			if (!ticking) {
+				ticking = true;
+				requestAnimationFrame(update);
+			}
+		},
+		{ passive: true }
+	);
+
+	update();
+})();

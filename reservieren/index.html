@@ -3,53 +3,56 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Lasertag Verden</title>
-		<link rel="stylesheet" href="/Shared.css" />
-		<link rel="stylesheet" href="Reservieren.css" />
-		<script src="/Shared.js"></script>
-		<script src="Reservieren.js"></script>
+		<title>Document</title>
+		<link rel="stylesheet" href="../Shared.css" />
+		<script src="../Shared.js"></script>
 	</head>
 	<body>
-		<header id="MainHeader">
-			<div id="MH_Content">
-				<div id="MH_MenuToggle" class="MH_Burger">
-					<span></span>
-					<span></span>
-					<span></span>
+		<header>
+			<div id="FixedHeaderContent">
+				<div class="HB_Box">
+					<div class="HFB_Stud"></div>
+					<div class="HFB_Stud"></div>
 				</div>
-				<nav id="MH_Nav">
-					<a href="/aktuelles" class="MH_NavItemText">Aktuelles</a>
-					<a href="/preise" class="MH_NavItemText">Preise</a>
-					<a href="/reservieren" class="MH_NavItemText MH_NavItemText_Selected">Reservieren</a>
-					<div class="MH_NavItemSpace"></div>
-					<a href="/galerie" class="MH_NavItemText">Galerie</a>
-					<a href="/uber-uns" class="MH_NavItemText">Über Uns</a>
-					<a href="/kontakt" class="MH_NavItemText">Kontakt</a>
-				</nav>
-				<a href="/" class="MH_NavItemLogo">
-					<img src="/Images/LaserTagVerdenLogo.webp" alt="Logo" class="MH_Logo" />
-				</a>
+				<div id="HeaderContent">
+					<a href="/">
+						<img src="../Resources/LaserTagVerdenLogo.png" alt="Logo" id="HeaderLogo" />
+					</a>
+					<nav id="HeaderNavigation">
+						<!-- <a href="/" class="HeaderNavitem">STARTSEITE</a> -->
+						<div class="NavSpace"></div>
+						<a href="../aktuelles/" class="HeaderNavitem">AKTUELLES</a>
+						<a href="../preise/" class="HeaderNavitem">PREISE</a>
+						<a href="../reservieren/" class="HeaderNavitem">RESERVIEREN</a>
+						<a href="../galerie/" class="HeaderNavitem">GALERIE</a>
+						<a href="../uber-uns/" class="HeaderNavitem">ÜBER UNS</a>
+						<a href="../kontakt/" class="HeaderNavitem">KONTAKT</a>
+					</nav>
+				</div>
+				<div class="HB_Box">
+					<div class="HFB_Stud"></div>
+					<div class="HFB_Stud"></div>
+				</div>
 			</div>
 		</header>
 
-		<main>
-			<span id="Loading" class="loader"></span>
-			<iframe
-				id="BookingFrame"
-				scrolling="yes"
-				class="sb-widget-iframe"
-				width="100%"
-				frameborder="0"
-				src="https://buchung.verden-lasertag.de/v2/?widget-type=iframe&theme=Concise&timeline=modern_week&datepicker=top_calendar#book"
-				title="Buchungen"
-			></iframe>
-		</main>
+		<main></main>
 
-		<footer id="MainFooter">
-			<div id="MF_Items">
-				<a href="/impressum" class="MF_NavItem">Impressum</a>
-				<a href="/agb" class="MF_NavItem">AGB</a>
-				<a href="/datenschutz" class="MF_NavItem">Datenschutz</a>
+		<footer>
+			<div class="FB_Box">
+				<div class="HFB_Stud"></div>
+				<div class="HFB_Stud"></div>
+			</div>
+			<nav id="FooterNavigation">
+				<a href="../impressum/" class="FooterNavItem">IMPRESSUM</a>
+				<a href="../agb/" class="FooterNavItem">AGB</a>
+				<a href="../datenschutz/" class="FooterNavItem">DATENSCHUTZ</a>
+				<div class="NavSpace"></div>
+				<a href="../muttizettel/" class="FooterNavItem">MUTTIZETTEL</a>
+			</nav>
+			<div class="FB_Box">
+				<div class="HFB_Stud"></div>
+				<div class="HFB_Stud"></div>
 			</div>
 		</footer>
 	</body>

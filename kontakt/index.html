@@ -3,81 +3,56 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Lasertag Verden</title>
-		<link rel="stylesheet" href="/Shared.css" />
-		<link rel="stylesheet" href="Kontakt.css" />
-		<script src="/Shared.js"></script>
+		<title>Document</title>
+		<link rel="stylesheet" href="../Shared.css" />
+		<script src="../Shared.js"></script>
 	</head>
 	<body>
-		<header id="MainHeader">
-			<div id="MH_Content">
-				<div id="MH_MenuToggle" class="MH_Burger">
-					<span></span>
-					<span></span>
-					<span></span>
+		<header>
+			<div id="FixedHeaderContent">
+				<div class="HB_Box">
+					<div class="HFB_Stud"></div>
+					<div class="HFB_Stud"></div>
 				</div>
-				<nav id="MH_Nav">
-					<a href="/aktuelles" class="MH_NavItemText">Aktuelles</a>
-					<a href="/preise" class="MH_NavItemText">Preise</a>
-					<a href="/reservieren" class="MH_NavItemText">Reservieren</a>
-					<div class="MH_NavItemSpace"></div>
-					<a href="/galerie" class="MH_NavItemText">Galerie</a>
-					<a href="/uber-uns" class="MH_NavItemText">Über Uns</a>
-					<a href="/kontakt" class="MH_NavItemText MH_NavItemText_Selected">Kontakt</a>
-				</nav>
-				<a href="/" class="MH_NavItemLogo">
-					<img src="/Images/LaserTagVerdenLogo.webp" alt="Logo" class="MH_Logo" />
-				</a>
+				<div id="HeaderContent">
+					<a href="/">
+						<img src="../Resources/LaserTagVerdenLogo.png" alt="Logo" id="HeaderLogo" />
+					</a>
+					<nav id="HeaderNavigation">
+						<!-- <a href="/" class="HeaderNavitem">STARTSEITE</a> -->
+						<div class="NavSpace"></div>
+						<a href="../aktuelles/" class="HeaderNavitem">AKTUELLES</a>
+						<a href="../preise/" class="HeaderNavitem">PREISE</a>
+						<a href="../reservieren/" class="HeaderNavitem">RESERVIEREN</a>
+						<a href="../galerie/" class="HeaderNavitem">GALERIE</a>
+						<a href="../uber-uns/" class="HeaderNavitem">ÜBER UNS</a>
+						<a href="../kontakt/" class="HeaderNavitem">KONTAKT</a>
+					</nav>
+				</div>
+				<div class="HB_Box">
+					<div class="HFB_Stud"></div>
+					<div class="HFB_Stud"></div>
+				</div>
 			</div>
 		</header>
 
-		<main>
-			<div class="ContentBox">
-				<img src="/Images/LocationIcon.webp" alt="Location" class="ContentBoxIcon" />
-				<h2 class="ContentTitle">Adresse</h2>
-				<p class="ContentText">Bernhard-Warnecke-Straße 5</p>
-				<p class="ContentText">27283 Verden</p>
-			</div>
-			<div class="ContentBox">
-				<img src="/Images/BlackPhoneIcon.webp" alt="Phone" class="ContentBoxIcon ContentBoxIcon_Invert" />
-				<h2 class="ContentTitle">Kontakt</h2>
-				<a href="tel:+491723834147" class="ContentText">Telefon: +49 172 3834147</a>
-				<a href="mailto:allgemein@verden-lasertag.de" class="ContentText">E-Mail: allgemein@verden-lasertag.de</a>
-				<a href="https://wa.me/+491723834147" class="ContentText">Auch gerne per Whatsapp</a>
-			</div>
-			<div class="ContentBox">
-				<img src="/Images/ClockIcon.webp" alt="Time" class="ContentBoxIcon ContentBoxIcon_Invert" />
-				<h2 class="ContentTitle">Zeiten</h2>
-				<div id="TimingTable">
-					<p class="ContentText">Dienstag-Freitag:</p>
-					<p class="ContentText">13:00-18:00</p>
-					<p class="ContentText">Samstag & Sonntag:</p>
-					<p class="ContentText">10:30-18:00</p>
-				</div>
-			</div>
+		<main></main>
 
-			<iframe
-				class="ContentBox ContentBoxMap"
-				data-cmp-vendor="s1104"
-				data-cmp-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2405.870322787447!2d9.2389109!3d52.914761899999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b0e4cd17fe60cd%3A0xc61486b665dfc8c!2sBernhard-Warnecke-Stra%C3%9Fe%205%2C%2027283%20Verden%20(Aller)%2C%20Deutschland!5e0!3m2!1sde!2s!4v1701259019377!5m2!1sde!2s"
-				width="100%"
-				height="100%"
-				style="border: 0"
-				allowfullscreen=""
-				loading="lazy"
-				referrerpolicy="no-referrer-when-downgrade"
-				data-cmp-done="1"
-				data-cmp-ab="1"
-				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2405.870322787447!2d9.2389109!3d52.914761899999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b0e4cd17fe60cd%3A0xc61486b665dfc8c!2sBernhard-Warnecke-Stra%C3%9Fe%205%2C%2027283%20Verden%20(Aller)%2C%20Deutschland!5e0!3m2!1sde!2s!4v1701259019377!5m2!1sde!2s"
-				data-cmp-activated="1"
-			></iframe>
-		</main>
-
-		<footer id="MainFooter">
-			<div id="MF_Items">
-				<a href="/impressum" class="MF_NavItem">Impressum</a>
-				<a href="/agb" class="MF_NavItem">AGB</a>
-				<a href="/datenschutz" class="MF_NavItem">Datenschutz</a>
+		<footer>
+			<div class="FB_Box">
+				<div class="HFB_Stud"></div>
+				<div class="HFB_Stud"></div>
+			</div>
+			<nav id="FooterNavigation">
+				<a href="../impressum/" class="FooterNavItem">IMPRESSUM</a>
+				<a href="../agb/" class="FooterNavItem">AGB</a>
+				<a href="../datenschutz/" class="FooterNavItem">DATENSCHUTZ</a>
+				<div class="NavSpace"></div>
+				<a href="../muttizettel/" class="FooterNavItem">MUTTIZETTEL</a>
+			</nav>
+			<div class="FB_Box">
+				<div class="HFB_Stud"></div>
+				<div class="HFB_Stud"></div>
 			</div>
 		</footer>
 	</body>

@@ -30,3 +30,14 @@
 
 	update();
 })();
+
+function ToggleMainHeader() {
+	document.getElementById("MainHeader").classList.toggle("MainHeader_Open");
+}
+
+document.addEventListener("click", (event) => {
+	var MainHeader = document.getElementById("MainHeader");
+	if (!MainHeader.contains(event.target)) {
+		MainHeader.classList.remove("MainHeader_Open");
+	}
+});

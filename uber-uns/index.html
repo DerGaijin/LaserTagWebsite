@@ -1,31 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<title>Lasertag Verden</title>
+		<link rel="icon" type="image/png" sizes="32x32" href="../Resources/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../Resources/favicon-16x16.png" />
 		<link rel="stylesheet" href="../Shared.css" />
+		<link rel="stylesheet" href="uber-uns.css" />
 		<script src="../Shared.js"></script>
 	</head>
 	<body>
-		<header>
+		<header id="MainHeader">
 			<div id="FixedHeaderContent">
 				<div class="HB_Box">
 					<div class="HFB_Stud"></div>
 					<div class="HFB_Stud"></div>
 				</div>
 				<div id="HeaderContent">
+					<div id="HeaderToggle" onclick="ToggleMainHeader()"><i id="HeaderToggleIcon"></i></div>
 					<a href="/">
 						<img src="../Resources/LaserTagVerdenLogo.png" alt="Logo" id="HeaderLogo" />
 					</a>
 					<nav id="HeaderNavigation">
-						<!-- <a href="/" class="HeaderNavitem">STARTSEITE</a> -->
+						<!-- <a href="/" class="HeaderNavitem NavItemSelected">STARTSEITE</a> -->
 						<div class="NavSpace"></div>
 						<a href="../aktuelles/" class="HeaderNavitem">AKTUELLES</a>
 						<a href="../preise/" class="HeaderNavitem">PREISE</a>
 						<a href="../reservieren/" class="HeaderNavitem">RESERVIEREN</a>
 						<a href="../galerie/" class="HeaderNavitem">GALERIE</a>
-						<a href="../uber-uns/" class="HeaderNavitem">ÜBER UNS</a>
+						<a href="../uber-uns/" class="HeaderNavitem NavItemSelected">ÜBER UNS</a>
 						<a href="../kontakt/" class="HeaderNavitem">KONTAKT</a>
 					</nav>
 				</div>
@@ -36,9 +40,27 @@
 			</div>
 		</header>
 
-		<main></main>
+		<main>
+			<div class="ContentBox">
+				<h2 id="MainTitle">Über uns</h2>
+				<h4 id="SubTitle">Lasertag Verden gehört zur Laserforce Familie.</h4>
+				<p class="Text">
+					Hier könnt ihr mit euren Freunden, Familien und Arbeitskollegen mit viel Spaß euch sportlich betätigen. Natürlich könnt ihr hier auch unterschiedliche Events buchen .z. B. Geburtstage,
+					Weihnachtsfeiern, Junggesellenabschiede und vieles mehr. Ihr möchtet mit eurer Firma, Verein oder Schulklasse euren Teamgeist verbessern, dann seid ihr hier bei uns genau richtig. Auf
+					Anfrage könnt ihr unsere Halle gerne buchen.
+				</p>
+				<p class="Text">(Auch außerhalb der Öffnungszeiten)</p>
+				<p class="Text">
+					Wenn ihr euch fragt „Was ist Lasertag eigentlich?“ hier ein kleiner Einblick. Lasertag ist ein Spiel, wo ich mich mit anderen in einer coolen Umgebung, sportlich messen und meine Skills
+					verbessern kann. Laserforce bietet dafür verschiedene Spielmodi an.
+				</p>
+				<p class="Text">Wie lange geht eine Runde?: 15 Minuten</p>
+				<p class="Text">Ihr meint, das ist nicht so lange, dann kommt vorbei und probiert es aus. (Vergisst aber euer Handtuch nicht😉) Solltet ihr noch Fragen haben, kein Problem, dann fragt uns.</p>
+				<p class="Text">Team Lasertag Verden freut sich auf euch</p>
+			</div>
+		</main>
 
-		<footer>
+		<footer id="MainFooter">
 			<div class="FB_Box">
 				<div class="HFB_Stud"></div>
 				<div class="HFB_Stud"></div>

@@ -1,31 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<title>Lasertag Verden</title>
+		<link rel="icon" type="image/png" sizes="32x32" href="../Resources/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../Resources/favicon-16x16.png" />
 		<link rel="stylesheet" href="../Shared.css" />
+		<link rel="stylesheet" href="../index.css" />
 		<script src="../Shared.js"></script>
 	</head>
 	<body>
-		<header>
+		<header id="MainHeader">
 			<div id="FixedHeaderContent">
 				<div class="HB_Box">
 					<div class="HFB_Stud"></div>
 					<div class="HFB_Stud"></div>
 				</div>
 				<div id="HeaderContent">
+					<div id="HeaderToggle" onclick="ToggleMainHeader()"><i id="HeaderToggleIcon"></i></div>
 					<a href="/">
 						<img src="../Resources/LaserTagVerdenLogo.png" alt="Logo" id="HeaderLogo" />
 					</a>
 					<nav id="HeaderNavigation">
-						<!-- <a href="/" class="HeaderNavitem">STARTSEITE</a> -->
+						<!-- <a href="/" class="HeaderNavitem NavItemSelected">STARTSEITE</a> -->
 						<div class="NavSpace"></div>
 						<a href="../aktuelles/" class="HeaderNavitem">AKTUELLES</a>
 						<a href="../preise/" class="HeaderNavitem">PREISE</a>
 						<a href="../reservieren/" class="HeaderNavitem">RESERVIEREN</a>
 						<a href="../galerie/" class="HeaderNavitem">GALERIE</a>
-						<a href="../uber-uns/" class="HeaderNavitem">ÜBER UNS</a>
+						<a href="../uber-uns/" class="HeaderNavitem ">ÜBER UNS</a>
 						<a href="../kontakt/" class="HeaderNavitem">KONTAKT</a>
 					</nav>
 				</div>
@@ -38,7 +42,7 @@
 
 		<main></main>
 
-		<footer>
+		<footer id="MainFooter">
 			<div class="FB_Box">
 				<div class="HFB_Stud"></div>
 				<div class="HFB_Stud"></div>
@@ -48,7 +52,7 @@
 				<a href="../agb/" class="FooterNavItem">AGB</a>
 				<a href="../datenschutz/" class="FooterNavItem">DATENSCHUTZ</a>
 				<div class="NavSpace"></div>
-				<a href="../muttizettel/" class="FooterNavItem">MUTTIZETTEL</a>
+				<a href="../muttizettel/" class="FooterNavItem NavItemSelected">MUTTIZETTEL</a>
 			</nav>
 			<div class="FB_Box">
 				<div class="HFB_Stud"></div>

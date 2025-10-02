@@ -1,24 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Lasertag Verden</title>
-		<style>
-			body {
-				background-color: #333;
-				display: flex;
-				align-items: center;
-				justify-content: space-evenly;
-				padding: 50px;
-			}
-			a {
-				color: white;
-			}
-		</style>
+		<link rel="icon" type="image/png" sizes="32x32" href="Resources/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="Resources/favicon-16x16.png" />
+		<link rel="stylesheet" href="Shared.css" />
+		<link rel="stylesheet" href="index.css" />
+		<script src="Shared.js"></script>
 	</head>
 	<body>
-		<a href="Steel/">Steel</a>
-		<a href="Neon/">Neon</a>
+		<header id="MainHeader">
+			<div id="FixedHeaderContent">
+				<div id="HeaderContent">
+					<div id="HeaderToggle" onclick="ToggleMainHeader()"><i id="HeaderToggleIcon"></i></div>
+					<a href="/">
+						<img src="Resources/LaserTagVerdenLogo.png" alt="Logo" id="HeaderLogo" />
+					</a>
+					<nav id="HeaderNavigation">
+						<!-- <a href="/" class="HeaderNavitem NavItemSelected">STARTSEITE</a> -->
+						<div class="NavSpace"></div>
+						<a href="preise/" class="HeaderNavitem">PREISE</a>
+						<a href="reservieren/" class="HeaderNavitem">RESERVIEREN</a>
+						<a href="galerie/" class="HeaderNavitem">GALERIE</a>
+						<a href="uber-uns/" class="HeaderNavitem">ÜBER UNS</a>
+						<a href="kontakt/" class="HeaderNavitem">KONTAKT</a>
+					</nav>
+				</div>
+			</div>
+		</header>
+
+		<main>
+			<div class="ContentBoxList">
+				<div class="ContentBox">
+					<h2 class="ContentBoxTitle">Unsere Öffnungszeiten</h2>
+					<div class="CenterBox">
+						<div id="OpeningsTable">
+							<p class="OpeningsTableItem">Montag</p>
+							<p class="OpeningsTableItem">|</p>
+							<p class="OpeningsTableItem">Geschlossen</p>
+
+							<p class="OpeningsTableItem">Dienstag</p>
+							<p class="OpeningsTableItem">|</p>
+							<p class="OpeningsTableItem">15:00 - 20:00</p>
+
+							<p class="OpeningsTableItem">Mittwoch</p>
+							<p class="OpeningsTableItem">|</p>
+							<p class="OpeningsTableItem">15:00 - 20:00</p>
+
+							<p class="OpeningsTableItem">Donnerstag</p>
+							<p class="OpeningsTableItem">|</p>
+							<p class="OpeningsTableItem">15:00 - 20:00</p>
+
+							<p class="OpeningsTableItem">Freitag</p>
+							<p class="OpeningsTableItem">|</p>
+							<p class="OpeningsTableItem">15:00 - 21:00</p>
+
+							<p class="OpeningsTableItem">Samstag</p>
+							<p class="OpeningsTableItem">|</p>
+							<p class="OpeningsTableItem">11:00 - 21:00</p>
+
+							<p class="OpeningsTableItem">Sonntag</p>
+							<p class="OpeningsTableItem">|</p>
+							<p class="OpeningsTableItem">11:00 - 20:00</p>
+						</div>
+						<p class="Note">Öffnungen nur auf Vorbuchungen</p>
+						<div class="Note">
+							<a class="NoteButton Button_Book" href="/preise/">Jetzt Buchen</a>
+							<a class="NoteButton Button_Book" href="/kontakt/">Kontakt</a>
+						</div>
+					</div>
+				</div>
+				<div class="ContentBox">
+					<h2 class="ContentBoxTitle">Aktuelles</h2>
+					<img src="Resources/Ferienflat.jpg" alt="Ferienflat" class="ContentBoxImage" />
+					<a class="NoteButton Button_Book" href="/reservieren#/category/5">Jetzt Buchen</a>
+				</div>
+				<div class="ContentBox">
+					<h2 class="ContentBoxTitle">Unsere Technik</h2>
+					<img src="Resources/LaserForceBlasters.webp" alt="LaserForceBlasters" class="ContentBoxImage" />
+					<img src="Resources/LaserForceGen8.webp" alt="LaserForceGen8" class="ContentBoxImage" />
+				</div>
+			</div>
+		</main>
+
+		<footer id="MainFooter">
+			<nav id="FooterNavigation">
+				<a href="impressum/" class="FooterNavItem">IMPRESSUM</a>
+				<a href="agb/" class="FooterNavItem">AGB</a>
+				<a href="datenschutz/" class="FooterNavItem">DATENSCHUTZ</a>
+				<div class="NavSpace"></div>
+				<a href="muttizettel/" class="FooterNavItem">MUTTIZETTEL</a>
+			</nav>
+		</footer>
 	</body>
 </html>

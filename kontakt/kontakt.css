@@ -1,72 +1,88 @@
 main {
-	max-width: 1200px;
+    max-width: 1200px;
 
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-template-rows: 0fr 1fr;
-	grid-gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0fr 1fr;
+    grid-gap: 10px;
 
-	padding: 5px;
-	padding-top: 25px;
-	padding-bottom: 25px;
+    padding: 5px;
+    padding-top: 25px;
+    padding-bottom: 25px;
 
-	justify-self: center;
+    justify-self: center;
 }
 
 .ContentBox {
-	padding: 10px;
+    padding: 10px;
 
-	background-color: #222;
+    background-color: #2a2a2a;
 
-	border-radius: 15px;
+    border-radius: 15px;
 
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
 }
 
 .ContentBoxMap {
-	grid-column: 1/4;
+    grid-column: 1/4;
 }
 
 .ContentBoxIcon {
-	width: 50px;
+    width: 50px;
 }
 
 .ContentBoxIcon_Invert {
-	filter: invert();
+    filter: invert();
 }
 
 .ContentTitle {
-	padding: 10px;
-	padding-top: 20px;
+    padding: 10px;
+    padding-top: 20px;
 }
 
-.ContentText {
-	text-decoration: none;
-	color: inherit;
+.ContentRow {
+    text-decoration: none;
+    color: inherit;
 
-	padding: 5px;
-	font-family: Arial, Helvetica, sans-serif;
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+
+    display: flex;
+    align-items: center;
+}
+
+.ContentLink {
+    text-decoration: underline;
+}
+
+.ContentIcon {
+    width: 25px;
+    height: 25px;
+
+    margin-left: 5px;
 }
 
 #TimingTable {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 @media screen and (max-width: 850px) {
-	main {
-		padding: 5px;
-		padding-top: 25px;
-		padding-bottom: 25px;
+    main {
+        padding: 5px;
+        padding-top: 25px;
+        padding-bottom: 25px;
 
-		justify-self: unset;
+        justify-self: unset;
 
-		grid-template-columns: 1fr;
-		grid-template-rows: 1fr 1fr 1fr 2fr;
-	}
-	.ContentBoxMap {
-		grid-column: 1;
-	}
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 2fr;
+    }
+    .ContentBoxMap {
+        grid-column: 1;
+    }
 }

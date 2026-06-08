@@ -2,7 +2,6 @@
 <html lang="de">
 	<head>
 		<?php require __DIR__ . '/../resources/head.php'; ?>
-		<link rel="stylesheet" href="galerie.css" />
 		<script src="galerie.js"></script>
 
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
@@ -12,7 +11,7 @@
 	<body>
 		<?php $currentPage = 'galerie'; include __DIR__ . '/../Resources/header.php'; ?>
 
-		<main>
+		<main class="overflow-hidden px-[100px] py-[15px] max-[775px]:px-[5px]">
 			<div id="ImageGallery">
 				<a href="../Gallery/64d3404c1f48b1b58318d666_image2.webp" data-ngthumb="../Gallery/64d3404c1f48b1b58318d666_image2.webp" data-ngdesc=""></a>
 				<a href="../Gallery/656719a6fd88ffef672ae8ae_attachment_9_image12.webp" data-ngthumb="../Gallery/656719a6fd88ffef672ae8ae_attachment_9_image12.webp" data-ngdesc=""></a>

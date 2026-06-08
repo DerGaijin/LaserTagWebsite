@@ -2,13 +2,12 @@
 <html lang="de">
 	<head>
 		<?php require __DIR__ . '/../resources/head.php'; ?>
-		<link rel="stylesheet" href="agb.css" />
 	</head>
 	<body>
 		<?php include __DIR__ . '/../Resources/header.php'; ?>
 
-		<main>
-			<div class="ContentBox">
+		<main class="flex max-w-[900px] flex-col items-center justify-center justify-self-center px-[5px] py-[25px]">
+			<div class="m-2.5 flex w-full flex-col rounded-[25px] bg-[var(--ContentBoxBackground)] p-5 font-[Arial,Helvetica,sans-serif] shadow-[10px_10px_20px_black] [&_h1]:mb-2.5 [&_h1]:mt-5 [&_h1]:text-[28px] [&_h1]:font-bold [&_h1]:leading-[44px] [&_h2]:mb-2.5 [&_h2]:mt-5 [&_h2]:text-[26px] [&_h2]:font-bold [&_h2]:leading-9 [&_h3]:mb-2.5 [&_h3]:mt-4 [&_h3]:text-[22px] [&_h3]:font-bold [&_p]:mb-2.5 [&_ul]:mb-2.5 [&_ul]:mt-0 [&_ul]:list-disc [&_ul]:pl-10">
 				<h1>Nutzungsbedingungen und AGB</h1>
 				<h2>1 Arena</h2>
 				<p>

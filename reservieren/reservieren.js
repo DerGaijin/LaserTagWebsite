@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const iframe = document.getElementById("BookingFrame");
 	const loader = document.getElementById("Loading");
 	iframe.addEventListener("load", () => {
-		loader.style.display = "none";
+		loader.classList.add("hidden");
 	});
 });
 

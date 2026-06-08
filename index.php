@@ -6,64 +6,77 @@
     <body>
         <?php include __DIR__ . '/Resources/header.php'; ?>
 
-        <main class="flex flex-col items-center px-[100px] py-[25px] max-[1260px]:px-[5px]">
-            <div class="grid w-full grid-cols-[repeat(2,auto)] justify-evenly max-[1260px]:flex max-[1260px]:flex-wrap [&>*:last-child:nth-child(odd)]:col-span-full [&>*:last-child:nth-child(odd)]:justify-self-center max-[1260px]:[&>*:last-child:nth-child(odd)]:col-auto max-[1260px]:[&>*:last-child:nth-child(odd)]:justify-self-auto">
-                <div class="m-2.5 flex w-[500px] flex-col rounded-[25px] bg-[var(--ContentBoxBackground)] p-2.5 shadow-[10px_10px_20px_black] max-[775px]:w-full">
-                    <h2 class="mb-[15px] border-b-2 border-white p-2 text-center text-[28px] uppercase">Unsere Öffnungszeiten</h2>
-                    <div class="flex h-full flex-col justify-center">
-                        <div id="OpeningsTable" class="grid grid-cols-[1fr_10px_1fr]">
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">Montag</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">|</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">Geschlossen</p>
+        <main class="mx-auto flex w-full max-w-[1180px] flex-col gap-8 px-6 py-8 max-[700px]:px-3">
+            <section class="relative overflow-hidden rounded-[32px] border border-[#00ffff55] bg-[radial-gradient(circle_at_top_left,#00ffff33,transparent_34%),linear-gradient(135deg,rgba(8,8,12,.96),rgba(28,28,32,.9))] p-8 shadow-[0_20px_60px_rgba(0,0,0,.75)] max-[700px]:p-5">
+                <div class="absolute right-[-90px] top-[-120px] h-[280px] w-[280px] rounded-full bg-[#00ffff22] blur-2xl"></div>
+                <div class="absolute bottom-[-130px] left-[20%] h-[240px] w-[240px] rounded-full bg-[#23863666] blur-3xl"></div>
 
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">Dienstag</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">|</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">15:00 - 20:00</p>
-
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">Mittwoch</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">|</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">15:00 - 20:00</p>
-
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">Donnerstag</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">|</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">15:00 - 20:00</p>
-
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">Freitag</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">|</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">15:00 - 21:00</p>
-
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">Samstag</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">|</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">11:00 - 21:00</p>
-
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">Sonntag</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">|</p>
-                            <p class="mb-2.5 whitespace-nowrap text-center text-[25px] max-[375px]:whitespace-normal">11:00 - 20:00</p>
+                <div class="relative grid items-center gap-8 lg:grid-cols-[1.15fr_.85fr]">
+                    <div class="flex flex-col gap-5">
+                        <p class="w-fit rounded-full border border-[#00ffff66] bg-black/35 px-4 py-2 text-sm uppercase tracking-[.22em] text-[#9fffff]">LaserTag Verden</p>
+                        <h1 class="text-[64px] uppercase leading-[.92] tracking-wide text-white drop-shadow-[0_0_18px_rgba(0,255,255,.45)] max-[700px]:text-[42px]">Adrenalin im Arena-Modus</h1>
+                        <p class="max-w-[640px] text-2xl leading-snug text-white/85 max-[700px]:text-xl">Taucht ein in unsere Lasertaghalle mit LaserForce Gen8 Equipment, taktischen Runden und Action fuer Teams, Geburtstage und Firmen.</p>
+                        <div class="flex flex-wrap gap-3 text-xl">
+                            <a class="Button_Book px-7 py-3" href="/preise/">Jetzt Buchen</a>
+                            <a class="rounded-md border border-white/35 bg-white/10 px-7 py-3 text-white no-underline transition hover:bg-white/20" href="/galerie/">Arena ansehen</a>
                         </div>
-                        <p class="mt-5 flex w-full justify-center text-xl">Öffnungen nur auf Vorbuchungen</p>
-                        <div class="mt-5 flex w-full justify-center text-xl">
-                            <a class="Button_Book mx-2.5 my-2.5 self-center" href="/preise/">Jetzt Buchen</a>
-                            <a class="Button_Book mx-2.5 my-2.5 self-center" href="/kontakt/">Kontakt</a>
+                    </div>
+
+                    <div class="relative rounded-[26px] border border-white/15 bg-black/35 p-4 shadow-[inset_0_0_35px_rgba(0,255,255,.12)]">
+                        <img src="Resources/LaserForceBlasters.webp" alt="LaserForce Blaster" class="w-full rounded-[18px]" />
+                        <div class="mt-4 grid grid-cols-2 gap-3 text-center text-lg max-[420px]:grid-cols-1">
+                            <div class="rounded-2xl bg-[#00aaaa22] p-3"><span class="block text-[#9fffff]">Gen8</span>LaserForce</div>
+                            <div class="rounded-2xl bg-[#23863633] p-3"><span class="block text-[#9fffff]">Teamplay</span>Action pur</div>
                         </div>
                     </div>
                 </div>
-                <div class="m-2.5 flex w-[500px] flex-col rounded-[25px] bg-[var(--ContentBoxBackground)] p-2.5 text-xl shadow-[10px_10px_20px_black] max-[775px]:w-full">
-                    <h2 class="mb-[15px] border-b-2 border-white p-2 text-center text-[28px] uppercase">!!! Umbauarbeiten !!!</h2>
-                    <div class="pb-2.5 text-center">
-                        <p>In den Sommerferien nutzen wir die Zeit, um unsere Lasertaghalle für euch noch besser zu machen.</p>
-                        <br />
-                        <p>Daher bleibt unsere Anlage</p>
-                        <p>vom <b class="text-[22px]">02.07.26</b> bis <b class="text-[22px]">12.08.26</b></p>
-                        <p>geschlossen</p>
+            </section>
+
+            <section class="grid gap-6 lg:grid-cols-[.95fr_1.05fr]">
+                <div class="rounded-[28px] border border-white/10 bg-[var(--ContentBoxBackground)] p-6 shadow-[0_18px_40px_rgba(0,0,0,.65)]">
+                    <h2 class="mb-5 border-b-2 border-[#00aaaa] pb-3 text-center text-[32px] uppercase">Öffnungszeiten</h2>
+                    <div id="OpeningsTable" class="grid grid-cols-[1fr_auto] gap-x-4 gap-y-3 text-[23px] max-[520px]:text-lg">
+                        <p class="rounded-l-xl bg-black/25 px-4 py-3">Montag</p>
+                        <p class="rounded-r-xl bg-black/25 px-4 py-3 text-right">Geschlossen*</p>
+                        <p class="rounded-l-xl bg-black/25 px-4 py-3">Dienstag</p>
+                        <p class="rounded-r-xl bg-black/25 px-4 py-3 text-right">Geschlossen*</p>
+                        <p class="rounded-l-xl bg-black/25 px-4 py-3">Mittwoch</p>
+                        <p class="rounded-r-xl bg-black/25 px-4 py-3 text-right">Geschlossen*</p>
+                        <p class="rounded-l-xl bg-[#00aaaa26] px-4 py-3">Donnerstag</p>
+                        <p class="rounded-r-xl bg-[#00aaaa26] px-4 py-3 text-right">15:00 - 20:00</p>
+                        <p class="rounded-l-xl bg-[#00aaaa26] px-4 py-3">Freitag</p>
+                        <p class="rounded-r-xl bg-[#00aaaa26] px-4 py-3 text-right">15:00 - 20:00</p>
+                        <p class="rounded-l-xl bg-[#23863636] px-4 py-3">Samstag</p>
+                        <p class="rounded-r-xl bg-[#23863636] px-4 py-3 text-right">10:00 - 21:00</p>
+                        <p class="rounded-l-xl bg-[#23863636] px-4 py-3">Sonntag</p>
+                        <p class="rounded-r-xl bg-[#23863636] px-4 py-3 text-right">10:00 - 21:00</p>
                     </div>
-                    <img src="Resources/renovieren.avif" alt="Renovieren" class="w-full" />
+                    <p class="mt-5 rounded-2xl border border-[#00ffff44] bg-black/25 p-4 text-center text-xl">*Montag bis Mittwoch geschlossen, ausser bei Buchung der Halle.</p>
+                    <div class="mt-5 flex flex-wrap justify-center gap-3 text-xl">
+                        <a class="Button_Book" href="/reservieren/">Reservieren</a>
+                        <a class="Button_Book" href="/kontakt/">Halle buchen</a>
+                    </div>
                 </div>
-                <div class="m-2.5 flex w-[500px] flex-col rounded-[25px] bg-[var(--ContentBoxBackground)] p-2.5 shadow-[10px_10px_20px_black] max-[775px]:w-full">
-                    <h2 class="mb-[15px] border-b-2 border-white p-2 text-center text-[28px] uppercase">Unsere Technik</h2>
-                    <img src="Resources/LaserForceBlasters.webp" alt="LaserForceBlasters" class="w-full" />
-                    <img src="Resources/LaserForceGen8.webp" alt="LaserForceGen8" class="w-full" />
+
+                <div class="grid gap-6">
+                    <article class="overflow-hidden rounded-[28px] border border-white/10 bg-[var(--ContentBoxBackground)] shadow-[0_18px_40px_rgba(0,0,0,.65)]">
+                        <div class="p-6 text-center text-xl">
+                            <h2 class="mb-3 text-[32px] uppercase text-[#9fffff]">Umbauarbeiten</h2>
+                            <p>In den Sommerferien machen wir die Lasertaghalle fuer euch noch besser.</p>
+                            <p class="mt-3 text-2xl">Geschlossen vom <b>02.07.26</b> bis <b>12.08.26</b></p>
+                        </div>
+                        <img src="Resources/renovieren.avif" alt="Renovieren" class="max-h-[260px] w-full object-cover" />
+                    </article>
+
+                    <article class="rounded-[28px] border border-white/10 bg-[var(--ContentBoxBackground)] p-6 shadow-[0_18px_40px_rgba(0,0,0,.65)]">
+                        <h2 class="mb-4 text-center text-[32px] uppercase">Unsere Technik</h2>
+                        <div class="grid items-center gap-5 sm:grid-cols-2">
+                            <img src="Resources/LaserForceGen8.webp" alt="LaserForce Gen8 Westen" class="w-full rounded-[18px] bg-black/25" />
+                            <div class="text-xl leading-relaxed text-white/85">Modernes LaserForce Gen8 Equipment, praezise Trefferwertung und Spielmodi fuer Einsteiger und erfahrene Teams.</div>
+                        </div>
+                    </article>
                 </div>
-            </div>
+            </section>
         </main>
 
         <?php include __DIR__ . '/Resources/footer.php'; ?>

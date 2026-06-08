@@ -32,12 +32,16 @@
 })();
 
 function ToggleMainHeader() {
-	document.getElementById("MainHeader").classList.toggle("MainHeader_Open");
+	document.getElementById("FixedHeaderContent").classList.toggle("!translate-y-0");
+	document.getElementById("HeaderToggleIcon").classList.toggle("!translate-y-[4px]");
+	document.getElementById("HeaderToggleIcon").classList.toggle("!-rotate-[135deg]");
 }
 
 document.addEventListener("click", (event) => {
 	var MainHeader = document.getElementById("MainHeader");
 	if (!MainHeader.contains(event.target)) {
-		MainHeader.classList.remove("MainHeader_Open");
+		document.getElementById("FixedHeaderContent").classList.remove("!translate-y-0");
+		document.getElementById("HeaderToggleIcon").classList.remove("!translate-y-[4px]");
+		document.getElementById("HeaderToggleIcon").classList.remove("!-rotate-[135deg]");
 	}
 });

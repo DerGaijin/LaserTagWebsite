@@ -53,19 +53,19 @@ $cardNote = $cardText . ' text-sm';
                     <h3 class="<?= $cardTitle ?>">1. Runde</h3>
                     <p class="<?= $cardPrice ?>">8,50 €</p>
                     <p class="<?= $cardNote ?>">(Member 7,50 €)</p>
-                    <a href="/reservieren#/category/3/" class="Button_Book">Jetzt Buchen</a>
+                    <a href="/reservieren/#/category/3/" class="Button_Book">Jetzt Buchen</a>
                 </div>
                 <div class="<?= $simpleCard ?>">
                     <h3 class="<?= $cardTitle ?>">3. Runden</h3>
                     <p class="<?= $cardPrice ?>">22,00 €</p>
                     <p class="<?= $cardNote ?>">(Member 20,00 €)</p>
-                    <a href="/reservieren#/category/3/" class="Button_Book">Jetzt Buchen</a>
+                    <a href="/reservieren/#/category/3/" class="Button_Book">Jetzt Buchen</a>
                 </div>
                 <div class="<?= $simpleCard ?>">
                     <h3 class="<?= $cardTitle ?>">5. Runden</h3>
                     <p class="<?= $cardPrice ?>">34,00 €</p>
                     <p class="<?= $cardNote ?>">(Member 30,00 €)</p>
-                    <a href="/reservieren#/category/3/" class="Button_Book">Jetzt Buchen</a>
+                    <a href="/reservieren/#/category/3/" class="Button_Book">Jetzt Buchen</a>
                 </div>
             </div>
             <div class="<?= $cardList ?>">
@@ -79,7 +79,7 @@ $cardNote = $cardText . ' text-sm';
                         <p class="<?= $cardText ?>">15:00 - 18:00</p>
                         <p class="<?= $cardPrice ?>">22,00 €</p>
                         <p class="<?= $cardNote ?>">Inkl. ein kleines Getränk</p>
-                        <a href="/reservieren#/category/1/" class="Button_Book">Jetzt Buchen</a>
+                        <a href="/reservieren/#/category/1/" class="Button_Book">Jetzt Buchen</a>
                     </div>
                 </div>
                 <div class="<?= $card ?>">
@@ -92,7 +92,7 @@ $cardNote = $cardText . ' text-sm';
                         <p class="<?= $cardText ?>">18:00 - 21:00</p>
                         <p class="<?= $cardPrice ?>">22,00 €</p>
                         <p class="<?= $cardNote ?>">Inkl. ein kleines Getränk</p>
-                        <a href="/reservieren#/category/1/" class="Button_Book">Jetzt Buchen</a>
+                        <a href="/reservieren/#/category/1/" class="Button_Book">Jetzt Buchen</a>
                     </div>
                 </div>
                 <div class="<?= $card ?>">
@@ -105,7 +105,7 @@ $cardNote = $cardText . ' text-sm';
                         <p class="<?= $cardText ?>">11:00 - 14:00</p>
                         <p class="<?= $cardPrice ?>">20,00 €</p>
                         <p class="<?= $cardNote ?>">Inkl. einem Kaffee, Tee oder Kakao</p>
-                        <a href="/reservieren#/category/1/" class="Button_Book">Jetzt Buchen</a>
+                        <a href="/reservieren/#/category/1/" class="Button_Book">Jetzt Buchen</a>
                     </div>
                 </div>
                 <div class="<?= $card ?>">
@@ -117,7 +117,7 @@ $cardNote = $cardText . ' text-sm';
                         <p class="<?= $cardDate ?>">Sonntags</p>
                         <p class="<?= $cardText ?>">17:00 - 19:00</p>
                         <p class="<?= $cardPrice ?>">18,00 €</p>
-                        <a href="/reservieren#/category/1/" class="Button_Book">Jetzt Buchen</a>
+                        <a href="/reservieren/#/category/1/" class="Button_Book">Jetzt Buchen</a>
                     </div>
                 </div>
             </div>
@@ -138,7 +138,7 @@ $cardNote = $cardText . ' text-sm';
                         <p class="<?= $cardText ?>">+ ein kleines Getränk</p>
                         <p class="<?= $cardText ?>">+ ein kleinen Slushy für das Geburtstagskind</p>
                         <p class="<?= $cardPrice ?>">18,00 €</p>
-                        <a href="/reservieren#/category/2/" class="Button_Book">Jetzt Buchen</a>
+                        <a href="/reservieren/#/category/2/" class="Button_Book">Jetzt Buchen</a>
                     </div>
                 </div>
                 <div class="<?= $card ?>">
@@ -151,7 +151,7 @@ $cardNote = $cardText . ' text-sm';
                         <p class="<?= $cardText ?>">+ ein kleines Getränk</p>
                         <p class="<?= $cardText ?>">+ ein kleinen Slushy und Memberkarte für das Geburtstagskind</p>
                         <p class="<?= $cardPrice ?>">27,00 €</p>
-                        <a href="/reservieren#/category/2/" class="Button_Book">Jetzt Buchen</a>
+                        <a href="/reservieren/#/category/2/" class="Button_Book">Jetzt Buchen</a>
                     </div>
                 </div>
             </div>

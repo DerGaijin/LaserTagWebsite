@@ -16,25 +16,7 @@
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/nanogallery2@3/dist/jquery.nanogallery2.min.js"></script>
 	</head>
 	<body>
-		<header id="MainHeader">
-			<div id="FixedHeaderContent">
-				<div id="HeaderContent">
-					<div id="HeaderToggle" onclick="ToggleMainHeader()"><i id="HeaderToggleIcon"></i></div>
-					<a href="/">
-						<img src="../Resources/LaserTagVerdenLogo.png" alt="Logo" id="HeaderLogo" />
-					</a>
-					<nav id="HeaderNavigation">
-						<!-- <a href="/" class="HeaderNavitem NavItemSelected">STARTSEITE</a> -->
-						<div class="NavSpace"></div>
-						<a href="../preise/" class="HeaderNavitem">PREISE</a>
-						<a href="../reservieren/" class="HeaderNavitem">RESERVIEREN</a>
-						<a href="../galerie/" class="HeaderNavitem NavItemSelected">GALERIE</a>
-						<a href="../uber-uns/" class="HeaderNavitem">ÜBER UNS</a>
-						<a href="../kontakt/" class="HeaderNavitem">KONTAKT</a>
-					</nav>
-				</div>
-			</div>
-		</header>
+		<?php $currentPage = 'galerie'; include __DIR__ . '/../Resources/header.php'; ?>
 
 		<main>
 			<div id="ImageGallery">
@@ -48,13 +30,6 @@
 			</div>
 		</main>
 
-		<footer id="MainFooter">
-			<nav id="FooterNavigation">
-				<a href="../impressum/" class="FooterNavItem">IMPRESSUM</a>
-				<a href="../agb/" class="FooterNavItem">AGB</a>
-				<a href="../datenschutz/" class="FooterNavItem">DATENSCHUTZ</a>
-				<div class="NavSpace"></div>
-			</nav>
-		</footer>
+		<?php include __DIR__ . '/../Resources/footer.php'; ?>
 	</body>
 </html>

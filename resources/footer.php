@@ -14,5 +14,6 @@ function footerClass(string $page, string $currentFooter): string
         <a href="/agb/" class="<?= footerClass('agb', $currentFooter) ?>">AGB</a>
         <a href="/datenschutz/" class="<?= footerClass('datenschutz', $currentFooter) ?>">DATENSCHUTZ</a>
         <div class="w-full max-[670px]:hidden"></div>
+        <a href="/muttizettel/" class="<?= footerClass('muttizettel', $currentFooter) ?>">MUTTIZETTEL</a>
     </nav>
 </footer>

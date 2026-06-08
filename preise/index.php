@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <?php
-$cardList = 'flex flex-wrap self-center justify-center';
-$card = 'm-2.5 grid max-w-[600px] grid-cols-2 rounded-[25px] bg-[var(--ContentBoxBackground)] p-2.5 shadow-[10px_10px_20px_black] max-[775px]:w-full';
-$simpleCard = 'm-2.5 flex min-w-[400px] max-w-[600px] flex-col items-center rounded-[25px] bg-[var(--ContentBoxBackground)] p-2.5 shadow-[10px_10px_20px_black] max-[775px]:w-full max-[775px]:min-w-0';
-$cardTitle = 'col-span-2 mb-2.5 w-full text-center text-2xl font-bold';
-$infoBox = 'flex h-auto max-w-full flex-[1_1_100%] justify-center font-[Arial,Helvetica,sans-serif]';
-$infoContent = 'm-2.5 flex max-w-[800px] flex-col items-center rounded-[25px] bg-[var(--ContentBoxBackground)] px-[10%] py-2.5 text-center shadow-[10px_10px_20px_black] max-[775px]:w-full';
-$cardMedia = 'flex items-center justify-center p-[5px]';
-$cardImage = 'aspect-square w-full max-w-[200px] rounded-full';
-$cardDetails = 'flex flex-col justify-center p-2.5';
-$cardText = 'pb-2.5';
-$cardDate = $cardText . ' text-xl';
-$cardPrice = $cardText . ' text-[22px]';
-$cardNote = $cardText . ' text-sm';
+$section = 'w-full max-w-[1180px]';
+$panel = 'rounded-[25px] bg-[var(--ContentBoxBackground)] shadow-[10px_10px_20px_black]';
+$eyebrow = 'text-sm uppercase tracking-[0.24em] text-[#73ffff]';
+$headline = 'mt-2 text-center text-[34px] leading-tight max-[775px]:text-[28px]';
+$bodyText = 'font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/90 max-[775px]:text-base';
+$grid = 'grid grid-cols-2 gap-5 max-[900px]:grid-cols-1';
+$card = $panel . ' flex min-h-[250px] flex-col overflow-hidden border border-white/10';
+$cardHeader = 'flex items-start justify-between gap-4 border-b border-white/10 p-5 max-[520px]:flex-col';
+$cardTitle = 'text-[26px] leading-tight max-[775px]:text-[22px]';
+$price = 'whitespace-nowrap text-right text-[30px] leading-none text-[#73ffff] max-[520px]:text-left';
+$priceNote = 'mt-1 block text-base text-white/80';
+$cardContent = 'flex flex-1 flex-col justify-between gap-5 p-5';
+$details = 'space-y-2 font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/90 max-[775px]:text-base';
+$meta = 'inline-flex w-fit rounded-full border border-[#00aaaa] px-3 py-1 font-[Arial,Helvetica,sans-serif] text-sm text-white/90';
 ?>
 <html lang="de">
     <head>
@@ -21,140 +22,137 @@ $cardNote = $cardText . ' text-sm';
     <body>
         <?php $currentPage = 'preise'; include __DIR__ . '/../Resources/header.php'; ?>
 
-        <main class="flex max-w-[2000px] flex-col justify-self-center">
-            <div class="<?= $infoBox ?>">
-                <div class="<?= $infoContent ?>">
-                    <h3 class="<?= $cardTitle ?>">Wichtig</h3>
-                    <p class="pb-2.5 text-lg">Wir haben an folgenden Tagen geschlossen:</p>
-                    <div class="grid grid-cols-2 gap-x-2.5 text-left">
-                        <p class="text-right">24.12.25</p>
-                        <p>Weihnachten</p>
-                        <p class="text-right">25.12.25</p>
-                        <p>1. Weihnachtstag</p>
-                        <p class="text-right">26.12.25</p>
-                        <p>2. Weihnachtstag</p>
-                        <p class="text-right">31.12.25</p>
-                        <p>Silvester</p>
-                        <p class="text-right">01.01.26</p>
-                        <p>Neujahr</p>
-                    </div>
-                </div>
-            </div>
+        <main class="flex flex-col items-center gap-8 px-[100px] py-[25px] max-[1260px]:px-[15px] max-[775px]:px-[5px]">
+            <section class="<?= $section ?> <?= $panel ?> px-8 py-7 text-center max-[775px]:px-4">
+                <p class="<?= $eyebrow ?>">Preise & Pakete</p>
+                <h1 class="<?= $headline ?>">Lasertag für kurze Matches, lange Abende und Geburtstagsrunden</h1>
+                <p class="<?= $bodyText ?> mt-4">
+                    Wählt die passende Spielzeit und reserviert euren Termin direkt online. Für Geburtstage gilt eine Mindestgruppe von 6 Personen.
+                </p>
+            </section>
 
-            <div class="<?= $infoBox ?>">
-                <div class="<?= $infoContent ?>">
-                    <h3 class="<?= $cardTitle ?>">Information</h3>
-                    <p>Bitte beachten Sie, dass das Mitbringen von Speisen, Snacks und Getränken in unsere Arena grundsätzlich nicht gestattet ist. Im Rahmen unserer Geburtstagsangebote dürfen eigene Speisen mitgebracht werden; Getränke sind jedoch weiterhin ausgeschlossen.</p>
+            <section class="<?= $section ?>">
+                <div class="mb-4 flex items-end justify-between gap-4 max-[775px]:flex-col max-[775px]:items-start">
+                    <div>
+                        <p class="<?= $eyebrow ?>">Spielzeit</p>
+                        <h2 class="text-[30px] leading-tight max-[775px]:text-[25px]">Standardbuchungen</h2>
+                    </div>
+                    <a href="/reservieren/#/category/3/" class="Button_Book">Termin wählen</a>
                 </div>
-            </div>
+                <div class="grid grid-cols-2 gap-5 max-[700px]:grid-cols-1">
+                    <article class="<?= $panel ?> border border-white/10 p-6 text-center">
+                        <h3 class="text-[26px]">1 Stunde</h3>
+                        <p class="mt-4 text-[34px] text-[#73ffff]">18,50 €</p>
+                        <p class="<?= $bodyText ?> mt-2">pro Person</p>
+                    </article>
+                    <article class="<?= $panel ?> border border-white/10 p-6 text-center">
+                        <h3 class="text-[26px]">2 Stunden</h3>
+                        <p class="mt-4 text-[34px] text-[#73ffff]">36,00 €</p>
+                        <p class="<?= $bodyText ?> mt-2">pro Person</p>
+                    </article>
+                </div>
+            </section>
 
-            <div class="<?= $cardList ?>">
-                <div class="<?= $simpleCard ?>">
-                    <h3 class="<?= $cardTitle ?>">1. Runde</h3>
-                    <p class="<?= $cardPrice ?>">8,50 €</p>
-                    <p class="<?= $cardNote ?>">(Member 7,50 €)</p>
-                    <a href="/reservieren/#/category/3/" class="Button_Book">Jetzt Buchen</a>
+            <section class="<?= $section ?>">
+                <div class="mb-4">
+                    <p class="<?= $eyebrow ?>">Aktionen</p>
+                    <h2 class="text-[30px] leading-tight max-[775px]:text-[25px]">Flats am Wochenende</h2>
                 </div>
-                <div class="<?= $simpleCard ?>">
-                    <h3 class="<?= $cardTitle ?>">3. Runden</h3>
-                    <p class="<?= $cardPrice ?>">22,00 €</p>
-                    <p class="<?= $cardNote ?>">(Member 20,00 €)</p>
-                    <a href="/reservieren/#/category/3/" class="Button_Book">Jetzt Buchen</a>
+                <div class="<?= $grid ?>">
+                    <article class="<?= $card ?>">
+                        <div class="<?= $cardHeader ?>">
+                            <div>
+                                <p class="<?= $meta ?>">Samstag & Sonntag</p>
+                                <h3 class="<?= $cardTitle ?> mt-3">Family Flat</h3>
+                            </div>
+                            <p class="<?= $price ?>">15,00 €<span class="<?= $priceNote ?>">pro Person</span></p>
+                        </div>
+                        <div class="<?= $cardContent ?>">
+                            <div class="<?= $details ?>">
+                                <p>Spielzeit von 10:00 bis 11:30 Uhr.</p>
+                                <p>Erwachsene erhalten wahlweise Kaffee oder Tee.</p>
+                            </div>
+                            <a href="/reservieren/#/category/1/" class="Button_Book self-start">Jetzt buchen</a>
+                        </div>
+                    </article>
+
+                    <article class="<?= $card ?>">
+                        <div class="<?= $cardHeader ?>">
+                            <div>
+                                <p class="<?= $meta ?>">Samstag & Sonntag</p>
+                                <h3 class="<?= $cardTitle ?> mt-3">Night Special</h3>
+                            </div>
+                            <p class="<?= $price ?>">27,00 €<span class="<?= $priceNote ?>">pro Person</span></p>
+                        </div>
+                        <div class="<?= $cardContent ?>">
+                            <div class="<?= $details ?>">
+                                <p>Drei Stunden Lasertag von 18:00 bis 21:00 Uhr.</p>
+                                <p>Ideal für Gruppen, die den Abend in der Arena verbringen möchten.</p>
+                            </div>
+                            <a href="/reservieren/#/category/1/" class="Button_Book self-start">Jetzt buchen</a>
+                        </div>
+                    </article>
                 </div>
-                <div class="<?= $simpleCard ?>">
-                    <h3 class="<?= $cardTitle ?>">5. Runden</h3>
-                    <p class="<?= $cardPrice ?>">34,00 €</p>
-                    <p class="<?= $cardNote ?>">(Member 30,00 €)</p>
-                    <a href="/reservieren/#/category/3/" class="Button_Book">Jetzt Buchen</a>
+            </section>
+
+            <section class="<?= $section ?>">
+                <div class="mb-4 flex items-end justify-between gap-4 max-[775px]:flex-col max-[775px]:items-start">
+                    <div>
+                        <p class="<?= $eyebrow ?>">Feiern</p>
+                        <h2 class="text-[30px] leading-tight max-[775px]:text-[25px]">Geburtstagspakete</h2>
+                    </div>
+                    <p class="<?= $meta ?>">ab 6 Gästen</p>
                 </div>
-            </div>
-            <div class="<?= $cardList ?>">
-                <div class="<?= $card ?>">
-                    <h3 class="<?= $cardTitle ?>">Flatrate - Prime Time</h3>
-                    <div class="<?= $cardMedia ?>">
-                        <img src="../Resources/PrimeTimeIcon.webp" alt="PrimeTime" class="<?= $cardImage ?>" />
-                    </div>
-                    <div class="<?= $cardDetails ?>">
-                        <p class="<?= $cardDate ?>">Dienstag - Freitag</p>
-                        <p class="<?= $cardText ?>">15:00 - 18:00</p>
-                        <p class="<?= $cardPrice ?>">22,00 €</p>
-                        <p class="<?= $cardNote ?>">Inkl. ein kleines Getränk</p>
-                        <a href="/reservieren/#/category/1/" class="Button_Book">Jetzt Buchen</a>
-                    </div>
+                <div class="<?= $grid ?>">
+                    <article class="<?= $card ?>">
+                        <div class="<?= $cardHeader ?>">
+                            <div>
+                                <p class="<?= $meta ?>">2 Stunden</p>
+                                <h3 class="<?= $cardTitle ?> mt-3">Geburtstag Basis</h3>
+                            </div>
+                            <p class="<?= $price ?>">34,90 €<span class="<?= $priceNote ?>">pro Gast</span></p>
+                        </div>
+                        <div class="<?= $cardContent ?>">
+                            <div class="<?= $details ?>">
+                                <p>Getränkeflat für die Gruppe ist enthalten.</p>
+                                <p>Das Geburtstagskind bekommt einen Slushy dazu.</p>
+                            </div>
+                            <a href="/reservieren/#/category/2/" class="Button_Book self-start">Geburtstag buchen</a>
+                        </div>
+                    </article>
+
+                    <article class="<?= $card ?>">
+                        <div class="<?= $cardHeader ?>">
+                            <div>
+                                <p class="<?= $meta ?>">3 Stunden</p>
+                                <h3 class="<?= $cardTitle ?> mt-3">Geburtstag Plus</h3>
+                            </div>
+                            <p class="<?= $price ?>">39,90 €<span class="<?= $priceNote ?>">pro Gast</span></p>
+                        </div>
+                        <div class="<?= $cardContent ?>">
+                            <div class="<?= $details ?>">
+                                <p>Alle Leistungen aus dem 2-Stunden-Paket sind inklusive.</p>
+                                <p>Zusätzlich erhält das Geburtstagskind eine Membercard; jeder Gast bekommt eine Snackbox.</p>
+                            </div>
+                            <a href="/reservieren/#/category/2/" class="Button_Book self-start">Geburtstag buchen</a>
+                        </div>
+                    </article>
                 </div>
-                <div class="<?= $card ?>">
-                    <h3 class="<?= $cardTitle ?>">Flatrate - Night Special</h3>
-                    <div class="<?= $cardMedia ?>">
-                        <img src="../Resources/NightSpecialIcon.webp" alt="NightSpecial" class="<?= $cardImage ?>" />
+            </section>
+
+            <section class="<?= $section ?> <?= $panel ?> border border-white/10 p-6 max-[775px]:p-4">
+                <div class="grid grid-cols-[auto_1fr_auto] items-center gap-5 max-[850px]:grid-cols-1">
+                    <div class="flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#00aaaa] text-[28px] text-[#73ffff]">+</div>
+                    <div>
+                        <p class="<?= $eyebrow ?>">Optional</p>
+                        <h2 class="text-[28px] leading-tight max-[775px]:text-[24px]">Getränkeflat</h2>
+                        <p class="<?= $bodyText ?> mt-2">
+                            Für 9,90 € pro Person sind kleine Getränke sowie 1-Liter-Wasserflaschen dabei. Cola, Fanta und Sprite sind davon ausgenommen.
+                        </p>
                     </div>
-                    <div class="<?= $cardDetails ?>">
-                        <p class="<?= $cardDate ?>">Freitag - Samstag</p>
-                        <p class="<?= $cardText ?>">18:00 - 21:00</p>
-                        <p class="<?= $cardPrice ?>">22,00 €</p>
-                        <p class="<?= $cardNote ?>">Inkl. ein kleines Getränk</p>
-                        <a href="/reservieren/#/category/1/" class="Button_Book">Jetzt Buchen</a>
-                    </div>
+                    <!-- <a href="/kontakt/" class="Button_Book">Nachfragen</a> -->
                 </div>
-                <div class="<?= $card ?>">
-                    <h3 class="<?= $cardTitle ?>">Flatrate - Early Hour</h3>
-                    <div class="<?= $cardMedia ?>">
-                        <img src="../Resources/EarlyHourIcon.webp" alt="EarlyHour" class="<?= $cardImage ?>" />
-                    </div>
-                    <div class="<?= $cardDetails ?>">
-                        <p class="<?= $cardDate ?>">Sonntags</p>
-                        <p class="<?= $cardText ?>">11:00 - 14:00</p>
-                        <p class="<?= $cardPrice ?>">20,00 €</p>
-                        <p class="<?= $cardNote ?>">Inkl. einem Kaffee, Tee oder Kakao</p>
-                        <a href="/reservieren/#/category/1/" class="Button_Book">Jetzt Buchen</a>
-                    </div>
-                </div>
-                <div class="<?= $card ?>">
-                    <h3 class="<?= $cardTitle ?>">Flatrate - Late Hour</h3>
-                    <div class="<?= $cardMedia ?>">
-                        <img src="../Resources/LateHourIcon.webp" alt="LateHour" class="<?= $cardImage ?>" />
-                    </div>
-                    <div class="<?= $cardDetails ?>">
-                        <p class="<?= $cardDate ?>">Sonntags</p>
-                        <p class="<?= $cardText ?>">17:00 - 19:00</p>
-                        <p class="<?= $cardPrice ?>">18,00 €</p>
-                        <a href="/reservieren/#/category/1/" class="Button_Book">Jetzt Buchen</a>
-                    </div>
-                </div>
-            </div>
-            <div class="<?= $infoBox ?>">
-                <div class="<?= $infoContent ?>">
-                    <h3 class="<?= $cardTitle ?>">Was ist der Unterschied zwischen FLATS und GEBURTSTAGS ANGEBOTEN?</h3>
-                    <p>Die Flat ist dafür da, soviel Runden wie möglich zu spielen und seine Skills zu verbessern. Das Geburtstagsangebot ist dafür da, um in Gesellschaft bei Snacks, Essen und ein bisschen spielen, sich feiern zu lassen.</p>
-                </div>
-            </div>
-            <div class="<?= $cardList ?>">
-                <div class="<?= $card ?>">
-                    <h3 class="<?= $cardTitle ?>">Geburtstags Angebot - Small</h3>
-                    <div class="<?= $cardMedia ?>">
-                        <img src="../Resources/SmallIcon.webp" alt="Small" class="<?= $cardImage ?>" />
-                    </div>
-                    <div class="<?= $cardDetails ?>">
-                        <p class="<?= $cardDate ?>">2 Runden</p>
-                        <p class="<?= $cardText ?>">+ ein kleines Getränk</p>
-                        <p class="<?= $cardText ?>">+ ein kleinen Slushy für das Geburtstagskind</p>
-                        <p class="<?= $cardPrice ?>">18,00 €</p>
-                        <a href="/reservieren/#/category/2/" class="Button_Book">Jetzt Buchen</a>
-                    </div>
-                </div>
-                <div class="<?= $card ?>">
-                    <h3 class="<?= $cardTitle ?>">Geburtstags Angebot - Large</h3>
-                    <div class="<?= $cardMedia ?>">
-                        <img src="../Resources/LargeIcon.webp" alt="Large" class="<?= $cardImage ?>" />
-                    </div>
-                    <div class="<?= $cardDetails ?>">
-                        <p class="<?= $cardDate ?>">4 Runden</p>
-                        <p class="<?= $cardText ?>">+ ein kleines Getränk</p>
-                        <p class="<?= $cardText ?>">+ ein kleinen Slushy und Memberkarte für das Geburtstagskind</p>
-                        <p class="<?= $cardPrice ?>">27,00 €</p>
-                        <a href="/reservieren/#/category/2/" class="Button_Book">Jetzt Buchen</a>
-                    </div>
-                </div>
-            </div>
+            </section>
         </main>
 
         <?php include __DIR__ . '/../Resources/footer.php'; ?>

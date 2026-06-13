@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 	<head>
-		<?php require __DIR__ . '/../resources/head.php'; ?>
+		<?php require '../resources/head.php'; ?>
 		<script src="galerie.js"></script>
 
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
@@ -9,7 +9,7 @@
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/nanogallery2@3/dist/jquery.nanogallery2.min.js"></script>
 	</head>
 	<body>
-		<?php $currentPage = 'galerie'; include __DIR__ . '/../Resources/header.php'; ?>
+		<?php $currentPage = 'galerie'; include '../resources/header.php'; ?>
 
 		<main class="overflow-hidden px-[100px] py-[15px] max-[775px]:px-[5px]">
 			<div id="ImageGallery">
@@ -23,6 +23,6 @@
 			</div>
 		</main>
 
-		<?php include __DIR__ . '/../Resources/footer.php'; ?>
+		<?php include '../resources/footer.php'; ?>
 	</body>
 </html>

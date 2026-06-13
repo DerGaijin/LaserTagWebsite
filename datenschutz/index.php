@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="de">
 	<head>
-		<?php require __DIR__ . '/../resources/head.php'; ?>
+		<?php require '../resources/head.php'; ?>
 	</head>
 	<body>
-		<?php include __DIR__ . '/../Resources/header.php'; ?>
+		<?php include '../resources/header.php'; ?>
 
 		<main class="flex max-w-[900px] flex-col items-center justify-center justify-self-center px-[5px] py-[25px]">
 			<div class="m-2.5 flex w-full flex-col rounded-[25px] bg-[var(--ContentBoxBackground)] p-5 font-[Arial,Helvetica,sans-serif] shadow-[10px_10px_20px_black] [&_h1]:mb-2.5 [&_h1]:mt-5 [&_h1]:text-[28px] [&_h1]:font-bold [&_h1]:leading-[44px] [&_h2]:mb-2.5 [&_h2]:mt-5 [&_h2]:text-[26px] [&_h2]:font-bold [&_h2]:leading-9 [&_p]:mb-2.5">
@@ -201,6 +201,6 @@
 			</div>
 		</main>
 
-		<?php $currentFooter = 'datenschutz'; include __DIR__ . '/../Resources/footer.php'; ?>
+		<?php $currentFooter = 'datenschutz'; include '../resources/footer.php'; ?>
 	</body>
 </html>

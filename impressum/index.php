@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="de">
 	<head>
-		<?php require __DIR__ . '/../resources/head.php'; ?>
+		<?php require '../resources/head.php'; ?>
 	</head>
 	<body>
-		<?php include __DIR__ . '/../Resources/header.php'; ?>
+		<?php include '../resources/header.php'; ?>
 
 		<main class="flex max-w-[900px] flex-col items-center justify-center justify-self-center px-[5px] py-[25px]">
 			<div class="flex flex-col rounded-[25px] bg-[var(--ContentBoxBackground)] p-5 font-[Arial,Helvetica,sans-serif] shadow-[10px_10px_20px_black] [&_h2]:pb-2.5 [&_h2]:text-[26px] [&_h2]:font-bold [&_p]:pt-[5px]">
@@ -21,6 +21,6 @@
 			</div>
 		</main>
 
-		<?php $currentFooter = 'impressum'; include __DIR__ . '/../Resources/footer.php'; ?>
+		<?php $currentFooter = 'impressum'; include '../resources/footer.php'; ?>
 	</body>
 </html>

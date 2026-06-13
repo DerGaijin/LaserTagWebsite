@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="de">
     <head>
-        <?php require __DIR__ . '/../resources/head.php'; ?>
+        <?php require '../resources/head.php'; ?>
         <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     </head>
     <body>
-        <?php include __DIR__ . '/../Resources/header.php'; ?>
+        <?php include '../resources/header.php'; ?>
 
         <main class="flex flex-col items-center gap-8 px-[100px] py-[25px] max-[1260px]:px-[15px] max-[775px]:px-[5px]">
             <section class="w-full max-w-[1000px] rounded-[25px] bg-[var(--ContentBoxBackground)] px-8 py-7 text-center shadow-[10px_10px_20px_black] max-[775px]:px-4">
@@ -238,6 +238,6 @@
             placeDateInput.value = getTodayText();
         </script>
 
-        <?php $currentFooter = 'muttizettel'; include __DIR__ . '/../Resources/footer.php'; ?>
+        <?php $currentFooter = 'muttizettel'; include '../resources/footer.php'; ?>
     </body>
 </html>

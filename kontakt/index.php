@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="de">
     <head>
-        <?php require __DIR__ . '/../resources/head.php'; ?>
+        <?php require '../resources/head.php'; ?>
     </head>
     <body>
-        <?php $currentPage = 'kontakt'; include __DIR__ . '/../Resources/header.php'; ?>
+        <?php $currentPage = 'kontakt'; include '../resources/header.php'; ?>
 
         <main class="grid max-w-[1200px] grid-cols-3 grid-rows-[0fr_1fr] gap-2.5 justify-self-center px-[5px] py-[25px] max-[850px]:grid-cols-1 max-[850px]:grid-rows-[1fr_1fr_1fr_2fr] max-[850px]:justify-self-auto">
             <div class="flex flex-col items-center rounded-[15px] bg-[#2a2a2a] p-2.5 text-center">
-                <img src="../Resources/LocationIcon.webp" alt="Location" class="w-[50px]" />
+                <img src="../resources/LocationIcon.webp" alt="Location" class="w-[50px]" />
                 <h2 class="p-2.5 pt-5 text-[24px] font-bold">Adresse</h2>
                 <p class="flex items-center p-[5px] font-[Arial,Helvetica,sans-serif] text-inherit no-underline">Bernhard-Warnecke-Straße 5</p>
                 <p class="flex items-center p-[5px] font-[Arial,Helvetica,sans-serif] text-inherit no-underline">27283 Verden</p>
             </div>
             <div class="flex flex-col items-center rounded-[15px] bg-[#2a2a2a] p-2.5 text-center">
-                <img src="../Resources/BlackPhoneIcon.webp" alt="Phone" class="w-[50px] invert" />
+                <img src="../resources/BlackPhoneIcon.webp" alt="Phone" class="w-[50px] invert" />
                 <h2 class="p-2.5 pt-5 text-[24px] font-bold">Kontakt</h2>
                 <a href="tel:+491723834147" class="flex items-center p-[5px] font-[Arial,Helvetica,sans-serif] text-inherit no-underline">
                     <p>Telefon: <b class="underline">+49 172 3834147</b></p>
-                    <img src="../Resources/PhoneIcon.webp" alt="PhoneIcon" class="ml-[5px] h-[25px] w-[25px]" />
+                    <img src="../resources/PhoneIcon.webp" alt="PhoneIcon" class="ml-[5px] h-[25px] w-[25px]" />
                 </a>
                 <a href="https://wa.me/+491723834147" class="flex items-center p-[5px] font-[Arial,Helvetica,sans-serif] text-inherit no-underline">
                     <p>Auch gerne per <b class="underline">Whatsapp</b></p>
-                    <img src="../Resources/WhatsappIcon.webp" alt="WhatsappIcon" class="ml-[5px] h-[25px] w-[25px]" />
+                    <img src="../resources/WhatsappIcon.webp" alt="WhatsappIcon" class="ml-[5px] h-[25px] w-[25px]" />
                 </a>
                 <a href="mailto:allgemein@verden-lasertag.de" class="flex items-center p-[5px] font-[Arial,Helvetica,sans-serif] text-inherit no-underline">
                     <p>E-Mail: <b class="underline">allgemein@verden-lasertag.de</b></p>
-                    <img src="../Resources/email.png" alt="EMailIcon" class="ml-[5px] h-[25px] w-[25px]" />
+                    <img src="../resources/email.png" alt="EMailIcon" class="ml-[5px] h-[25px] w-[25px]" />
                 </a>
             </div>
             <div class="flex flex-col items-center rounded-[15px] bg-[#2a2a2a] p-2.5 text-center">
-                <img src="../Resources/ClockIcon.webp" alt="Time" class="w-[50px] invert" />
+                <img src="../resources/ClockIcon.webp" alt="Time" class="w-[50px] invert" />
                 <h2 class="p-2.5 pt-5 text-[24px] font-bold">Telefonische<br />Erreichbarkeit</h2>
                 <div id="TimingTable" class="grid grid-cols-2">
                     <p class="flex items-center p-[5px] font-[Arial,Helvetica,sans-serif] text-inherit no-underline">Dienstag-Freitag:</p>
@@ -58,6 +58,6 @@
             ></iframe>
         </main>
 
-        <?php include __DIR__ . '/../Resources/footer.php'; ?>
+        <?php include '../resources/footer.php'; ?>
     </body>
 </html>

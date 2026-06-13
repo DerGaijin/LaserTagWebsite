@@ -2,11 +2,11 @@
 <html lang="de">
 
 <head>
-    <?php require __DIR__ . '/resources/head.php'; ?>
+    <?php require 'resources/head.php'; ?>
 </head>
 
 <body>
-    <?php include __DIR__ . '/Resources/header.php'; ?>
+    <?php include 'resources/header.php'; ?>
 
     <main class="mx-auto flex w-full max-w-[1180px] flex-col gap-8 px-6 py-8 max-[700px]:px-3">
         <section
@@ -23,7 +23,7 @@
                     <p class="mt-3 text-2xl text-white max-[700px]:text-xl">Geschlossen vom <b>02.07.26</b> bis
                         <b>12.08.26</b></p>
                 </div>
-                <img src="Resources/renovieren.avif" alt="Renovieren"
+                <img src="resources/renovieren.avif" alt="Renovieren"
                     class="max-h-[180px] w-full rounded-[18px] object-cover" />
             </div>
         </section>
@@ -47,15 +47,15 @@
                         unsere Lasertaghalle mit LaserForce Gen8 Equipment, taktischen Runden und Action für Teams,
                         Geburtstage und Firmen.</p>
                     <div class="flex flex-wrap gap-3 text-xl">
-                        <a class="Button_Book px-7 py-3" href="/preise/">Jetzt Buchen</a>
+                        <a class="Button_Book px-7 py-3" href="preise/">Jetzt Buchen</a>
                         <a class="rounded-md border border-white/35 bg-white/10 px-7 py-3 text-white no-underline transition hover:bg-white/20"
-                            href="/galerie/">Arena ansehen</a>
+                            href="galerie/">Arena ansehen</a>
                     </div>
                 </div>
 
                 <div
                     class="relative rounded-[26px] border border-white/15 bg-black/35 p-4 shadow-[inset_0_0_35px_rgba(0,255,255,.12)]">
-                    <img src="Resources/LaserForceBlasters.webp" alt="LaserForce Blaster"
+                    <img src="resources/LaserForceBlasters.webp" alt="LaserForce Blaster"
                         class="w-full rounded-[18px]" />
                     <div class="mt-4 grid grid-cols-2 gap-3 text-center text-lg max-[420px]:grid-cols-1">
                         <div class="rounded-2xl bg-[#00aaaa22] p-3"><span
@@ -91,8 +91,8 @@
                 <p class="mt-5 rounded-2xl border border-[#00ffff44] bg-black/25 p-4 text-center text-xl">*Montag bis
                     Mittwoch geschlossen, außer bei Buchung der Halle.</p>
                 <div class="mt-5 flex flex-wrap justify-center gap-3 text-xl">
-                    <a class="Button_Book" href="/reservieren/">Reservieren</a>
-                    <a class="Button_Book" href="/kontakt/">Halle buchen</a>
+                    <a class="Button_Book" href="reservieren/">Reservieren</a>
+                    <a class="Button_Book" href="kontakt/">Halle buchen</a>
                 </div>
             </div>
 
@@ -102,15 +102,15 @@
                     <h2 class="mb-5 border-b-2 border-[#00aaaa] pb-3 text-center text-[32px] uppercase">Unsere Technik
                     </h2>
                     <div class="flex flex-1 flex-col gap-4">
-                        <img src="Resources/LaserForceBlasters.webp" alt="LaserForceBlasters" class="ContentBoxImage" />
-                        <img src="Resources/LaserForceGen8.webp" alt="LaserForceGen8" class="ContentBoxImage" />
+                        <img src="resources/LaserForceBlasters.webp" alt="LaserForceBlasters" class="ContentBoxImage" />
+                        <img src="resources/LaserForceGen8.webp" alt="LaserForceGen8" class="ContentBoxImage" />
                     </div>
                 </article>
             </div>
         </section>
     </main>
 
-    <?php include __DIR__ . '/Resources/footer.php'; ?>
+    <?php include 'resources/footer.php'; ?>
 </body>
 
 </html>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="de">
 	<head>
-		<?php require __DIR__ . '/../resources/head.php'; ?>
+		<?php require '../resources/head.php'; ?>
 		<link rel="stylesheet" href="reservieren.css" />
 		<script src="reservieren.js"></script>
 	</head>
 	<body>
-		<?php $currentPage = 'reservieren'; include __DIR__ . '/../Resources/header.php'; ?>
+		<?php $currentPage = 'reservieren'; include '../resources/header.php'; ?>
 
 		<main>
 			<!-- src="https://buchung.verden-lasertag.de/v2/?widget-type=iframe&timeline=modern_week&datepicker=top_calendar#book" -->
@@ -22,6 +22,6 @@
 			></iframe>
 		</main>
 
-		<?php include __DIR__ . '/../Resources/footer.php'; ?>
+		<?php include '../resources/footer.php'; ?>
 	</body>
 </html>

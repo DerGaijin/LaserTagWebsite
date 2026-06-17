@@ -34,21 +34,44 @@ $meta = 'inline-flex w-fit rounded-full border border-[#00aaaa] px-3 py-1 font-[
             <section class="<?= $section ?>">
                 <div class="mb-4 flex items-end justify-between gap-4 max-[775px]:flex-col max-[775px]:items-start">
                     <div>
-                        <p class="<?= $eyebrow ?>">Spielzeit</p>
-                        <h2 class="text-[30px] leading-tight max-[775px]:text-[25px]">Standardbuchungen</h2>
+                        <p class="<?= $eyebrow ?>">Feiern</p>
+                        <h2 class="text-[30px] leading-tight max-[775px]:text-[25px]">Geburtstagspakete</h2>
                     </div>
-                    <a href="../reservieren/#/category/3/" class="Button_Book">Termin wählen</a>
+                    <p class="<?= $meta ?>">ab 6 Gästen</p>
                 </div>
-                <div class="grid grid-cols-2 gap-5 max-[700px]:grid-cols-1">
-                    <article class="<?= $panel ?> border border-white/10 p-6 text-center">
-                        <h3 class="text-[26px]">1 Stunde</h3>
-                        <p class="mt-4 text-[34px] text-[#73ffff]">18,50 €</p>
-                        <p class="<?= $bodyText ?> mt-2">pro Person</p>
+                <div class="<?= $grid ?>">
+                    <article class="<?= $card ?>">
+                        <div class="<?= $cardHeader ?>">
+                            <div>
+                                <p class="<?= $meta ?>">2 Stunden</p>
+                                <h3 class="<?= $cardTitle ?> mt-3">Geburtstag Basis</h3>
+                            </div>
+                            <p class="<?= $price ?>">34,90 €<span class="<?= $priceNote ?>">pro Gast</span></p>
+                        </div>
+                        <div class="<?= $cardContent ?>">
+                            <div class="<?= $details ?>">
+                                <p>Getränkeflat für die Gruppe ist enthalten.</p>
+                                <p>Das Geburtstagskind bekommt einen Slushy dazu.</p>
+                            </div>
+                            <a href="../reservieren/#/category/2/" class="Button_Book self-start">Geburtstag buchen</a>
+                        </div>
                     </article>
-                    <article class="<?= $panel ?> border border-white/10 p-6 text-center">
-                        <h3 class="text-[26px]">2 Stunden</h3>
-                        <p class="mt-4 text-[34px] text-[#73ffff]">36,00 €</p>
-                        <p class="<?= $bodyText ?> mt-2">pro Person</p>
+
+                    <article class="<?= $card ?>">
+                        <div class="<?= $cardHeader ?>">
+                            <div>
+                                <p class="<?= $meta ?>">3 Stunden</p>
+                                <h3 class="<?= $cardTitle ?> mt-3">Geburtstag Plus</h3>
+                            </div>
+                            <p class="<?= $price ?>">39,90 €<span class="<?= $priceNote ?>">pro Gast</span></p>
+                        </div>
+                        <div class="<?= $cardContent ?>">
+                            <div class="<?= $details ?>">
+                                <p>Alle Leistungen aus dem 2-Stunden-Paket sind inklusive.</p>
+                                <p>Zusätzlich erhält das Geburtstagskind eine Membercard; jeder Gast bekommt eine Snackbox.</p>
+                            </div>
+                            <a href="../reservieren/#/category/2/" class="Button_Book self-start">Geburtstag buchen</a>
+                        </div>
                     </article>
                 </div>
             </section>
@@ -98,44 +121,21 @@ $meta = 'inline-flex w-fit rounded-full border border-[#00aaaa] px-3 py-1 font-[
             <section class="<?= $section ?>">
                 <div class="mb-4 flex items-end justify-between gap-4 max-[775px]:flex-col max-[775px]:items-start">
                     <div>
-                        <p class="<?= $eyebrow ?>">Feiern</p>
-                        <h2 class="text-[30px] leading-tight max-[775px]:text-[25px]">Geburtstagspakete</h2>
+                        <p class="<?= $eyebrow ?>">Spielzeit</p>
+                        <h2 class="text-[30px] leading-tight max-[775px]:text-[25px]">Standardbuchungen</h2>
                     </div>
-                    <p class="<?= $meta ?>">ab 6 Gästen</p>
+                    <a href="../reservieren/#/category/3/" class="Button_Book">Termin wählen</a>
                 </div>
-                <div class="<?= $grid ?>">
-                    <article class="<?= $card ?>">
-                        <div class="<?= $cardHeader ?>">
-                            <div>
-                                <p class="<?= $meta ?>">2 Stunden</p>
-                                <h3 class="<?= $cardTitle ?> mt-3">Geburtstag Basis</h3>
-                            </div>
-                            <p class="<?= $price ?>">34,90 €<span class="<?= $priceNote ?>">pro Gast</span></p>
-                        </div>
-                        <div class="<?= $cardContent ?>">
-                            <div class="<?= $details ?>">
-                                <p>Getränkeflat für die Gruppe ist enthalten.</p>
-                                <p>Das Geburtstagskind bekommt einen Slushy dazu.</p>
-                            </div>
-                            <a href="../reservieren/#/category/2/" class="Button_Book self-start">Geburtstag buchen</a>
-                        </div>
+                <div class="grid grid-cols-2 gap-5 max-[700px]:grid-cols-1">
+                    <article class="<?= $panel ?> border border-white/10 p-6 text-center">
+                        <h3 class="text-[26px]">1 Stunde</h3>
+                        <p class="mt-4 text-[34px] text-[#73ffff]">18,50 €</p>
+                        <p class="<?= $bodyText ?> mt-2">pro Person</p>
                     </article>
-
-                    <article class="<?= $card ?>">
-                        <div class="<?= $cardHeader ?>">
-                            <div>
-                                <p class="<?= $meta ?>">3 Stunden</p>
-                                <h3 class="<?= $cardTitle ?> mt-3">Geburtstag Plus</h3>
-                            </div>
-                            <p class="<?= $price ?>">39,90 €<span class="<?= $priceNote ?>">pro Gast</span></p>
-                        </div>
-                        <div class="<?= $cardContent ?>">
-                            <div class="<?= $details ?>">
-                                <p>Alle Leistungen aus dem 2-Stunden-Paket sind inklusive.</p>
-                                <p>Zusätzlich erhält das Geburtstagskind eine Membercard; jeder Gast bekommt eine Snackbox.</p>
-                            </div>
-                            <a href="../reservieren/#/category/2/" class="Button_Book self-start">Geburtstag buchen</a>
-                        </div>
+                    <article class="<?= $panel ?> border border-white/10 p-6 text-center">
+                        <h3 class="text-[26px]">2 Stunden</h3>
+                        <p class="mt-4 text-[34px] text-[#73ffff]">36,00 €</p>
+                        <p class="<?= $bodyText ?> mt-2">pro Person</p>
                     </article>
                 </div>
             </section>

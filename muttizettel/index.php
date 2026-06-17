@@ -40,7 +40,7 @@
                 </div>
 
                 <div id="ChildrenGrid" class="mt-4 grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">
-                    <?php for ($i = 1; $i <= 4; $i++): ?>
+                    <?php for ($i = 1; $i <= 6; $i++): ?>
                         <div class="child-row rounded-[15px] border border-white/10 bg-[#151515] p-3">
                             <div class="flex items-start gap-2">
                                 <div class="grid flex-1 grid-cols-2 gap-3 max-[500px]:grid-cols-1">

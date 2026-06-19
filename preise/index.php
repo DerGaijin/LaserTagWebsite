@@ -53,7 +53,7 @@ $meta = 'inline-flex w-fit rounded-full border border-[#00aaaa] px-3 py-1 font-[
                                 <p>Getränkeflat für die Gruppe ist enthalten.</p>
                                 <p>Das Geburtstagskind bekommt einen Slushy dazu.</p>
                             </div>
-                            <a href="../reservieren/#/category/2/" class="Button_Book self-start">Geburtstag buchen</a>
+                            <a href="../reservieren/?service=birthday-basis" class="Button_Book self-start">Geburtstag buchen</a>
                         </div>
                     </article>
 
@@ -70,7 +70,7 @@ $meta = 'inline-flex w-fit rounded-full border border-[#00aaaa] px-3 py-1 font-[
                                 <p>Alle Leistungen aus dem 2-Stunden-Paket sind inklusive.</p>
                                 <p>Zusätzlich erhält das Geburtstagskind eine Membercard; jeder Gast bekommt eine Snackbox.</p>
                             </div>
-                            <a href="../reservieren/#/category/2/" class="Button_Book self-start">Geburtstag buchen</a>
+                            <a href="../reservieren/?service=birthday-plus" class="Button_Book self-start">Geburtstag buchen</a>
                         </div>
                     </article>
                 </div>
@@ -95,7 +95,7 @@ $meta = 'inline-flex w-fit rounded-full border border-[#00aaaa] px-3 py-1 font-[
                                 <p>Spielzeit von 10:00 bis 11:30 Uhr.</p>
                                 <p>Erwachsene erhalten wahlweise Kaffee oder Tee.</p>
                             </div>
-                            <a href="../reservieren/#/category/1/" class="Button_Book self-start">Jetzt buchen</a>
+                            <a href="../reservieren/?service=family-flat" class="Button_Book self-start">Jetzt buchen</a>
                         </div>
                     </article>
 
@@ -112,7 +112,7 @@ $meta = 'inline-flex w-fit rounded-full border border-[#00aaaa] px-3 py-1 font-[
                                 <p>Drei Stunden Lasertag von 18:00 bis 21:00 Uhr.</p>
                                 <p>Ideal für Gruppen, die den Abend in der Arena verbringen möchten.</p>
                             </div>
-                            <a href="../reservieren/#/category/1/" class="Button_Book self-start">Jetzt buchen</a>
+                            <a href="../reservieren/?service=night-special" class="Button_Book self-start">Jetzt buchen</a>
                         </div>
                     </article>
                 </div>
@@ -124,18 +124,20 @@ $meta = 'inline-flex w-fit rounded-full border border-[#00aaaa] px-3 py-1 font-[
                         <p class="<?= $eyebrow ?>">Spielzeit</p>
                         <h2 class="text-[30px] leading-tight max-[775px]:text-[25px]">Standardbuchungen</h2>
                     </div>
-                    <a href="../reservieren/#/category/3/" class="Button_Book">Termin wählen</a>
+                    <a href="../reservieren/?service=standard-2h" class="Button_Book">Termin wählen</a>
                 </div>
                 <div class="grid grid-cols-2 gap-5 max-[700px]:grid-cols-1">
                     <article class="<?= $panel ?> border border-white/10 p-6 text-center">
                         <h3 class="text-[26px]">1 Stunde</h3>
                         <p class="mt-4 text-[34px] text-[#73ffff]">18,50 €</p>
                         <p class="<?= $bodyText ?> mt-2">pro Person</p>
+                        <a href="../reservieren/?service=standard-1h" class="Button_Book mt-5 inline-block">1 Stunde wählen</a>
                     </article>
                     <article class="<?= $panel ?> border border-white/10 p-6 text-center">
                         <h3 class="text-[26px]">2 Stunden</h3>
                         <p class="mt-4 text-[34px] text-[#73ffff]">36,00 €</p>
                         <p class="<?= $bodyText ?> mt-2">pro Person</p>
+                        <a href="../reservieren/?service=standard-2h" class="Button_Book mt-5 inline-block">2 Stunden wählen</a>
                     </article>
                 </div>
             </section>

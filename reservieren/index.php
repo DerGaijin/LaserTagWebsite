@@ -142,34 +142,27 @@ $stepPill = 'rounded-full border border-[#00aaaa] bg-black/35 px-3 py-1 font-[Ar
 					<input type="hidden" name="start_time" value="14:00:00" data-start-time />
 
 					<div class="rounded-[22px] border border-white/10 bg-black/25 p-4">
-						<div class="grid grid-cols-[1fr_1fr_auto] items-end gap-4 max-[760px]:grid-cols-1">
-							<div>
-								<label class="<?= $label ?>" for="booking-month">Monat</label>
-								<select id="booking-month" class="<?= $field ?>" name="month" data-month-select>
-									<option value="2026-07">Juli 2026</option>
-									<option value="2026-08">August 2026</option>
-									<option value="2026-09">September 2026</option>
-								</select>
+						<input type="hidden" name="month" value="2026-07" data-month-input />
+						<div class="flex items-center justify-between gap-4 max-[560px]:flex-col max-[560px]:items-stretch">
+							<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-calendar-prev>Zurueck</button>
+							<div class="text-center">
+								<p class="<?= $label ?>">Datum waehlen</p>
+								<h3 class="mt-1 text-[30px] leading-none text-[#73ffff] max-[775px]:text-[24px]" data-calendar-title>Juli 2026</h3>
 							</div>
-							<div>
-								<label class="<?= $label ?>" for="booking-week">Woche</label>
-								<select id="booking-week" class="<?= $field ?>" name="week" data-week-select>
-									<option value="0">22.07. bis 28.07.</option>
-									<option value="1">29.07. bis 04.08.</option>
-									<option value="2">05.08. bis 11.08.</option>
-								</select>
-							</div>
-							<span class="<?= $stepPill ?>" data-week-summary>Kalenderwoche 30</span>
+							<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-calendar-next>Weiter</button>
 						</div>
 
-						<div class="mt-5 grid grid-cols-7 gap-2 max-[760px]:grid-cols-4 max-[460px]:grid-cols-2" data-day-list>
-							<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-white/70" type="button" data-date="2026-07-22" data-day-label="Mittwoch"><span>Mi</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-sm">22.07.</span><span class="mt-3 block text-sm text-white/45">3 Slots</span></button>
-							<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-white/70" type="button" data-date="2026-07-23" data-day-label="Donnerstag"><span>Do</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-sm">23.07.</span><span class="mt-3 block text-sm text-white/45">4 Slots</span></button>
-							<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-white/70" type="button" data-date="2026-07-24" data-day-label="Freitag"><span>Fr</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-sm">24.07.</span><span class="mt-3 block text-sm text-white/45">5 Slots</span></button>
-							<button class="rounded-2xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 p-4 text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" type="button" data-date="2026-07-25" data-day-label="Samstag" aria-pressed="true"><span>Sa</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-sm">25.07.</span><span class="mt-3 block text-sm text-white/80">aktiv</span></button>
-							<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-white/70" type="button" data-date="2026-07-26" data-day-label="Sonntag"><span>So</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-sm">26.07.</span><span class="mt-3 block text-sm text-white/45">2 Slots</span></button>
-							<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-white/70" type="button" data-date="2026-07-27" data-day-label="Montag"><span>Mo</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-sm">27.07.</span><span class="mt-3 block text-sm text-white/45">geschlossen</span></button>
-							<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-white/70" type="button" data-date="2026-07-28" data-day-label="Dienstag"><span>Di</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-sm">28.07.</span><span class="mt-3 block text-sm text-white/45">3 Slots</span></button>
+						<div class="mt-5 grid grid-cols-7 gap-2 text-center font-[Arial,Helvetica,sans-serif] text-sm uppercase tracking-[0.08em] text-white/50">
+							<span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span>
+						</div>
+						<div class="mt-2 grid grid-cols-7 gap-2" data-calendar-grid></div>
+
+						<div class="mt-5 flex items-center justify-between gap-4 rounded-2xl border border-[#00aaaa]/35 bg-[#00aaaa]/10 p-4 max-[700px]:flex-col max-[700px]:items-start">
+							<div>
+								<p class="<?= $label ?>">Ausgewaehlter Termin</p>
+								<p class="mt-1 text-[24px] text-[#73ffff]" data-selected-date-label>Samstag, 25.07.2026</p>
+							</div>
+							<span class="<?= $stepPill ?>" data-availability-label>4 Zeitfenster verfuegbar</span>
 						</div>
 					</div>
 
@@ -288,14 +281,79 @@ $stepPill = 'rounded-full border border-[#00aaaa] bg-black/35 px-3 py-1 font-[Ar
 					selectOffer(params.get("service"));
 				}
 
-				const dayButtons = Array.from(document.querySelectorAll("[data-date]"));
-				dayButtons.forEach((button) => {
-					button.addEventListener("click", () => {
-						activateChoice(button, dayButtons);
-						document.querySelector("[data-start-date]").value = button.dataset.date;
-						document.querySelector("[data-selected-day]").textContent = "am " + button.dataset.dayLabel;
-					});
+				const monthNames = ["Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+				const dayNames = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+				const availabilityByDay = [2, 0, 4, 5, 6, 4, 3];
+				const calendarGrid = document.querySelector("[data-calendar-grid]");
+				const calendarTitle = document.querySelector("[data-calendar-title]");
+				const selectedDateLabel = document.querySelector("[data-selected-date-label]");
+				const availabilityLabel = document.querySelector("[data-availability-label]");
+				const monthInput = document.querySelector("[data-month-input]");
+				const today = new Date();
+				today.setHours(0, 0, 0, 0);
+				let selectedDate = new Date(document.querySelector("[data-start-date]").value + "T00:00:00");
+				if (selectedDate < today) {
+					selectedDate = new Date(today);
+				}
+				let visibleMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
+
+				const padDatePart = (value) => String(value).padStart(2, "0");
+				const toDateValue = (date) => date.getFullYear() + "-" + padDatePart(date.getMonth() + 1) + "-" + padDatePart(date.getDate());
+				const toDisplayDate = (date) => dayNames[date.getDay()] + ", " + padDatePart(date.getDate()) + "." + padDatePart(date.getMonth() + 1) + "." + date.getFullYear();
+
+				const updateSelectedDate = (date) => {
+					selectedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+					document.querySelector("[data-start-date]").value = toDateValue(selectedDate);
+					document.querySelector("[data-selected-day]").textContent = "am " + dayNames[selectedDate.getDay()];
+					selectedDateLabel.textContent = toDisplayDate(selectedDate);
+					const slots = availabilityByDay[selectedDate.getDay()];
+					availabilityLabel.textContent = slots === 0 ? "geschlossen" : slots + " Zeitfenster verfuegbar";
+				};
+
+				const renderCalendar = () => {
+					calendarGrid.innerHTML = "";
+					calendarTitle.textContent = monthNames[visibleMonth.getMonth()] + " " + visibleMonth.getFullYear();
+					monthInput.value = visibleMonth.getFullYear() + "-" + padDatePart(visibleMonth.getMonth() + 1);
+					const firstDay = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), 1);
+					const lastDay = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 0);
+					const leadingDays = (firstDay.getDay() + 6) % 7;
+
+					for (let i = 0; i < leadingDays; i++) {
+						calendarGrid.appendChild(document.createElement("span"));
+					}
+
+					for (let day = 1; day <= lastDay.getDate(); day++) {
+						const date = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), day);
+						const isSelected = toDateValue(date) === toDateValue(selectedDate);
+						const isMondayClosed = date.getDay() === 1;
+						const isPast = date < today;
+						const isDisabled = isPast || isMondayClosed;
+						const button = document.createElement("button");
+						button.type = "button";
+						button.className = "min-h-[76px] rounded-2xl border p-2 text-left transition max-[560px]:min-h-[58px]";
+						button.className += isDisabled ? " border-white/5 bg-black/20 text-white/30" : isSelected ? " border-[#00aaaa] bg-[#00aaaa]/25 text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" : " border-white/10 bg-black/30 text-white/75 hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
+						button.disabled = isDisabled;
+						button.innerHTML = '<span class="block text-[22px] leading-none max-[560px]:text-[18px]">' + day + '</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/85' : 'text-white/45') + '">' + (isPast ? 'vergangen' : isMondayClosed ? 'geschlossen' : availabilityByDay[date.getDay()] + ' Slots') + '</span>';
+						if (!isDisabled) {
+							button.addEventListener("click", () => {
+								updateSelectedDate(date);
+								renderCalendar();
+							});
+						}
+						calendarGrid.appendChild(button);
+					}
+				};
+
+				document.querySelector("[data-calendar-prev]").addEventListener("click", () => {
+					visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1);
+					renderCalendar();
 				});
+				document.querySelector("[data-calendar-next]").addEventListener("click", () => {
+					visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1);
+					renderCalendar();
+				});
+				updateSelectedDate(selectedDate);
+				renderCalendar();
 
 				const timeButtons = Array.from(document.querySelectorAll("[data-time]"));
 				timeButtons.forEach((button) => button.addEventListener("click", () => {
@@ -306,10 +364,6 @@ $stepPill = 'rounded-full border border-[#00aaaa] bg-black/35 px-3 py-1 font-[Ar
 				const count = document.querySelector("[data-count]");
 				document.querySelector("[data-count-down]").addEventListener("click", () => { count.value = Math.max(1, Number(count.value) - 1); });
 				document.querySelector("[data-count-up]").addEventListener("click", () => { count.value = Number(count.value) + 1; });
-
-				document.querySelector("[data-week-select]").addEventListener("change", (event) => {
-					document.querySelector("[data-week-summary]").textContent = "Kalenderwoche " + (30 + Number(event.target.value));
-				});
 
 				const accountTabs = Array.from(document.querySelectorAll("[data-account-tab]"));
 				const accountPanels = Array.from(document.querySelectorAll("[data-account-panel]"));

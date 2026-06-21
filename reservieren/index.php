@@ -141,50 +141,69 @@ $stepPill = 'rounded-full border border-[#00aaaa] bg-black/35 px-3 py-1 font-[Ar
 					<input type="hidden" name="start_date" value="2026-07-25" data-start-date />
 					<input type="hidden" name="start_time" value="14:00:00" data-start-time />
 
-					<div class="rounded-[22px] border border-white/10 bg-black/25 p-4">
-						<input type="hidden" name="month" value="2026-07" data-month-input />
-						<div class="flex items-center justify-between gap-4 max-[560px]:flex-col max-[560px]:items-stretch">
-							<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-calendar-prev>Zurueck</button>
-							<div class="text-center">
-								<p class="<?= $label ?>">Datum waehlen</p>
-								<h3 class="mt-1 text-[30px] leading-none text-[#73ffff] max-[775px]:text-[24px]" data-calendar-title>Juli 2026</h3>
-							</div>
-							<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-calendar-next>Weiter</button>
-						</div>
-
-						<div class="mt-5 grid grid-cols-7 gap-2 text-center font-[Arial,Helvetica,sans-serif] text-sm uppercase tracking-[0.08em] text-white/50">
-							<span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span>
-						</div>
-						<div class="mt-2 grid grid-cols-7 gap-2" data-calendar-grid></div>
-
-						<div class="mt-5 flex items-center justify-between gap-4 rounded-2xl border border-[#00aaaa]/35 bg-[#00aaaa]/10 p-4 max-[700px]:flex-col max-[700px]:items-start">
-							<div>
-								<p class="<?= $label ?>">Ausgewaehlter Termin</p>
-								<p class="mt-1 text-[24px] text-[#73ffff]" data-selected-date-label>Samstag, 25.07.2026</p>
-							</div>
-							<span class="<?= $stepPill ?>" data-availability-label>4 Zeitfenster verfuegbar</span>
-						</div>
-					</div>
-
-					<div class="mt-5 grid grid-cols-[0.75fr_1.25fr] gap-5 max-[900px]:grid-cols-1">
+					<div class="grid grid-cols-[minmax(0,1fr)_minmax(340px,0.72fr)] gap-5 max-[980px]:grid-cols-1">
 						<div class="rounded-[22px] border border-white/10 bg-black/25 p-4">
+							<input type="hidden" name="month" value="2026-07" data-month-input />
+							<div class="flex items-center justify-between gap-4 max-[560px]:flex-col max-[560px]:items-stretch">
+								<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-calendar-prev>Zurueck</button>
+								<div class="text-center">
+									<p class="<?= $label ?>">Datum waehlen</p>
+									<h3 class="mt-1 text-[30px] leading-none text-[#73ffff] max-[775px]:text-[24px]" data-calendar-title>Juli 2026</h3>
+								</div>
+								<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-calendar-next>Weiter</button>
+							</div>
+
+							<div class="mt-5 grid grid-cols-7 gap-2 text-center font-[Arial,Helvetica,sans-serif] text-sm uppercase tracking-[0.08em] text-white/50">
+								<span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span>
+							</div>
+							<div class="mt-2 grid grid-cols-7 gap-2" data-calendar-grid></div>
+
+							<div class="mt-5 rounded-2xl border border-[#00aaaa]/35 bg-[#00aaaa]/10 p-4">
+								<div class="flex items-start justify-between gap-4 max-[700px]:flex-col">
+									<div>
+										<p class="<?= $label ?>">Ausgewaehlter Termin</p>
+										<p class="mt-1 text-[24px] leading-tight text-[#73ffff]" data-selected-date-label>Samstag, 25.07.2026</p>
+										<p class="<?= $bodyText ?> mt-1 text-base">Start: <span class="text-white" data-selected-time-label>14:00 Uhr</span></p>
+									</div>
+									<span class="<?= $stepPill ?>" data-availability-label>12 Zeitfenster verfuegbar</span>
+								</div>
+							</div>
+						</div>
+
+						<aside class="flex flex-col gap-5">
+							<div class="rounded-[22px] border border-white/10 bg-black/25 p-4">
 							<p class="<?= $label ?>">Teilnehmer</p>
 							<div class="mt-3 flex items-center justify-between rounded-2xl border border-white/15 bg-black/30 p-3">
 								<button class="h-10 w-10 rounded-full border border-white/20 text-xl" type="button" data-count-down>-</button>
 								<input class="w-20 bg-transparent text-center text-[30px] text-[#73ffff] outline-none" type="number" name="count" value="8" min="1" data-count readonly />
 								<button class="h-10 w-10 rounded-full border border-[#00aaaa] text-xl text-[#73ffff]" type="button" data-count-up>+</button>
 							</div>
-							<p class="<?= $bodyText ?> mt-3 text-base">Die Spieleranzahl kann spaeter fuer Verfuegbarkeit und Preisberechnung genutzt werden.</p>
 						</div>
-						<div class="rounded-[22px] border border-white/10 bg-black/25 p-4">
-							<p class="<?= $label ?>">Zeitfenster <span data-selected-day>am Samstag</span></p>
-							<div class="mt-3 grid grid-cols-2 gap-3 max-[520px]:grid-cols-1" data-time-list>
-								<button class="rounded-2xl border border-white/15 bg-black/30 p-4 text-left" type="button" data-time="12:00:00"><span class="block text-[24px]">12:00</span><span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/60">2 Stunden</span></button>
-								<button class="rounded-2xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 p-4 text-left text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" type="button" data-time="14:00:00" aria-pressed="true"><span class="block text-[24px]">14:00</span><span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/80">ausgewaehlt</span></button>
-								<button class="rounded-2xl border border-white/15 bg-black/30 p-4 text-left" type="button" data-time="16:00:00"><span class="block text-[24px]">16:00</span><span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/60">2 Stunden</span></button>
-								<button class="rounded-2xl border border-white/15 bg-black/30 p-4 text-left" type="button" data-time="18:00:00"><span class="block text-[24px]">18:00</span><span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/60">2 Stunden</span></button>
+
+							<div class="rounded-[22px] border border-white/10 bg-black/25 p-4">
+								<div class="flex items-end justify-between gap-3 max-[520px]:flex-col max-[520px]:items-start">
+									<div>
+										<p class="<?= $label ?>">Zeitfenster <span data-selected-day>am Samstag</span></p>
+										<p class="<?= $bodyText ?> mt-1 text-base">Kompakte Auswahl fuer Tage mit vielen Startzeiten.</p>
+									</div>
+									<span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/55">scrollen</span>
+								</div>
+								<div class="mt-3 grid max-h-[360px] grid-cols-3 gap-2 overflow-y-auto pr-1 max-[1200px]:grid-cols-2 max-[520px]:grid-cols-1" data-time-list>
+									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="10:00:00"><span class="block text-[21px] leading-tight">10:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
+									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="10:30:00"><span class="block text-[21px] leading-tight">10:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
+									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="11:00:00"><span class="block text-[21px] leading-tight">11:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
+									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="11:30:00"><span class="block text-[21px] leading-tight">11:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
+									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="12:00:00"><span class="block text-[21px] leading-tight">12:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
+									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="12:30:00"><span class="block text-[21px] leading-tight">12:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
+									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="13:00:00"><span class="block text-[21px] leading-tight">13:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
+									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="13:30:00"><span class="block text-[21px] leading-tight">13:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
+									<button class="rounded-xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 px-3 py-2 text-left text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" type="button" data-time="14:00:00" aria-pressed="true"><span class="block text-[21px] leading-tight">14:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/80">ausgewaehlt</span></button>
+									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="14:30:00"><span class="block text-[21px] leading-tight">14:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
+									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="15:00:00"><span class="block text-[21px] leading-tight">15:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
+									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="15:30:00"><span class="block text-[21px] leading-tight">15:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
 							</div>
 						</div>
+						</aside>
 					</div>
 					<div class="mt-6 flex justify-end"><button class="Button_Book" type="button" data-go-step="account">Weiter zum Konto</button></div>
 				</section>
@@ -283,11 +302,12 @@ $stepPill = 'rounded-full border border-[#00aaaa] bg-black/35 px-3 py-1 font-[Ar
 
 				const monthNames = ["Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 				const dayNames = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
-				const availabilityByDay = [2, 0, 4, 5, 6, 4, 3];
+				const availabilityByDay = [12, 0, 12, 12, 12, 12, 12];
 				const calendarGrid = document.querySelector("[data-calendar-grid]");
 				const calendarTitle = document.querySelector("[data-calendar-title]");
 				const selectedDateLabel = document.querySelector("[data-selected-date-label]");
 				const availabilityLabel = document.querySelector("[data-availability-label]");
+				const selectedTimeLabel = document.querySelector("[data-selected-time-label]");
 				const monthInput = document.querySelector("[data-month-input]");
 				const today = new Date();
 				today.setHours(0, 0, 0, 0);
@@ -356,9 +376,11 @@ $stepPill = 'rounded-full border border-[#00aaaa] bg-black/35 px-3 py-1 font-[Ar
 				renderCalendar();
 
 				const timeButtons = Array.from(document.querySelectorAll("[data-time]"));
+				const formatTimeLabel = (value) => value.slice(0, 5) + " Uhr";
 				timeButtons.forEach((button) => button.addEventListener("click", () => {
 					activateChoice(button, timeButtons);
 					document.querySelector("[data-start-time]").value = button.dataset.time;
+					selectedTimeLabel.textContent = formatTimeLabel(button.dataset.time);
 				}));
 
 				const count = document.querySelector("[data-count]");

@@ -17,6 +17,92 @@ $meta = 'inline-flex w-fit rounded-full border border-[#00aaaa] px-3 py-1 font-[
 $label = 'font-[Arial,Helvetica,sans-serif] text-sm uppercase tracking-[0.12em] text-white/70';
 $field = 'mt-2 w-full rounded-xl border border-white/15 bg-black/35 px-4 py-3 font-[Arial,Helvetica,sans-serif] text-white outline-none';
 $stepPill = 'rounded-full border border-[#00aaaa] bg-black/35 px-3 py-1 font-[Arial,Helvetica,sans-serif] text-sm text-white/90';
+$offerSections = [
+	[
+		'eyebrow' => 'Feiern',
+		'title' => 'Geburtstagspakete',
+		'badge' => 'ab 6 Gästen',
+		'layout' => 'cards',
+		'offers' => [
+			[
+				'id' => 1,
+				'duration' => '2 Stunden',
+				'title' => 'Geburtstag Basis',
+				'price' => '34,90 €',
+				'priceNote' => 'pro Gast',
+				'details' => ['Getränkeflat für die Gruppe ist enthalten.', 'Das Geburtstagskind bekommt einen Slushy dazu.'],
+				'description' => '2 Stunden Geburtstagspaket mit Getraenkeflat und Slushy fuer das Geburtstagskind.',
+			],
+			[
+				'id' => 2,
+				'duration' => '3 Stunden',
+				'title' => 'Geburtstag Plus',
+				'price' => '39,90 €',
+				'priceNote' => 'pro Gast',
+				'details' => ['Alle Leistungen aus dem 2-Stunden-Paket sind inklusive.', 'Zusätzlich erhält das Geburtstagskind eine Membercard; jeder Gast bekommt eine Snackbox.'],
+				'description' => '3 Stunden Geburtstagspaket mit Getraenkeflat, Membercard und Snackboxen.',
+			],
+		],
+	],
+	[
+		'eyebrow' => 'Aktionen',
+		'title' => 'Flats am Wochenende',
+		'layout' => 'cards',
+		'offers' => [
+			[
+				'id' => 3,
+				'duration' => 'Samstag & Sonntag',
+				'title' => 'Family Flat',
+				'price' => '15,00 €',
+				'priceNote' => 'pro Person',
+				'details' => ['Spielzeit von 10:00 bis 11:30 Uhr.', 'Erwachsene erhalten wahlweise Kaffee oder Tee.'],
+				'description' => 'Wochenend-Spielzeit von 10:00 bis 11:30 Uhr fuer Familien.',
+			],
+			[
+				'id' => 4,
+				'duration' => 'Samstag & Sonntag',
+				'title' => 'Night Special',
+				'price' => '27,00 €',
+				'priceNote' => 'pro Person',
+				'details' => ['Drei Stunden Lasertag von 18:00 bis 21:00 Uhr.', 'Ideal für Gruppen, die den Abend in der Arena verbringen möchten.'],
+				'description' => 'Drei Stunden Lasertag am Wochenende von 18:00 bis 21:00 Uhr.',
+			],
+		],
+	],
+	[
+		'eyebrow' => 'Spielzeit',
+		'title' => 'Standardbuchungen',
+		'layout' => 'compact',
+		'offers' => [
+			[
+				'id' => 5,
+				'title' => '1 Stunde',
+				'serviceTitle' => 'Standardspiel 1 Stunde',
+				'price' => '18,50 €',
+				'priceNote' => 'pro Person',
+				'description' => 'Eine Stunde Lasertag fuer kurze Matches und spontane Gruppen.',
+			],
+			[
+				'id' => 6,
+				'title' => '2 Stunden',
+				'serviceTitle' => 'Standardspiel 2 Stunden',
+				'price' => '36,00 €',
+				'priceNote' => 'pro Person',
+				'description' => 'Zwei Stunden Lasertag fuer Gruppen, Teams und laengere Spielrunden.',
+			],
+		],
+	],
+];
+$offersById = [];
+foreach ($offerSections as $sectionData) {
+	foreach ($sectionData['offers'] as $offer) {
+		$offersById[(string) $offer['id']] = [
+			'title' => $offer['serviceTitle'] ?? $offer['title'],
+			'description' => $offer['description'],
+		];
+	}
+}
+$defaultOfferId = 6;
 ?>
 <html lang="de">
 	<head>
@@ -43,81 +129,35 @@ $stepPill = 'rounded-full border border-[#00aaaa] bg-black/35 px-3 py-1 font-[Ar
 
 			<form class="<?= $section ?> flex flex-col gap-8" action="#" method="post">
 				<section data-wizard-step="offer">
-					<section class="<?= $section ?> mb-8">
-						<div class="mb-4 flex items-end justify-between gap-4 max-[775px]:flex-col max-[775px]:items-start">
-							<div>
-								<p class="<?= $eyebrow ?>">Feiern</p>
-								<h2 class="text-[30px] leading-tight max-[775px]:text-[25px]">Geburtstagspakete</h2>
+					<?php foreach ($offerSections as $offerSection): ?>
+						<section class="<?= $section ?> mb-8">
+							<div class="mb-4 flex items-end justify-between gap-4 max-[775px]:flex-col max-[775px]:items-start">
+								<div><p class="<?= $eyebrow ?>"><?= htmlspecialchars($offerSection['eyebrow']) ?></p><h2 class="text-[30px] leading-tight max-[775px]:text-[25px]"><?= htmlspecialchars($offerSection['title']) ?></h2></div>
+								<?php if (!empty($offerSection['badge'])): ?><p class="<?= $meta ?>"><?= htmlspecialchars($offerSection['badge']) ?></p><?php endif; ?>
 							</div>
-							<p class="<?= $meta ?>">ab 6 Gästen</p>
-						</div>
-						<div class="<?= $grid ?>">
-							<article class="<?= $card ?>" data-offer-card="birthday-basis">
-								<div class="<?= $cardHeader ?>">
-									<div><p class="<?= $meta ?>">2 Stunden</p><h3 class="<?= $cardTitle ?> mt-3">Geburtstag Basis</h3></div>
-									<p class="<?= $price ?>">34,90 €<span class="<?= $priceNote ?>">pro Gast</span></p>
-								</div>
-								<div class="<?= $cardContent ?>">
-									<div class="<?= $details ?>"><p>Getränkeflat für die Gruppe ist enthalten.</p><p>Das Geburtstagskind bekommt einen Slushy dazu.</p></div>
-									<button class="Button_Book self-start" type="button" data-select-offer="birthday-basis">Jetzt buchen</button>
-								</div>
-							</article>
-
-							<article class="<?= $card ?>" data-offer-card="birthday-plus">
-								<div class="<?= $cardHeader ?>">
-									<div><p class="<?= $meta ?>">3 Stunden</p><h3 class="<?= $cardTitle ?> mt-3">Geburtstag Plus</h3></div>
-									<p class="<?= $price ?>">39,90 €<span class="<?= $priceNote ?>">pro Gast</span></p>
-								</div>
-								<div class="<?= $cardContent ?>">
-									<div class="<?= $details ?>"><p>Alle Leistungen aus dem 2-Stunden-Paket sind inklusive.</p><p>Zusätzlich erhält das Geburtstagskind eine Membercard; jeder Gast bekommt eine Snackbox.</p></div>
-									<button class="Button_Book self-start" type="button" data-select-offer="birthday-plus">Jetzt buchen</button>
-								</div>
-							</article>
-						</div>
-					</section>
-
-					<section class="<?= $section ?> mb-8">
-						<div class="mb-4"><p class="<?= $eyebrow ?>">Aktionen</p><h2 class="text-[30px] leading-tight max-[775px]:text-[25px]">Flats am Wochenende</h2></div>
-						<div class="<?= $grid ?>">
-							<article class="<?= $card ?>" data-offer-card="family-flat">
-								<div class="<?= $cardHeader ?>">
-									<div><p class="<?= $meta ?>">Samstag & Sonntag</p><h3 class="<?= $cardTitle ?> mt-3">Family Flat</h3></div>
-									<p class="<?= $price ?>">15,00 €<span class="<?= $priceNote ?>">pro Person</span></p>
-								</div>
-								<div class="<?= $cardContent ?>">
-									<div class="<?= $details ?>"><p>Spielzeit von 10:00 bis 11:30 Uhr.</p><p>Erwachsene erhalten wahlweise Kaffee oder Tee.</p></div>
-									<button class="Button_Book self-start" type="button" data-select-offer="family-flat">Jetzt buchen</button>
-								</div>
-							</article>
-
-							<article class="<?= $card ?>" data-offer-card="night-special">
-								<div class="<?= $cardHeader ?>">
-									<div><p class="<?= $meta ?>">Samstag & Sonntag</p><h3 class="<?= $cardTitle ?> mt-3">Night Special</h3></div>
-									<p class="<?= $price ?>">27,00 €<span class="<?= $priceNote ?>">pro Person</span></p>
-								</div>
-								<div class="<?= $cardContent ?>">
-									<div class="<?= $details ?>"><p>Drei Stunden Lasertag von 18:00 bis 21:00 Uhr.</p><p>Ideal für Gruppen, die den Abend in der Arena verbringen möchten.</p></div>
-									<button class="Button_Book self-start" type="button" data-select-offer="night-special">Jetzt buchen</button>
-								</div>
-							</article>
-						</div>
-					</section>
-
-					<section class="<?= $section ?> mb-8">
-						<div class="mb-4 flex items-end justify-between gap-4 max-[775px]:flex-col max-[775px]:items-start">
-							<div><p class="<?= $eyebrow ?>">Spielzeit</p><h2 class="text-[30px] leading-tight max-[775px]:text-[25px]">Standardbuchungen</h2></div>
-						</div>
-						<div class="grid grid-cols-2 gap-5 max-[700px]:grid-cols-1">
-							<article class="<?= $panel ?> border border-white/10 p-6 text-center" data-offer-card="standard-1h">
-								<h3 class="text-[26px]">1 Stunde</h3><p class="mt-4 text-[34px] text-[#73ffff]">18,50 €</p><p class="<?= $bodyText ?> mt-2">pro Person</p>
-								<button class="Button_Book mt-5 inline-block" type="button" data-select-offer="standard-1h">Jetzt buchen</button>
-							</article>
-							<article class="<?= $panel ?> border border-white/10 p-6 text-center" data-offer-card="standard-2h">
-								<h3 class="text-[26px]">2 Stunden</h3><p class="mt-4 text-[34px] text-[#73ffff]">36,00 €</p><p class="<?= $bodyText ?> mt-2">pro Person</p>
-								<button class="Button_Book mt-5 inline-block" type="button" data-select-offer="standard-2h">Jetzt buchen</button>
-							</article>
-						</div>
-					</section>
+							<div class="<?= $offerSection['layout'] === 'compact' ? 'grid grid-cols-2 gap-5 max-[700px]:grid-cols-1' : $grid ?>">
+								<?php foreach ($offerSection['offers'] as $offer): ?>
+									<?php if ($offerSection['layout'] === 'compact'): ?>
+										<article class="<?= $panel ?> border border-white/10 p-6 text-center" data-offer-card="<?= $offer['id'] ?>">
+											<h3 class="text-[26px]"><?= htmlspecialchars($offer['title']) ?></h3><p class="mt-4 text-[34px] text-[#73ffff]"><?= htmlspecialchars($offer['price']) ?></p><p class="<?= $bodyText ?> mt-2"><?= htmlspecialchars($offer['priceNote']) ?></p>
+											<button class="Button_Book mt-5 inline-block" type="button" data-select-offer="<?= $offer['id'] ?>">Jetzt buchen</button>
+										</article>
+									<?php else: ?>
+										<article class="<?= $card ?>" data-offer-card="<?= $offer['id'] ?>">
+											<div class="<?= $cardHeader ?>">
+												<div><p class="<?= $meta ?>"><?= htmlspecialchars($offer['duration']) ?></p><h3 class="<?= $cardTitle ?> mt-3"><?= htmlspecialchars($offer['title']) ?></h3></div>
+												<p class="<?= $price ?>"><?= htmlspecialchars($offer['price']) ?><span class="<?= $priceNote ?>"><?= htmlspecialchars($offer['priceNote']) ?></span></p>
+											</div>
+											<div class="<?= $cardContent ?>">
+												<div class="<?= $details ?>"><?php foreach ($offer['details'] as $detail): ?><p><?= htmlspecialchars($detail) ?></p><?php endforeach; ?></div>
+												<button class="Button_Book self-start" type="button" data-select-offer="<?= $offer['id'] ?>">Jetzt buchen</button>
+											</div>
+										</article>
+									<?php endif; ?>
+								<?php endforeach; ?>
+							</div>
+						</section>
+					<?php endforeach; ?>
 
 					<section class="<?= $section ?> <?= $panel ?> border border-white/10 p-6 max-[775px]:p-4">
 						<div class="grid grid-cols-[auto_1fr] items-center gap-5 max-[850px]:grid-cols-1">
@@ -132,12 +172,12 @@ $stepPill = 'rounded-full border border-[#00aaaa] bg-black/35 px-3 py-1 font-[Ar
 						<div>
 							<p class="<?= $eyebrow ?>">Schritt 2</p>
 							<h2 class="mt-2 text-[32px] leading-tight max-[775px]:text-[26px]">Wann wollt ihr spielen?</h2>
-							<p class="<?= $bodyText ?> mt-3">Ausgewaehlt: <span class="text-[#73ffff]" data-service-title>Standardspiel 2 Stunden</span></p>
+							<p class="<?= $bodyText ?> mt-3">Ausgewaehlt: <span class="text-[#73ffff]" data-offer-title>Standardspiel 2 Stunden</span></p>
 						</div>
 						<button class="Button_Book" type="button" data-go-step="offer">Angebot aendern</button>
 					</div>
 
-					<input type="hidden" name="service_id" value="standard-2h" data-service-id />
+					<input type="hidden" name="offer_id" value="<?= $defaultOfferId ?>" data-offer-id />
 					<input type="hidden" name="start_date" value="2026-07-25" data-start-date />
 					<input type="hidden" name="start_time" value="14:00:00" data-start-time />
 
@@ -251,14 +291,8 @@ $stepPill = 'rounded-full border border-[#00aaaa] bg-black/35 px-3 py-1 font-[Ar
 
 		<script>
 			document.addEventListener("DOMContentLoaded", () => {
-				const services = {
-					"birthday-basis": { title: "Geburtstag Basis", description: "2 Stunden Geburtstagspaket mit Getraenkeflat und Slushy fuer das Geburtstagskind." },
-					"birthday-plus": { title: "Geburtstag Plus", description: "3 Stunden Geburtstagspaket mit Getraenkeflat, Membercard und Snackboxen." },
-					"family-flat": { title: "Family Flat", description: "Wochenend-Spielzeit von 10:00 bis 11:30 Uhr fuer Familien." },
-					"night-special": { title: "Night Special", description: "Drei Stunden Lasertag am Wochenende von 18:00 bis 21:00 Uhr." },
-					"standard-1h": { title: "Standardspiel 1 Stunde", description: "Eine Stunde Lasertag fuer kurze Matches und spontane Gruppen." },
-					"standard-2h": { title: "Standardspiel 2 Stunden", description: "Zwei Stunden Lasertag fuer Gruppen, Teams und laengere Spielrunden." },
-				};
+				const offers = <?= json_encode($offersById, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+				const defaultOfferId = "<?= $defaultOfferId ?>";
 				const activateChoice = (button, buttons) => {
 					buttons.forEach((item) => {
 						item.setAttribute("aria-pressed", "false");
@@ -281,23 +315,33 @@ $stepPill = 'rounded-full border border-[#00aaaa] bg-black/35 px-3 py-1 font-[Ar
 				document.querySelectorAll("[data-go-step]").forEach((button) => button.addEventListener("click", () => goToStep(button.dataset.goStep)));
 				tabs.forEach((tab) => tab.addEventListener("click", () => goToStep(tab.dataset.wizardTab)));
 
-				const selectOffer = (serviceId) => {
-					const service = services[serviceId] || services["standard-2h"];
-					document.querySelector("[data-service-title]").textContent = service.title;
-					document.querySelector("[data-service-id]").value = serviceId;
+				const setOfferUrl = (offerId) => {
+					const url = new URL(window.location.href);
+					url.searchParams.set("id", offerId);
+					window.history.pushState({ offerId }, "", url);
+				};
+
+				const selectOffer = (offerId, updateUrl = true) => {
+					offerId = offers[offerId] ? offerId : defaultOfferId;
+					const offer = offers[offerId];
+					document.querySelector("[data-offer-title]").textContent = offer.title;
+					document.querySelector("[data-offer-id]").value = offerId;
 					document.querySelectorAll("[data-offer-card]").forEach((card) => {
-						const isActive = card.dataset.offerCard === serviceId;
+						const isActive = card.dataset.offerCard === offerId;
 						card.classList.toggle("ring-2", isActive);
 						card.classList.toggle("ring-[#73ffff]", isActive);
 					});
+					if (updateUrl) {
+						setOfferUrl(offerId);
+					}
 					goToStep("schedule");
 				};
 
 				document.querySelectorAll("[data-select-offer]").forEach((button) => button.addEventListener("click", () => selectOffer(button.dataset.selectOffer)));
 
 				const params = new URLSearchParams(window.location.search);
-				if (services[params.get("service")]) {
-					selectOffer(params.get("service"));
+				if (offers[params.get("id")]) {
+					selectOffer(params.get("id"), false);
 				}
 
 				const monthNames = ["Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];

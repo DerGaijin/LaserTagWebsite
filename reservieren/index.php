@@ -103,6 +103,8 @@ foreach ($offerSections as $sectionData) {
 	}
 }
 $defaultOfferId = 6;
+$defaultDate = (new DateTimeImmutable('today'))->format('Y-m-d');
+$defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 ?>
 <html lang="de">
 	<head>
@@ -177,18 +179,18 @@ $defaultOfferId = 6;
 						<button class="Button_Book" type="button" data-go-step="offer">Angebot aendern</button>
 					</div>
 
-					<input type="hidden" name="offer_id" value="<?= $defaultOfferId ?>" data-offer-id />
-					<input type="hidden" name="start_date" value="2026-07-25" data-start-date />
-					<input type="hidden" name="start_time" value="14:00:00" data-start-time />
+					<input type="hidden" name="offer_id" value="" data-offer-id />
+					<input type="hidden" name="start_date" value="<?= htmlspecialchars($defaultDate) ?>" data-start-date />
+					<input type="hidden" name="start_time" value="" data-start-time />
 
 					<div class="grid grid-cols-[minmax(0,1fr)_minmax(340px,0.72fr)] gap-5 max-[980px]:grid-cols-1">
 						<div class="rounded-[22px] border border-white/10 bg-black/25 p-4">
-							<input type="hidden" name="month" value="2026-07" data-month-input />
+							<input type="hidden" name="month" value="<?= htmlspecialchars($defaultMonth) ?>" data-month-input />
 							<div class="flex items-center justify-between gap-4 max-[560px]:flex-col max-[560px]:items-stretch">
 								<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-calendar-prev>Zurueck</button>
 								<div class="text-center">
 									<p class="<?= $label ?>">Datum waehlen</p>
-									<h3 class="mt-1 text-[30px] leading-none text-[#73ffff] max-[775px]:text-[24px]" data-calendar-title>Juli 2026</h3>
+									<h3 class="mt-1 text-[30px] leading-none text-[#73ffff] max-[775px]:text-[24px]" data-calendar-title></h3>
 								</div>
 								<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-calendar-next>Weiter</button>
 							</div>
@@ -202,10 +204,10 @@ $defaultOfferId = 6;
 								<div class="flex items-start justify-between gap-4 max-[700px]:flex-col">
 									<div>
 										<p class="<?= $label ?>">Ausgewaehlter Termin</p>
-										<p class="mt-1 text-[24px] leading-tight text-[#73ffff]" data-selected-date-label>Samstag, 25.07.2026</p>
-										<p class="<?= $bodyText ?> mt-1 text-base">Start: <span class="text-white" data-selected-time-label>14:00 Uhr</span></p>
+										<p class="mt-1 text-[24px] leading-tight text-[#73ffff]" data-selected-date-label></p>
+										<p class="<?= $bodyText ?> mt-1 text-base">Start: <span class="text-white" data-selected-time-label>Bitte waehlen</span></p>
 									</div>
-									<span class="<?= $stepPill ?>" data-availability-label>12 Zeitfenster verfuegbar</span>
+									<span class="<?= $stepPill ?>" data-availability-label>Lade Zeiten...</span>
 								</div>
 							</div>
 						</div>
@@ -229,18 +231,7 @@ $defaultOfferId = 6;
 									<span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/55">scrollen</span>
 								</div>
 								<div class="mt-3 grid max-h-[360px] grid-cols-3 gap-2 overflow-y-auto pr-1 max-[1200px]:grid-cols-2 max-[520px]:grid-cols-1" data-time-list>
-									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="10:00:00"><span class="block text-[21px] leading-tight">10:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
-									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="10:30:00"><span class="block text-[21px] leading-tight">10:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
-									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="11:00:00"><span class="block text-[21px] leading-tight">11:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
-									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="11:30:00"><span class="block text-[21px] leading-tight">11:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
-									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="12:00:00"><span class="block text-[21px] leading-tight">12:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
-									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="12:30:00"><span class="block text-[21px] leading-tight">12:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
-									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="13:00:00"><span class="block text-[21px] leading-tight">13:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
-									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="13:30:00"><span class="block text-[21px] leading-tight">13:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
-									<button class="rounded-xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 px-3 py-2 text-left text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" type="button" data-time="14:00:00" aria-pressed="true"><span class="block text-[21px] leading-tight">14:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/80">ausgewaehlt</span></button>
-									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="14:30:00"><span class="block text-[21px] leading-tight">14:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
-									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="15:00:00"><span class="block text-[21px] leading-tight">15:00</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
-									<button class="rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-time="15:30:00"><span class="block text-[21px] leading-tight">15:30</span><span class="font-[Arial,Helvetica,sans-serif] text-xs text-white/60">2 Std.</span></button>
+									<p class="col-span-full font-[Arial,Helvetica,sans-serif] text-sm text-white/60">Bitte zuerst ein Angebot auswaehlen.</p>
 							</div>
 						</div>
 						</aside>
@@ -306,6 +297,7 @@ $defaultOfferId = 6;
 
 				const tabs = Array.from(document.querySelectorAll("[data-wizard-tab]"));
 				const steps = Array.from(document.querySelectorAll("[data-wizard-step]"));
+				let loadAvailability = () => {};
 				const goToStep = (step) => {
 					steps.forEach((item) => item.classList.toggle("hidden", item.dataset.wizardStep !== step));
 					activateChoice(document.querySelector(`[data-wizard-tab="${step}"]`), tabs);
@@ -335,6 +327,7 @@ $defaultOfferId = 6;
 						setOfferUrl(offerId);
 					}
 					goToStep("schedule");
+					loadAvailability();
 				};
 
 				document.querySelectorAll("[data-select-offer]").forEach((button) => button.addEventListener("click", () => selectOffer(button.dataset.selectOffer)));
@@ -346,32 +339,101 @@ $defaultOfferId = 6;
 
 				const monthNames = ["Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 				const dayNames = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
-				const availabilityByDay = [12, 0, 12, 12, 12, 12, 12];
 				const calendarGrid = document.querySelector("[data-calendar-grid]");
 				const calendarTitle = document.querySelector("[data-calendar-title]");
 				const selectedDateLabel = document.querySelector("[data-selected-date-label]");
 				const availabilityLabel = document.querySelector("[data-availability-label]");
 				const selectedTimeLabel = document.querySelector("[data-selected-time-label]");
+				const selectedTimeInput = document.querySelector("[data-start-time]");
+				const selectedDateInput = document.querySelector("[data-start-date]");
+				const offerIdInput = document.querySelector("[data-offer-id]");
+				const timeList = document.querySelector("[data-time-list]");
 				const monthInput = document.querySelector("[data-month-input]");
 				const today = new Date();
 				today.setHours(0, 0, 0, 0);
-				let selectedDate = new Date(document.querySelector("[data-start-date]").value + "T00:00:00");
+				let selectedDate = new Date(selectedDateInput.value + "T00:00:00");
 				if (selectedDate < today) {
 					selectedDate = new Date(today);
 				}
 				let visibleMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
+				let availabilityByDate = {};
+				let isLoadingAvailability = false;
+				let availabilityError = "";
 
 				const padDatePart = (value) => String(value).padStart(2, "0");
 				const toDateValue = (date) => date.getFullYear() + "-" + padDatePart(date.getMonth() + 1) + "-" + padDatePart(date.getDate());
 				const toDisplayDate = (date) => dayNames[date.getDay()] + ", " + padDatePart(date.getDate()) + "." + padDatePart(date.getMonth() + 1) + "." + date.getFullYear();
+				const formatTimeLabel = (value) => value.slice(0, 5) + " Uhr";
+				const getSelectedTimes = () => availabilityByDate[toDateValue(selectedDate)] || [];
+				const showTimeMessage = (message) => {
+					timeList.innerHTML = "";
+					const text = document.createElement("p");
+					text.className = "col-span-full font-[Arial,Helvetica,sans-serif] text-sm text-white/60";
+					text.textContent = message;
+					timeList.appendChild(text);
+				};
+
+				const selectTime = (time) => {
+					selectedTimeInput.value = time;
+					selectedTimeLabel.textContent = time ? formatTimeLabel(time) : "Bitte waehlen";
+					renderTimes();
+				};
+
+				const renderTimes = () => {
+					const times = getSelectedTimes();
+					timeList.innerHTML = "";
+
+					if (!offerIdInput.value) {
+						availabilityLabel.textContent = "Angebot auswaehlen";
+						showTimeMessage("Bitte zuerst ein Angebot auswaehlen.");
+						return;
+					}
+
+					if (isLoadingAvailability) {
+						showTimeMessage("Zeiten werden geladen...");
+						return;
+					}
+
+					if (availabilityError) {
+						availabilityLabel.textContent = availabilityError;
+						showTimeMessage(availabilityError);
+						return;
+					}
+
+					availabilityLabel.textContent = times.length === 0 ? "keine Zeiten verfuegbar" : times.length + " Zeitfenster verfuegbar";
+
+					if (times.length === 0) {
+						showTimeMessage("Fuer diesen Tag sind keine Zeiten frei.");
+						return;
+					}
+
+					times.forEach((time) => {
+						const isSelected = selectedTimeInput.value === time;
+						const button = document.createElement("button");
+						button.type = "button";
+						button.dataset.time = time;
+						button.setAttribute("aria-pressed", isSelected ? "true" : "false");
+						button.className = isSelected ? "rounded-xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 px-3 py-2 text-left text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" : "rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
+						button.innerHTML = '<span class="block text-[21px] leading-tight">' + time.slice(0, 5) + '</span><span class="font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/80' : 'text-white/60') + '">' + (isSelected ? 'ausgewaehlt' : 'frei') + '</span>';
+						button.addEventListener("click", () => selectTime(time));
+						timeList.appendChild(button);
+					});
+				};
 
 				const updateSelectedDate = (date) => {
 					selectedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-					document.querySelector("[data-start-date]").value = toDateValue(selectedDate);
+					selectedDateInput.value = toDateValue(selectedDate);
 					document.querySelector("[data-selected-day]").textContent = "am " + dayNames[selectedDate.getDay()];
 					selectedDateLabel.textContent = toDisplayDate(selectedDate);
-					const slots = availabilityByDay[selectedDate.getDay()];
-					availabilityLabel.textContent = slots === 0 ? "geschlossen" : slots + " Zeitfenster verfuegbar";
+					const times = getSelectedTimes();
+
+					// Keep a valid selected time, or automatically choose the first free slot for the day.
+					if (!times.includes(selectedTimeInput.value)) {
+						selectedTimeInput.value = times[0] || "";
+						selectedTimeLabel.textContent = selectedTimeInput.value ? formatTimeLabel(selectedTimeInput.value) : "Bitte waehlen";
+					}
+
+					renderTimes();
 				};
 
 				const renderCalendar = () => {
@@ -388,16 +450,17 @@ $defaultOfferId = 6;
 
 					for (let day = 1; day <= lastDay.getDate(); day++) {
 						const date = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), day);
+						const dateValue = toDateValue(date);
+						const slots = (availabilityByDate[dateValue] || []).length;
 						const isSelected = toDateValue(date) === toDateValue(selectedDate);
-						const isMondayClosed = date.getDay() === 1;
 						const isPast = date < today;
-						const isDisabled = isPast || isMondayClosed;
+						const isDisabled = isPast || isLoadingAvailability || slots === 0;
 						const button = document.createElement("button");
 						button.type = "button";
 						button.className = "min-h-[76px] rounded-2xl border p-2 text-left transition max-[560px]:min-h-[58px]";
 						button.className += isDisabled ? " border-white/5 bg-black/20 text-white/30" : isSelected ? " border-[#00aaaa] bg-[#00aaaa]/25 text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" : " border-white/10 bg-black/30 text-white/75 hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
 						button.disabled = isDisabled;
-						button.innerHTML = '<span class="block text-[22px] leading-none max-[560px]:text-[18px]">' + day + '</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/85' : 'text-white/45') + '">' + (isPast ? 'vergangen' : isMondayClosed ? 'geschlossen' : availabilityByDay[date.getDay()] + ' Slots') + '</span>';
+						button.innerHTML = '<span class="block text-[22px] leading-none max-[560px]:text-[18px]">' + day + '</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/85' : 'text-white/45') + '">' + (isPast ? 'vergangen' : isLoadingAvailability ? 'laden...' : slots === 0 ? 'belegt' : slots + ' Slots') + '</span>';
 						if (!isDisabled) {
 							button.addEventListener("click", () => {
 								updateSelectedDate(date);
@@ -408,24 +471,75 @@ $defaultOfferId = 6;
 					}
 				};
 
+				const firstAvailableDate = () => {
+					for (let day = 1; day <= new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 0).getDate(); day++) {
+						const date = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), day);
+
+						if (date >= today && (availabilityByDate[toDateValue(date)] || []).length > 0) {
+							return date;
+						}
+					}
+
+					const firstOfVisibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), 1);
+
+					return firstOfVisibleMonth < today ? new Date(today) : firstOfVisibleMonth;
+				};
+
+				loadAvailability = async () => {
+					if (!offerIdInput.value) {
+						availabilityByDate = {};
+						availabilityError = "";
+						isLoadingAvailability = false;
+						renderCalendar();
+						renderTimes();
+						return;
+					}
+
+					const monthValue = visibleMonth.getFullYear() + "-" + padDatePart(visibleMonth.getMonth() + 1);
+					isLoadingAvailability = true;
+					availabilityError = "";
+					availabilityLabel.textContent = "Lade Zeiten...";
+					renderCalendar();
+					renderTimes();
+
+					try {
+						const response = await fetch("availability.php?offer_id=" + encodeURIComponent(offerIdInput.value) + "&month=" + encodeURIComponent(monthValue));
+						const responseText = await response.text();
+						let data = {};
+
+						try {
+							data = JSON.parse(responseText);
+						} catch (parseError) {
+							const plainResponse = responseText.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+							throw new Error(plainResponse ? plainResponse.slice(0, 180) : "Zeiten konnten nicht geladen werden. Serverantwort war kein JSON.");
+						}
+
+						if (!response.ok || data.error) {
+							throw new Error(data.error || "Zeiten konnten nicht geladen werden.");
+						}
+
+						availabilityByDate = data.dates || {};
+						selectedDate = firstAvailableDate();
+					} catch (error) {
+						availabilityByDate = {};
+						availabilityError = error.message;
+					} finally {
+						isLoadingAvailability = false;
+						updateSelectedDate(selectedDate);
+						renderCalendar();
+					}
+				};
+
 				document.querySelector("[data-calendar-prev]").addEventListener("click", () => {
 					visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1);
-					renderCalendar();
+					loadAvailability();
 				});
 				document.querySelector("[data-calendar-next]").addEventListener("click", () => {
 					visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1);
-					renderCalendar();
+					loadAvailability();
 				});
 				updateSelectedDate(selectedDate);
-				renderCalendar();
-
-				const timeButtons = Array.from(document.querySelectorAll("[data-time]"));
-				const formatTimeLabel = (value) => value.slice(0, 5) + " Uhr";
-				timeButtons.forEach((button) => button.addEventListener("click", () => {
-					activateChoice(button, timeButtons);
-					document.querySelector("[data-start-time]").value = button.dataset.time;
-					selectedTimeLabel.textContent = formatTimeLabel(button.dataset.time);
-				}));
+				loadAvailability();
 
 				const count = document.querySelector("[data-count]");
 				document.querySelector("[data-count-down]").addEventListener("click", () => { count.value = Math.max(1, Number(count.value) - 1); });

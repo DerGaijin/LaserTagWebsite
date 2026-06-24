@@ -133,7 +133,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				</button>
 			</nav>
 
-			<form class="<?= $section ?> flex flex-col gap-8" action="#" method="post">
+			<form class="<?= $section ?> flex flex-col gap-8" action="book.php" method="post" data-booking-form>
 				<section data-wizard-step="offer">
 					<?php foreach ($offerSections as $offerSection): ?>
 						<section class="<?= $section ?> mb-8">
@@ -186,6 +186,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					<input type="hidden" name="offer_id" value="" data-offer-id />
 					<input type="hidden" name="start_date" value="<?= htmlspecialchars($defaultDate) ?>" data-start-date />
 					<input type="hidden" name="start_time" value="" data-start-time />
+					<input type="hidden" name="client_id" value="" data-client-id />
 
 					<div class="grid grid-cols-[minmax(0,1fr)_minmax(340px,0.72fr)] gap-5 max-[980px]:grid-cols-1">
 						<div class="rounded-[22px] border border-white/10 bg-black/25 p-4">
@@ -258,27 +259,41 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						<div class="rounded-[22px] border-2 border-[#00aaaa] bg-[#00aaaa]/10 p-5" data-account-panel="login">
 							<p class="text-[26px] text-[#73ffff]">Einloggen</p>
 							<p class="<?= $bodyText ?> mt-2 text-base">Bestehende Kunden bestaetigen schneller mit gespeicherten Daten.</p>
-							<div class="mt-5 space-y-4">
-								<div><label class="<?= $label ?>" for="login-email">E-Mail</label><input id="login-email" class="<?= $field ?>" type="email" name="login_email" placeholder="kunde@example.de" /></div>
-								<div><label class="<?= $label ?>" for="login-password">Passwort</label><input id="login-password" class="<?= $field ?>" type="password" placeholder="Passwort" /></div>
-								<button class="Button_Book" type="button" data-go-step="confirm">Weiter zur Bestaetigung</button>
+							<div class="mt-5 space-y-4" data-login-form>
+								<div><label class="<?= $label ?>" for="login-email">E-Mail</label><input id="login-email" class="<?= $field ?>" type="email" name="login_email" placeholder="kunde@example.de" autocomplete="email" data-login-email /></div>
+								<div><label class="<?= $label ?>" for="login-password">Passwort</label><input id="login-password" class="<?= $field ?>" type="password" placeholder="Passwort" autocomplete="current-password" data-login-password /></div>
+								<p class="hidden rounded-xl border border-white/10 bg-black/25 p-3 font-[Arial,Helvetica,sans-serif] text-sm" data-login-message></p>
+								<button class="Button_Book" type="button" data-login-submit>Einloggen</button>
+							</div>
+							<div class="mt-5 hidden rounded-2xl border border-[#00aaaa]/40 bg-black/25 p-4" data-logged-in-panel>
+								<p class="<?= $label ?>">Eingeloggt als</p>
+								<p class="mt-2 text-[24px] leading-tight text-[#73ffff]" data-client-name></p>
+								<p class="<?= $bodyText ?> mt-1 text-base" data-client-email></p>
+								<p class="<?= $bodyText ?> mt-1 hidden text-base" data-client-phone></p>
+								<div class="mt-5 flex flex-wrap gap-3">
+									<button class="Button_Book" type="button" data-go-step="confirm">Weiter zur Bestaetigung</button>
+									<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-login-logout>Anderes Konto nutzen</button>
+								</div>
 							</div>
 						</div>
 
 						<div class="rounded-[22px] border border-white/10 bg-black/25 p-5 opacity-60" data-account-panel="register">
 							<p class="text-[26px]">Konto erstellen</p>
 							<p class="<?= $bodyText ?> mt-2 text-base">Neue Kunden registrieren sich, bevor der Termin verbindlich bestaetigt wird.</p>
-							<div class="mt-5 grid grid-cols-2 gap-4 max-[520px]:grid-cols-1">
-								<div><label class="<?= $label ?>" for="register-name">Name</label><input id="register-name" class="<?= $field ?>" type="text" name="client[name]" placeholder="Max Mustermann" /></div>
-								<div><label class="<?= $label ?>" for="register-phone">Telefon</label><input id="register-phone" class="<?= $field ?>" type="tel" name="client[phone]" placeholder="0123 456789" /></div>
-								<div class="col-span-2 max-[520px]:col-auto"><label class="<?= $label ?>" for="register-email">E-Mail</label><input id="register-email" class="<?= $field ?>" type="email" name="client[email]" placeholder="max@example.de" /></div>
+							<div class="mt-5 grid grid-cols-2 gap-4 max-[520px]:grid-cols-1" data-register-form>
+								<div><label class="<?= $label ?>" for="register-name">Name</label><input id="register-name" class="<?= $field ?>" type="text" name="client[name]" placeholder="Max Mustermann" autocomplete="name" data-register-name /></div>
+								<div><label class="<?= $label ?>" for="register-phone">Telefon</label><input id="register-phone" class="<?= $field ?>" type="tel" name="client[phone]" placeholder="0123 456789" autocomplete="tel" data-register-phone /></div>
+								<div class="col-span-2 max-[520px]:col-auto"><label class="<?= $label ?>" for="register-email">E-Mail</label><input id="register-email" class="<?= $field ?>" type="email" name="client[email]" placeholder="max@example.de" autocomplete="email" data-register-email /></div>
+								<div><label class="<?= $label ?>" for="register-password">Passwort</label><input id="register-password" class="<?= $field ?>" type="password" autocomplete="new-password" data-register-password /></div>
+								<div><label class="<?= $label ?>" for="register-password-confirm">Passwort wiederholen</label><input id="register-password-confirm" class="<?= $field ?>" type="password" autocomplete="new-password" data-register-password-confirm /></div>
 							</div>
-							<button class="Button_Book mt-5" type="button" data-go-step="confirm">Weiter zur Bestaetigung</button>
+							<p class="mt-4 hidden rounded-xl border border-white/10 bg-black/25 p-3 font-[Arial,Helvetica,sans-serif] text-sm" data-register-message></p>
+							<button class="Button_Book mt-5" type="button" data-register-submit>Konto erstellen</button>
 						</div>
 					</div>
 
 					<div class="mt-5 rounded-2xl border border-[#73ffff]/30 bg-[#73ffff]/10 p-4">
-						<p class="<?= $bodyText ?> text-base">Design-only: Login, Registrierung und Terminbestaetigung sind UI-Elemente. Es wird keine echte Buchung erstellt.</p>
+						<p class="<?= $bodyText ?> text-base">Der Login wird ueber SimplyBook geprueft. Registrierung und Terminbestaetigung sind noch UI-Elemente.</p>
 					</div>
 				</section>
 
@@ -296,6 +311,12 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Teilnehmer</p><p class="mt-2 text-lg"><span data-confirm-count>8</span> Personen</p></div>
 								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Datum</p><p class="mt-2 text-lg" data-confirm-date></p></div>
 								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Startzeit</p><p class="mt-2 text-lg" data-confirm-time>Bitte waehlen</p></div>
+								<div class="col-span-2 rounded-2xl border border-white/10 bg-black/25 p-4 max-[560px]:col-auto">
+									<p class="<?= $label ?>">Kundenkonto</p>
+									<p class="mt-2 text-lg text-[#73ffff]" data-confirm-client-name>Nicht eingeloggt</p>
+									<p class="mt-1 text-sm text-white/70" data-confirm-client-email>Bitte in Schritt 3 einloggen.</p>
+									<p class="mt-1 hidden text-sm text-white/70" data-confirm-client-phone></p>
+								</div>
 							</div>
 						</div>
 
@@ -303,17 +324,31 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 							<p class="text-[26px]">Bereit?</p>
 							<p class="<?= $bodyText ?> mt-2 text-base">Prueft die Angaben ein letztes Mal. Danach kann die Buchung bestaetigt werden.</p>
 							<div class="mt-5 flex flex-col gap-3">
-								<button class="Button_Book" type="submit">Buchung bestaetigen</button>
+								<button class="Button_Book" type="submit" data-booking-submit>Buchung bestaetigen</button>
 								<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-go-step="schedule">Termin aendern</button>
 							</div>
 						</aside>
 					</div>
 
-					<div class="mt-5 rounded-2xl border border-[#73ffff]/30 bg-[#73ffff]/10 p-4">
-						<p class="<?= $bodyText ?> text-base">Design-only: Der Bestaetigen-Button sendet aktuell kein echtes Buchungssystem ab.</p>
+					<div class="mt-5 hidden rounded-2xl border border-white/10 bg-black/25 p-4" data-booking-message>
+						<p class="<?= $bodyText ?> text-base"></p>
 					</div>
 				</section>
 			</form>
+
+			<div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 px-4 backdrop-blur-sm" data-booking-success>
+				<section class="w-full max-w-[680px] rounded-[30px] border-2 border-[#00aaaa] bg-[var(--ContentBoxBackground)] p-8 text-center text-white shadow-[0_0_55px_rgba(0,170,170,0.45)] max-[560px]:p-5" role="dialog" aria-modal="true" aria-labelledby="booking-success-title">
+					<div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#73ffff] bg-[#00aaaa]/25 text-[42px] text-[#73ffff] shadow-[0_0_28px_rgba(115,255,255,0.35)]">✓</div>
+					<p class="<?= $eyebrow ?> mt-6 justify-self-center">Reservierung erfolgreich</p>
+					<h2 id="booking-success-title" class="mt-2 text-[38px] leading-tight text-[#73ffff] max-[560px]:text-[30px]">Euer Termin ist gebucht</h2>
+					<p class="<?= $bodyText ?> mt-4">Die Buchung wurde verbindlich in unserem System hinterlegt. Bitte achtet auf eure E-Mails fuer weitere Informationen.</p>
+					<div class="mt-6 grid grid-cols-3 gap-3 font-[Arial,Helvetica,sans-serif] max-[620px]:grid-cols-1" data-success-summary></div>
+					<div class="mt-7 flex justify-center gap-3 max-[520px]:flex-col">
+						<a class="Button_Book" href="./">Neue Reservierung</a>
+						<a class="rounded-2xl border border-white/15 bg-black/30 px-5 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" href="../">Zur Startseite</a>
+					</div>
+				</section>
+			</div>
 		</main>
 
 		<script>
@@ -392,6 +427,15 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const confirmCount = document.querySelector("[data-confirm-count]");
 				const confirmDate = document.querySelector("[data-confirm-date]");
 				const confirmTime = document.querySelector("[data-confirm-time]");
+				const clientIdInput = document.querySelector("[data-client-id]");
+				const confirmClientName = document.querySelector("[data-confirm-client-name]");
+				const confirmClientEmail = document.querySelector("[data-confirm-client-email]");
+				const confirmClientPhone = document.querySelector("[data-confirm-client-phone]");
+				const bookingForm = document.querySelector("[data-booking-form]");
+				const bookingSubmit = document.querySelector("[data-booking-submit]");
+				const bookingMessage = document.querySelector("[data-booking-message]");
+				const bookingSuccess = document.querySelector("[data-booking-success]");
+				const successSummary = document.querySelector("[data-success-summary]");
 				const today = new Date();
 				today.setHours(0, 0, 0, 0);
 				let selectedDate = new Date(selectedDateInput.value + "T00:00:00");
@@ -676,6 +720,240 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 							panel.classList.toggle("opacity-60", !isActive);
 						});
 					});
+				});
+
+				const loginEmail = document.querySelector("[data-login-email]");
+				const loginPassword = document.querySelector("[data-login-password]");
+				const loginSubmit = document.querySelector("[data-login-submit]");
+				const loginMessage = document.querySelector("[data-login-message]");
+				const loginForm = document.querySelector("[data-login-form]");
+				const loggedInPanel = document.querySelector("[data-logged-in-panel]");
+				const clientName = document.querySelector("[data-client-name]");
+				const clientEmail = document.querySelector("[data-client-email]");
+				const clientPhone = document.querySelector("[data-client-phone]");
+				const loginLogout = document.querySelector("[data-login-logout]");
+				const registerName = document.querySelector("[data-register-name]");
+				const registerPhone = document.querySelector("[data-register-phone]");
+				const registerEmail = document.querySelector("[data-register-email]");
+				const registerPassword = document.querySelector("[data-register-password]");
+				const registerPasswordConfirm = document.querySelector("[data-register-password-confirm]");
+				const registerSubmit = document.querySelector("[data-register-submit]");
+				const registerMessage = document.querySelector("[data-register-message]");
+				let currentClient = null;
+
+				const showLoginMessage = (message, isError = false) => {
+					loginMessage.textContent = message;
+					loginMessage.classList.remove("hidden", "border-red-400/40", "bg-red-950/30", "text-red-100", "border-[#00aaaa]/40", "bg-[#00aaaa]/10", "text-[#73ffff]");
+					loginMessage.classList.add(isError ? "border-red-400/40" : "border-[#00aaaa]/40", isError ? "bg-red-950/30" : "bg-[#00aaaa]/10", isError ? "text-red-100" : "text-[#73ffff]");
+				};
+
+				const showRegisterMessage = (message, isError = false) => {
+					registerMessage.textContent = message;
+					registerMessage.classList.remove("hidden", "border-red-400/40", "bg-red-950/30", "text-red-100", "border-[#00aaaa]/40", "bg-[#00aaaa]/10", "text-[#73ffff]");
+					registerMessage.classList.add(isError ? "border-red-400/40" : "border-[#00aaaa]/40", isError ? "bg-red-950/30" : "bg-[#00aaaa]/10", isError ? "text-red-100" : "text-[#73ffff]");
+				};
+
+				const showBookingMessage = (message, isError = false) => {
+					bookingMessage.querySelector("p").textContent = message;
+					bookingMessage.classList.remove("hidden", "border-red-400/40", "bg-red-950/30", "text-red-100", "border-[#00aaaa]", "bg-[#00aaaa]/20", "text-[#73ffff]", "shadow-[0_0_30px_rgba(0,170,170,0.35)]");
+					bookingMessage.classList.add(isError ? "border-red-400/40" : "border-[#00aaaa]", isError ? "bg-red-950/30" : "bg-[#00aaaa]/20", isError ? "text-red-100" : "text-[#73ffff]");
+
+						if (!isError) {
+							bookingMessage.classList.add("shadow-[0_0_30px_rgba(0,170,170,0.35)]");
+						}
+					};
+
+				const setLoggedInClient = (client) => {
+					currentClient = client;
+					clientIdInput.value = client.id || "";
+					clientName.textContent = client.name || client.email || "Kundenkonto";
+					clientEmail.textContent = client.email || "";
+					clientPhone.textContent = client.phone ? "Telefon: " + client.phone : "";
+					clientPhone.classList.toggle("hidden", !client.phone);
+					confirmClientName.textContent = client.name || client.email || "Kundenkonto";
+					confirmClientEmail.textContent = client.email || "";
+					confirmClientPhone.textContent = client.phone ? "Telefon: " + client.phone : "";
+					confirmClientPhone.classList.toggle("hidden", !client.phone);
+					loginForm.classList.add("hidden");
+					loggedInPanel.classList.remove("hidden");
+				};
+
+				const resetLoggedInClient = () => {
+					currentClient = null;
+					clientIdInput.value = "";
+					loginPassword.value = "";
+					confirmClientName.textContent = "Nicht eingeloggt";
+					confirmClientEmail.textContent = "Bitte in Schritt 3 einloggen.";
+					confirmClientPhone.textContent = "";
+					confirmClientPhone.classList.add("hidden");
+					loginMessage.classList.add("hidden");
+					loggedInPanel.classList.add("hidden");
+					loginForm.classList.remove("hidden");
+				};
+
+				const readJsonResponse = async (response) => {
+					const responseText = await response.text();
+
+					try {
+						return JSON.parse(responseText);
+					} catch (error) {
+						const plainResponse = responseText.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+						throw new Error(plainResponse ? plainResponse.slice(0, 180) : "Serverantwort war kein JSON.");
+					}
+				};
+
+				const showSuccessScreen = () => {
+					const offer = offers[offerIdInput.value] || offers[defaultOfferId];
+					const items = [
+						["Angebot", offer.title],
+						["Datum", toDisplayDate(selectedDate)],
+						["Start", formatTimeLabel(selectedTimeInput.value)],
+					];
+
+					successSummary.innerHTML = "";
+					items.forEach(([label, value]) => {
+						const item = document.createElement("div");
+						item.className = "rounded-2xl border border-white/10 bg-black/30 p-4";
+						item.innerHTML = '<p class="text-xs uppercase tracking-[0.14em] text-white/55">' + label + '</p><p class="mt-2 text-lg text-[#73ffff]">' + value + '</p>';
+						successSummary.appendChild(item);
+					});
+
+					bookingSuccess.classList.remove("hidden");
+					bookingSuccess.classList.add("flex");
+				};
+
+				const submitRegister = async () => {
+					const name = registerName.value.trim();
+					const phone = registerPhone.value.trim();
+					const email = registerEmail.value.trim();
+					const password = registerPassword.value;
+					const passwordConfirm = registerPasswordConfirm.value;
+
+					if (!name || !email || password.length < 6) {
+						showRegisterMessage("Bitte Name, E-Mail und ein Passwort mit mindestens 6 Zeichen eingeben.", true);
+						return;
+					}
+
+					if (password !== passwordConfirm) {
+						showRegisterMessage("Die Passwoerter stimmen nicht ueberein.", true);
+						return;
+					}
+
+					registerSubmit.disabled = true;
+					registerSubmit.textContent = "Konto wird erstellt...";
+					showRegisterMessage("Wir legen euer Kundenkonto bei SimplyBook an.");
+
+					try {
+						const formData = new FormData();
+						formData.append("name", name);
+						formData.append("phone", phone);
+						formData.append("email", email);
+						formData.append("password", password);
+
+						const response = await fetch("register.php", { method: "POST", body: formData });
+						const data = await readJsonResponse(response);
+
+						if (!response.ok || data.error) {
+							throw new Error((data.error || "Registrierung fehlgeschlagen.") + (data.request_id ? " (Request: " + data.request_id + ")" : ""));
+						}
+
+						setLoggedInClient(data.client || {});
+						registerPassword.value = "";
+						registerPasswordConfirm.value = "";
+						accountTabs.find((tab) => tab.dataset.accountTab === "login").click();
+					} catch (error) {
+						showRegisterMessage(error.message || "Registrierung fehlgeschlagen.", true);
+					} finally {
+						registerSubmit.disabled = false;
+						registerSubmit.textContent = "Konto erstellen";
+					}
+				};
+
+				const submitLogin = async () => {
+					const email = loginEmail.value.trim();
+					const password = loginPassword.value;
+
+					if (!email || !password) {
+						showLoginMessage("Bitte E-Mail und Passwort eingeben.", true);
+						return;
+					}
+
+					loginSubmit.disabled = true;
+					loginSubmit.textContent = "Login wird geprueft...";
+					showLoginMessage("Wir pruefen eure Zugangsdaten bei SimplyBook.");
+
+					try {
+						const formData = new FormData();
+						formData.append("email", email);
+						formData.append("password", password);
+
+						const response = await fetch("login.php", { method: "POST", body: formData });
+						const data = await readJsonResponse(response);
+
+						if (!response.ok || data.error) {
+							throw new Error(data.error || "Login fehlgeschlagen.");
+						}
+
+						setLoggedInClient(data.client || {});
+					} catch (error) {
+						clientIdInput.value = "";
+						showLoginMessage(error.message || "Login fehlgeschlagen.", true);
+					} finally {
+						loginSubmit.disabled = false;
+						loginSubmit.textContent = "Einloggen";
+					}
+				};
+
+				const submitBooking = async (event) => {
+					event.preventDefault();
+
+					if (!offerIdInput.value || !selectedDateInput.value || !selectedTimeInput.value) {
+						showBookingMessage("Bitte zuerst Angebot, Datum und Startzeit auswaehlen.", true);
+						goToStep("schedule");
+						return;
+					}
+
+					if (!currentClient || !clientIdInput.value) {
+						showBookingMessage("Bitte vor der Buchung einloggen oder ein Konto erstellen.", true);
+						goToStep("account");
+						return;
+					}
+
+					bookingSubmit.disabled = true;
+					bookingSubmit.textContent = "Buchung wird gesendet...";
+					showBookingMessage("Wir senden eure Buchung jetzt an SimplyBook.");
+
+					try {
+						const formData = new FormData(bookingForm);
+						formData.append("client_name", currentClient.name || currentClient.email || "Kundenkonto");
+						formData.append("client_email", currentClient.email || "");
+						formData.append("client_phone", currentClient.phone || "");
+
+						const response = await fetch("book.php", { method: "POST", body: formData });
+						const data = await readJsonResponse(response);
+
+						if (!response.ok || data.error) {
+							throw new Error(data.error || "Buchung fehlgeschlagen.");
+						}
+
+						showSuccessScreen();
+						bookingSubmit.textContent = "Buchung bestaetigt";
+					} catch (error) {
+						showBookingMessage(error.message || "Buchung fehlgeschlagen.", true);
+						bookingSubmit.disabled = false;
+						bookingSubmit.textContent = "Buchung bestaetigen";
+					}
+				};
+
+				bookingForm.addEventListener("submit", submitBooking);
+				loginSubmit.addEventListener("click", submitLogin);
+				loginLogout.addEventListener("click", resetLoggedInClient);
+				registerSubmit.addEventListener("click", submitRegister);
+				loginPassword.addEventListener("keydown", (event) => {
+					if (event.key === "Enter") {
+						event.preventDefault();
+						submitLogin();
+					}
 				});
 			});
 		</script>

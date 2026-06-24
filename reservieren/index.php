@@ -207,7 +207,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 										<p class="mt-1 text-[24px] leading-tight text-[#73ffff]" data-selected-date-label></p>
 										<p class="<?= $bodyText ?> mt-1 text-base">Start: <span class="text-white" data-selected-time-label>Bitte waehlen</span></p>
 									</div>
-									<span class="<?= $stepPill ?>" data-availability-label>Lade Zeiten...</span>
+									<span class="<?= $stepPill ?>" data-availability-label>Angebot auswaehlen</span>
 								</div>
 							</div>
 						</div>
@@ -231,7 +231,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 									<span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/55">scrollen</span>
 								</div>
 								<div class="mt-3 grid max-h-[360px] grid-cols-3 gap-2 overflow-y-auto pr-1 max-[1200px]:grid-cols-2 max-[520px]:grid-cols-1" data-time-list>
-									<p class="col-span-full font-[Arial,Helvetica,sans-serif] text-sm text-white/60">Bitte zuerst ein Angebot auswaehlen.</p>
+									<div class="col-span-full rounded-xl border border-white/10 bg-black/25 p-4 font-[Arial,Helvetica,sans-serif] text-sm text-white/70">Waehlt zuerst ein Angebot aus, danach pruefen wir die freien Startzeiten.</div>
 							</div>
 						</div>
 						</aside>
@@ -365,15 +365,41 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const toDisplayDate = (date) => dayNames[date.getDay()] + ", " + padDatePart(date.getDate()) + "." + padDatePart(date.getMonth() + 1) + "." + date.getFullYear();
 				const formatTimeLabel = (value) => value.slice(0, 5) + " Uhr";
 				const getSelectedTimes = () => availabilityByDate[toDateValue(selectedDate)] || [];
-				const showTimeMessage = (message) => {
+				const getSlotTime = (slot) => typeof slot === "string" ? slot : slot.time;
+				const getFreeLabel = (slot) => {
+					if (typeof slot === "string" || !slot.free) {
+						return "frei";
+					}
+
+					return (slot.hasMore ? slot.free + "+" : slot.free) + " Plaetze frei";
+				};
+				const showTimeMessage = (message, title = "Hinweis", isLoading = false) => {
 					timeList.innerHTML = "";
+					const card = document.createElement("div");
+					card.className = "col-span-full rounded-xl border border-white/10 bg-black/25 p-4 font-[Arial,Helvetica,sans-serif] text-white/80";
+
+					const heading = document.createElement("p");
+					heading.className = "flex items-center gap-3 text-sm font-bold uppercase tracking-[0.12em] text-[#73ffff]";
+
+					if (isLoading) {
+						const spinner = document.createElement("span");
+						spinner.className = "inline-block h-3 w-3 animate-spin rounded-full border-2 border-[#73ffff]/30 border-t-[#73ffff]";
+						heading.appendChild(spinner);
+					}
+
+					heading.appendChild(document.createTextNode(title));
+
 					const text = document.createElement("p");
-					text.className = "col-span-full font-[Arial,Helvetica,sans-serif] text-sm text-white/60";
+					text.className = "mt-2 text-sm leading-6 text-white/65";
 					text.textContent = message;
-					timeList.appendChild(text);
+
+					card.appendChild(heading);
+					card.appendChild(text);
+					timeList.appendChild(card);
 				};
 
-				const selectTime = (time) => {
+				const selectTime = (slot) => {
+					const time = getSlotTime(slot);
 					selectedTimeInput.value = time;
 					selectedTimeLabel.textContent = time ? formatTimeLabel(time) : "Bitte waehlen";
 					renderTimes();
@@ -385,12 +411,12 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 					if (!offerIdInput.value) {
 						availabilityLabel.textContent = "Angebot auswaehlen";
-						showTimeMessage("Bitte zuerst ein Angebot auswaehlen.");
+						showTimeMessage("Waehlt zuerst ein Angebot aus, danach pruefen wir die freien Startzeiten.", "Noch kein Angebot");
 						return;
 					}
 
 					if (isLoadingAvailability) {
-						showTimeMessage("Zeiten werden geladen...");
+						showTimeMessage("Wir fragen gerade die freien Startzeiten fuer " + toDisplayDate(selectedDate) + " ab.", "Verfuegbarkeit wird geprueft", true);
 						return;
 					}
 
@@ -403,19 +429,20 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					availabilityLabel.textContent = times.length === 0 ? "keine Zeiten verfuegbar" : times.length + " Zeitfenster verfuegbar";
 
 					if (times.length === 0) {
-						showTimeMessage("Fuer diesen Tag sind keine Zeiten frei.");
+						showTimeMessage("Fuer diesen Tag sind aktuell keine Startzeiten frei. Waehlt bitte ein anderes Datum.", "Keine freien Zeiten");
 						return;
 					}
 
-					times.forEach((time) => {
+					times.forEach((slot) => {
+						const time = getSlotTime(slot);
 						const isSelected = selectedTimeInput.value === time;
 						const button = document.createElement("button");
 						button.type = "button";
 						button.dataset.time = time;
 						button.setAttribute("aria-pressed", isSelected ? "true" : "false");
 						button.className = isSelected ? "rounded-xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 px-3 py-2 text-left text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" : "rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
-						button.innerHTML = '<span class="block text-[21px] leading-tight">' + time.slice(0, 5) + '</span><span class="font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/80' : 'text-white/60') + '">' + (isSelected ? 'ausgewaehlt' : 'frei') + '</span>';
-						button.addEventListener("click", () => selectTime(time));
+						button.innerHTML = '<span class="block text-[21px] leading-tight">' + time.slice(0, 5) + '</span><span class="font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/80' : 'text-white/60') + '">' + (isSelected ? 'ausgewaehlt · ' : '') + getFreeLabel(slot) + '</span>';
+						button.addEventListener("click", () => selectTime(slot));
 						timeList.appendChild(button);
 					});
 				};
@@ -425,14 +452,6 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					selectedDateInput.value = toDateValue(selectedDate);
 					document.querySelector("[data-selected-day]").textContent = "am " + dayNames[selectedDate.getDay()];
 					selectedDateLabel.textContent = toDisplayDate(selectedDate);
-					const times = getSelectedTimes();
-
-					// Keep a valid selected time, or automatically choose the first free slot for the day.
-					if (!times.includes(selectedTimeInput.value)) {
-						selectedTimeInput.value = times[0] || "";
-						selectedTimeLabel.textContent = selectedTimeInput.value ? formatTimeLabel(selectedTimeInput.value) : "Bitte waehlen";
-					}
-
 					renderTimes();
 				};
 
@@ -450,39 +469,24 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 					for (let day = 1; day <= lastDay.getDate(); day++) {
 						const date = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), day);
-						const dateValue = toDateValue(date);
-						const slots = (availabilityByDate[dateValue] || []).length;
 						const isSelected = toDateValue(date) === toDateValue(selectedDate);
 						const isPast = date < today;
-						const isDisabled = isPast || isLoadingAvailability || slots === 0;
+						const isDisabled = isPast || isLoadingAvailability || isSelected;
 						const button = document.createElement("button");
 						button.type = "button";
 						button.className = "min-h-[76px] rounded-2xl border p-2 text-left transition max-[560px]:min-h-[58px]";
-						button.className += isDisabled ? " border-white/5 bg-black/20 text-white/30" : isSelected ? " border-[#00aaaa] bg-[#00aaaa]/25 text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" : " border-white/10 bg-black/30 text-white/75 hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
+						button.className += isSelected ? " border-[#00aaaa] bg-[#00aaaa]/25 text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)] cursor-default" : isDisabled ? " border-white/5 bg-black/20 text-white/30" : " border-white/10 bg-black/30 text-white/75 hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
 						button.disabled = isDisabled;
-						button.innerHTML = '<span class="block text-[22px] leading-none max-[560px]:text-[18px]">' + day + '</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/85' : 'text-white/45') + '">' + (isPast ? 'vergangen' : isLoadingAvailability ? 'laden...' : slots === 0 ? 'belegt' : slots + ' Slots') + '</span>';
+						button.innerHTML = '<span class="block text-[22px] leading-none max-[560px]:text-[18px]">' + day + '</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/85' : 'text-white/45') + '">' + (isPast ? 'vergangen' : isLoadingAvailability && isSelected ? 'laden...' : 'waehlen') + '</span>';
 						if (!isDisabled) {
 							button.addEventListener("click", () => {
 								updateSelectedDate(date);
 								renderCalendar();
+								loadAvailability();
 							});
 						}
 						calendarGrid.appendChild(button);
 					}
-				};
-
-				const firstAvailableDate = () => {
-					for (let day = 1; day <= new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 0).getDate(); day++) {
-						const date = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), day);
-
-						if (date >= today && (availabilityByDate[toDateValue(date)] || []).length > 0) {
-							return date;
-						}
-					}
-
-					const firstOfVisibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), 1);
-
-					return firstOfVisibleMonth < today ? new Date(today) : firstOfVisibleMonth;
 				};
 
 				loadAvailability = async () => {
@@ -495,15 +499,17 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						return;
 					}
 
-					const monthValue = visibleMonth.getFullYear() + "-" + padDatePart(visibleMonth.getMonth() + 1);
+					const dateValue = toDateValue(selectedDate);
 					isLoadingAvailability = true;
 					availabilityError = "";
-					availabilityLabel.textContent = "Lade Zeiten...";
+					selectedTimeInput.value = "";
+					selectedTimeLabel.textContent = "Bitte waehlen";
+					availabilityLabel.textContent = "Pruefe Verfuegbarkeit";
 					renderCalendar();
 					renderTimes();
 
 					try {
-						const response = await fetch("availability.php?offer_id=" + encodeURIComponent(offerIdInput.value) + "&month=" + encodeURIComponent(monthValue));
+						const response = await fetch("availability.php?offer_id=" + encodeURIComponent(offerIdInput.value) + "&date=" + encodeURIComponent(dateValue));
 						const responseText = await response.text();
 						let data = {};
 
@@ -519,7 +525,9 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						}
 
 						availabilityByDate = data.dates || {};
-						selectedDate = firstAvailableDate();
+						const times = getSelectedTimes();
+						selectedTimeInput.value = times[0] ? getSlotTime(times[0]) : "";
+						selectedTimeLabel.textContent = selectedTimeInput.value ? formatTimeLabel(selectedTimeInput.value) : "Bitte waehlen";
 					} catch (error) {
 						availabilityByDate = {};
 						availabilityError = error.message;
@@ -532,11 +540,11 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 				document.querySelector("[data-calendar-prev]").addEventListener("click", () => {
 					visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1);
-					loadAvailability();
+					renderCalendar();
 				});
 				document.querySelector("[data-calendar-next]").addEventListener("click", () => {
 					visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1);
-					loadAvailability();
+					renderCalendar();
 				});
 				updateSelectedDate(selectedDate);
 				loadAvailability();

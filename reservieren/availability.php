@@ -2,6 +2,8 @@
 
 const SIMPLYBOOK_API_URL = 'https://user-api.simplybook.me';
 const SIMPLYBOOK_UNIT_ID = 1;
+const SIMPLYBOOK_TOKEN_CACHE_SECONDS = 3600;
+const SIMPLYBOOK_MAX_PARTICIPANTS = 12;
 
 ob_start();
 register_shutdown_function(function () {
@@ -64,20 +66,71 @@ function jsonResponse($data, $statusCode = 200)
 	exit;
 }
 
-function logSimplyBookCall($method, $statusCode, $startedAt, $success)
+function tokenCachePath($companyLogin)
 {
-	$durationMs = round((microtime(true) - $startedAt) * 1000, 2);
-	$status = $statusCode === null ? 'n/a' : (string) $statusCode;
-	$result = $success ? 'success' : 'failed';
+	return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'simplybook_token_' . md5($companyLogin) . '.json';
+}
 
-	// Logged to the PHP/server error log for simple API timing diagnostics.
-	error_log('SimplyBook ' . $method . ' ' . $result . ' HTTP ' . $status . ' in ' . $durationMs . ' ms');
+function readCachedToken($companyLogin)
+{
+	$path = tokenCachePath($companyLogin);
+
+	if (!is_readable($path)) {
+		return '';
+	}
+
+	$data = json_decode((string) file_get_contents($path), true);
+
+	if (!is_array($data) || empty($data['token']) || empty($data['expires_at']) || time() >= (int) $data['expires_at']) {
+		return '';
+	}
+
+	return (string) $data['token'];
+}
+
+function writeCachedToken($companyLogin, $token)
+{
+	$data = json_encode([
+		'token' => $token,
+		'expires_at' => time() + SIMPLYBOOK_TOKEN_CACHE_SECONDS,
+	]);
+
+	if ($data !== false) {
+		file_put_contents(tokenCachePath($companyLogin), $data, LOCK_EX);
+	}
+}
+
+function getSimplyBookToken($companyLogin, $apiKey)
+{
+	$token = readCachedToken($companyLogin);
+
+	if ($token !== '') {
+		return $token;
+	}
+
+	$token = jsonRpcCall(SIMPLYBOOK_API_URL . '/login', 'getToken', [$companyLogin, $apiKey]);
+	writeCachedToken($companyLogin, (string) $token);
+
+	return (string) $token;
+}
+
+function timesFromMatrix($matrix, $date)
+{
+	$times = [];
+
+	if (!is_array($matrix) || !isset($matrix[$date]) || !is_array($matrix[$date])) {
+		return $times;
+	}
+
+	foreach ($matrix[$date] as $time) {
+		$times[(string) $time] = true;
+	}
+
+	return $times;
 }
 
 function jsonRpcCall($url, $method, $params = [], $headers = [])
 {
-	$startedAt = microtime(true);
-	$statusCode = null;
 	$payload = json_encode([
 		'jsonrpc' => '2.0',
 		'method' => $method,
@@ -121,29 +174,23 @@ function jsonRpcCall($url, $method, $params = [], $headers = [])
 	$error = curl_error($curl);
 
 	if ($response === false) {
-		logSimplyBookCall($method, $statusCode, $startedAt, false);
 		throw new RuntimeException('SimplyBook request failed: ' . $error);
 	}
 
 	$decoded = json_decode($response, true);
 
 	if (!is_array($decoded)) {
-		logSimplyBookCall($method, $statusCode, $startedAt, false);
 		throw new RuntimeException('SimplyBook returned invalid JSON.');
 	}
 
 	if (isset($decoded['error'])) {
 		$message = is_array($decoded['error']) ? ($decoded['error']['message'] ?? 'Unknown API error') : (string) $decoded['error'];
-		logSimplyBookCall($method, $statusCode, $startedAt, false);
 		throw new RuntimeException($message);
 	}
 
 	if ($statusCode >= 400) {
-		logSimplyBookCall($method, $statusCode, $startedAt, false);
 		throw new RuntimeException('SimplyBook HTTP error: ' . $statusCode);
 	}
-
-	logSimplyBookCall($method, $statusCode, $startedAt, true);
 
 	return $decoded['result'] ?? null;
 }
@@ -152,9 +199,9 @@ try {
 	loadDotEnv(dirname(__DIR__) . '/.env');
 
 	$offerId = (string) ($_GET['offer_id'] ?? '6');
-	$month = (string) ($_GET['month'] ?? date('Y-m'));
+	$date = (string) ($_GET['date'] ?? date('Y-m-d'));
 
-	if (!in_array($offerId, $offerIds, true) || !preg_match('/^\d{4}-\d{2}$/', $month)) {
+	if (!in_array($offerId, $offerIds, true) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
 		jsonResponse(['error' => 'Invalid availability request.'], 400);
 	}
 
@@ -169,30 +216,44 @@ try {
 		jsonResponse(['error' => 'PHP cURL extension is not enabled. SimplyBook requests need cURL.'], 500);
 	}
 
-	$monthStart = new DateTimeImmutable($month . '-01');
-	$dateFrom = $monthStart->format('Y-m-d');
-	$dateTo = $monthStart->modify('last day of this month')->format('Y-m-d');
+	// Keep getStartTimeMatrix fast by asking SimplyBook for one selected day only.
+	$dateFrom = $date;
+	$dateTo = $date;
 
-	$token = jsonRpcCall(SIMPLYBOOK_API_URL . '/login', 'getToken', [$companyLogin, $apiKey]);
+	$token = getSimplyBookToken($companyLogin, $apiKey);
 	$authHeaders = ['X-Company-Login: ' . $companyLogin, 'X-Token: ' . $token];
-	$timesByDate = [];
 	$matrix = jsonRpcCall(SIMPLYBOOK_API_URL, 'getStartTimeMatrix', [$dateFrom, $dateTo, $offerId, SIMPLYBOOK_UNIT_ID, 1], $authHeaders);
+	$availableTimes = timesFromMatrix($matrix, $date);
+	$freeByTime = [];
 
-	if (is_array($matrix)) {
-		foreach ($matrix as $date => $times) {
-			if (!is_array($times)) {
-				continue;
-			}
+	foreach (array_keys($availableTimes) as $time) {
+		$freeByTime[$time] = 1;
+	}
 
-			foreach ($times as $time) {
-				$timesByDate[(string) $date][(string) $time] = true;
+	// SimplyBook only tells us whether a start time is available for a requested count.
+	// To show free spots, test larger counts and keep the highest working count per time.
+	$pendingTimes = $availableTimes;
+	for ($count = SIMPLYBOOK_MAX_PARTICIPANTS; $count >= 2 && $pendingTimes !== []; $count--) {
+		$matrix = jsonRpcCall(SIMPLYBOOK_API_URL, 'getStartTimeMatrix', [$dateFrom, $dateTo, $offerId, SIMPLYBOOK_UNIT_ID, $count], $authHeaders);
+		$countTimes = timesFromMatrix($matrix, $date);
+
+		foreach (array_keys($pendingTimes) as $time) {
+			if (isset($countTimes[$time])) {
+				$freeByTime[$time] = $count;
+				unset($pendingTimes[$time]);
 			}
 		}
 	}
 
-	foreach ($timesByDate as $date => $times) {
-		ksort($times);
-		$timesByDate[$date] = array_keys($times);
+	ksort($freeByTime);
+	$timesByDate = [$date => []];
+
+	foreach ($freeByTime as $time => $free) {
+		$timesByDate[$date][] = [
+			'time' => $time,
+			'free' => $free,
+			'hasMore' => $free >= SIMPLYBOOK_MAX_PARTICIPANTS,
+		];
 	}
 
 	jsonResponse(['dates' => $timesByDate]);

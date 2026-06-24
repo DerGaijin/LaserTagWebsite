@@ -349,6 +349,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const offerIdInput = document.querySelector("[data-offer-id]");
 				const timeList = document.querySelector("[data-time-list]");
 				const monthInput = document.querySelector("[data-month-input]");
+				const count = document.querySelector("[data-count]");
 				const today = new Date();
 				today.setHours(0, 0, 0, 0);
 				let selectedDate = new Date(selectedDateInput.value + "T00:00:00");
@@ -359,6 +360,9 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				let availabilityByDate = {};
 				let isLoadingAvailability = false;
 				let availabilityError = "";
+				let availabilityRequest = null;
+				let availabilityRequestId = 0;
+				let countChangeTimer = null;
 
 				const padDatePart = (value) => String(value).padStart(2, "0");
 				const toDateValue = (date) => date.getFullYear() + "-" + padDatePart(date.getMonth() + 1) + "-" + padDatePart(date.getDate());
@@ -500,6 +504,13 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					}
 
 					const dateValue = toDateValue(selectedDate);
+					const requestId = ++availabilityRequestId;
+
+					if (availabilityRequest) {
+						availabilityRequest.abort();
+					}
+
+					availabilityRequest = new AbortController();
 					isLoadingAvailability = true;
 					availabilityError = "";
 					selectedTimeInput.value = "";
@@ -509,9 +520,13 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					renderTimes();
 
 					try {
-						const response = await fetch("availability.php?offer_id=" + encodeURIComponent(offerIdInput.value) + "&date=" + encodeURIComponent(dateValue) + "&count=" + encodeURIComponent(count.value));
+						const response = await fetch("availability.php?offer_id=" + encodeURIComponent(offerIdInput.value) + "&date=" + encodeURIComponent(dateValue) + "&count=" + encodeURIComponent(count.value), { signal: availabilityRequest.signal });
 						const responseText = await response.text();
 						let data = {};
+
+						if (requestId !== availabilityRequestId) {
+							return;
+						}
 
 						try {
 							data = JSON.parse(responseText);
@@ -525,7 +540,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						}
 
 						if (data.apiCalls) {
-							console.group("SimplyBook API results");
+							console.group(data.cached ? "SimplyBook API results (cached)" : "SimplyBook API results");
 							data.apiCalls.forEach((call) => console.log(call.method, call));
 							console.groupEnd();
 						}
@@ -535,10 +550,23 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						selectedTimeInput.value = times[0] ? getSlotTime(times[0]) : "";
 						selectedTimeLabel.textContent = selectedTimeInput.value ? formatTimeLabel(selectedTimeInput.value) : "Bitte waehlen";
 					} catch (error) {
+						if (error.name === "AbortError") {
+							return;
+						}
+
+						if (requestId !== availabilityRequestId) {
+							return;
+						}
+
 						availabilityByDate = {};
 						availabilityError = error.message;
 					} finally {
+						if (requestId !== availabilityRequestId) {
+							return;
+						}
+
 						isLoadingAvailability = false;
+						availabilityRequest = null;
 						updateSelectedDate(selectedDate);
 						renderCalendar();
 					}
@@ -555,7 +583,6 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				updateSelectedDate(selectedDate);
 				loadAvailability();
 
-				const count = document.querySelector("[data-count]");
 				const updateCount = (value) => {
 					const nextValue = Math.max(1, value);
 
@@ -566,7 +593,8 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					count.value = nextValue;
 
 					if (offerIdInput.value) {
-						loadAvailability();
+						clearTimeout(countChangeTimer);
+						countChangeTimer = setTimeout(loadAvailability, 450);
 					}
 				};
 				document.querySelector("[data-count-down]").addEventListener("click", () => updateCount(Number(count.value) - 1));

@@ -3,6 +3,7 @@
 const SIMPLYBOOK_API_URL = 'https://user-api.simplybook.me';
 const SIMPLYBOOK_UNIT_ID = 1;
 const SIMPLYBOOK_TOKEN_CACHE_SECONDS = 3600;
+const SIMPLYBOOK_AVAILABILITY_CACHE_SECONDS = 60;
 
 ob_start();
 register_shutdown_function(function () {
@@ -112,6 +113,88 @@ function getSimplyBookToken($companyLogin, $apiKey)
 	writeCachedToken($companyLogin, (string) $token);
 
 	return (string) $token;
+}
+
+function availabilityCachePath($offerId, $date, $count)
+{
+	$key = md5($offerId . '|' . $date . '|' . $count . '|' . SIMPLYBOOK_UNIT_ID);
+
+	return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'simplybook_availability_' . $key . '.json';
+}
+
+function availabilityLockPath($offerId, $date, $count)
+{
+	return availabilityCachePath($offerId, $date, $count) . '.lock';
+}
+
+function readCachedAvailability($offerId, $date, $count)
+{
+	$path = availabilityCachePath($offerId, $date, $count);
+
+	if (!is_readable($path)) {
+		return null;
+	}
+
+	$data = json_decode((string) file_get_contents($path), true);
+
+	if (!is_array($data) || empty($data['expires_at']) || time() >= (int) $data['expires_at'] || !isset($data['dates'])) {
+		return null;
+	}
+
+	return $data['dates'];
+}
+
+function writeCachedAvailability($offerId, $date, $count, $dates)
+{
+	$data = json_encode([
+		'expires_at' => time() + SIMPLYBOOK_AVAILABILITY_CACHE_SECONDS,
+		'dates' => $dates,
+	]);
+
+	if ($data !== false) {
+		file_put_contents(availabilityCachePath($offerId, $date, $count), $data, LOCK_EX);
+	}
+}
+
+function acquireAvailabilityLock($offerId, $date, $count)
+{
+	$lock = fopen(availabilityLockPath($offerId, $date, $count), 'c');
+
+	if ($lock === false) {
+		return null;
+	}
+
+	if (flock($lock, LOCK_EX | LOCK_NB)) {
+		return $lock;
+	}
+
+	fclose($lock);
+
+	return null;
+}
+
+function releaseAvailabilityLock($lock)
+{
+	if ($lock !== null) {
+		flock($lock, LOCK_UN);
+		fclose($lock);
+	}
+}
+
+function waitForCachedAvailability($offerId, $date, $count)
+{
+	$deadline = microtime(true) + 8;
+
+	while (microtime(true) < $deadline) {
+		usleep(100000);
+		$cachedDates = readCachedAvailability($offerId, $date, $count);
+
+		if ($cachedDates !== null) {
+			return $cachedDates;
+		}
+	}
+
+	return null;
 }
 
 function timesFromMatrix($matrix, $date)
@@ -227,6 +310,29 @@ try {
 		jsonResponse(['error' => 'PHP cURL extension is not enabled. SimplyBook requests need cURL.'], 500);
 	}
 
+	$cachedDates = readCachedAvailability($offerId, $date, $count);
+
+	if ($cachedDates !== null) {
+		jsonResponse(['dates' => $cachedDates, 'apiCalls' => [], 'cached' => true]);
+	}
+
+	$availabilityLock = acquireAvailabilityLock($offerId, $date, $count);
+
+	if ($availabilityLock === null) {
+		$cachedDates = waitForCachedAvailability($offerId, $date, $count);
+
+		if ($cachedDates !== null) {
+			jsonResponse(['dates' => $cachedDates, 'apiCalls' => [], 'cached' => true]);
+		}
+	} else {
+		$cachedDates = readCachedAvailability($offerId, $date, $count);
+
+		if ($cachedDates !== null) {
+			releaseAvailabilityLock($availabilityLock);
+			jsonResponse(['dates' => $cachedDates, 'apiCalls' => [], 'cached' => true]);
+		}
+	}
+
 	// Keep getStartTimeMatrix fast by asking SimplyBook for one selected day only.
 	$dateFrom = $date;
 	$dateTo = $date;
@@ -246,7 +352,14 @@ try {
 		];
 	}
 
-	jsonResponse(['dates' => $timesByDate, 'apiCalls' => $apiCallResults]);
+	writeCachedAvailability($offerId, $date, $count, $timesByDate);
+	releaseAvailabilityLock($availabilityLock);
+
+	jsonResponse(['dates' => $timesByDate, 'apiCalls' => $apiCallResults, 'cached' => false]);
 } catch (Throwable $exception) {
+	if (isset($availabilityLock)) {
+		releaseAvailabilityLock($availabilityLock);
+	}
+
 	jsonResponse(['error' => $exception->getMessage()], 500);
 }

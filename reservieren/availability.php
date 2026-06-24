@@ -3,7 +3,6 @@
 const SIMPLYBOOK_API_URL = 'https://user-api.simplybook.me';
 const SIMPLYBOOK_UNIT_ID = 1;
 const SIMPLYBOOK_TOKEN_CACHE_SECONDS = 3600;
-const SIMPLYBOOK_MAX_PARTICIPANTS = 12;
 
 ob_start();
 register_shutdown_function(function () {
@@ -23,6 +22,7 @@ register_shutdown_function(function () {
 
 // Local offer ids are the same ids used by SimplyBook events.
 $offerIds = ['1', '2', '3', '4', '5', '6'];
+$apiCallResults = [];
 
 function loadDotEnv($path)
 {
@@ -131,6 +131,8 @@ function timesFromMatrix($matrix, $date)
 
 function jsonRpcCall($url, $method, $params = [], $headers = [])
 {
+	global $apiCallResults;
+
 	$payload = json_encode([
 		'jsonrpc' => '2.0',
 		'method' => $method,
@@ -192,14 +194,23 @@ function jsonRpcCall($url, $method, $params = [], $headers = [])
 		throw new RuntimeException('SimplyBook HTTP error: ' . $statusCode);
 	}
 
-	return $decoded['result'] ?? null;
+	$result = $decoded['result'] ?? null;
+	$apiCallResults[] = [
+		'method' => $method,
+		'params' => $params,
+		'result' => $method === 'getToken' ? '[redacted]' : $result,
+	];
+
+	return $result;
 }
 
 try {
+	set_time_limit(90);
 	loadDotEnv(dirname(__DIR__) . '/.env');
 
 	$offerId = (string) ($_GET['offer_id'] ?? '6');
 	$date = (string) ($_GET['date'] ?? date('Y-m-d'));
+	$count = max(1, (int) ($_GET['count'] ?? 1));
 
 	if (!in_array($offerId, $offerIds, true) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
 		jsonResponse(['error' => 'Invalid availability request.'], 400);
@@ -222,41 +233,20 @@ try {
 
 	$token = getSimplyBookToken($companyLogin, $apiKey);
 	$authHeaders = ['X-Company-Login: ' . $companyLogin, 'X-Token: ' . $token];
-	$matrix = jsonRpcCall(SIMPLYBOOK_API_URL, 'getStartTimeMatrix', [$dateFrom, $dateTo, $offerId, SIMPLYBOOK_UNIT_ID, 1], $authHeaders);
+	$matrix = jsonRpcCall(SIMPLYBOOK_API_URL, 'getStartTimeMatrix', [$dateFrom, $dateTo, $offerId, SIMPLYBOOK_UNIT_ID, $count], $authHeaders);
 	$availableTimes = timesFromMatrix($matrix, $date);
-	$freeByTime = [];
-
-	foreach (array_keys($availableTimes) as $time) {
-		$freeByTime[$time] = 1;
-	}
-
-	// SimplyBook only tells us whether a start time is available for a requested count.
-	// To show free spots, test larger counts and keep the highest working count per time.
-	$pendingTimes = $availableTimes;
-	for ($count = SIMPLYBOOK_MAX_PARTICIPANTS; $count >= 2 && $pendingTimes !== []; $count--) {
-		$matrix = jsonRpcCall(SIMPLYBOOK_API_URL, 'getStartTimeMatrix', [$dateFrom, $dateTo, $offerId, SIMPLYBOOK_UNIT_ID, $count], $authHeaders);
-		$countTimes = timesFromMatrix($matrix, $date);
-
-		foreach (array_keys($pendingTimes) as $time) {
-			if (isset($countTimes[$time])) {
-				$freeByTime[$time] = $count;
-				unset($pendingTimes[$time]);
-			}
-		}
-	}
-
-	ksort($freeByTime);
 	$timesByDate = [$date => []];
 
-	foreach ($freeByTime as $time => $free) {
+	ksort($availableTimes);
+
+	foreach (array_keys($availableTimes) as $time) {
 		$timesByDate[$date][] = [
 			'time' => $time,
-			'free' => $free,
-			'hasMore' => $free >= SIMPLYBOOK_MAX_PARTICIPANTS,
+			'count' => $count,
 		];
 	}
 
-	jsonResponse(['dates' => $timesByDate]);
+	jsonResponse(['dates' => $timesByDate, 'apiCalls' => $apiCallResults]);
 } catch (Throwable $exception) {
 	jsonResponse(['error' => $exception->getMessage()], 500);
 }

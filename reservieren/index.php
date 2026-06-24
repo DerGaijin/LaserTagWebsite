@@ -366,12 +366,12 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const formatTimeLabel = (value) => value.slice(0, 5) + " Uhr";
 				const getSelectedTimes = () => availabilityByDate[toDateValue(selectedDate)] || [];
 				const getSlotTime = (slot) => typeof slot === "string" ? slot : slot.time;
-				const getFreeLabel = (slot) => {
-					if (typeof slot === "string" || !slot.free) {
+				const getAvailabilityLabel = (slot) => {
+					if (typeof slot === "string" || !slot.count) {
 						return "frei";
 					}
 
-					return (slot.hasMore ? slot.free + "+" : slot.free) + " Plaetze frei";
+					return "verfuegbar fuer " + slot.count + " Personen";
 				};
 				const showTimeMessage = (message, title = "Hinweis", isLoading = false) => {
 					timeList.innerHTML = "";
@@ -441,7 +441,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						button.dataset.time = time;
 						button.setAttribute("aria-pressed", isSelected ? "true" : "false");
 						button.className = isSelected ? "rounded-xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 px-3 py-2 text-left text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" : "rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
-						button.innerHTML = '<span class="block text-[21px] leading-tight">' + time.slice(0, 5) + '</span><span class="font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/80' : 'text-white/60') + '">' + (isSelected ? 'ausgewaehlt · ' : '') + getFreeLabel(slot) + '</span>';
+						button.innerHTML = '<span class="block text-[21px] leading-tight">' + time.slice(0, 5) + '</span><span class="font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/80' : 'text-white/60') + '">' + (isSelected ? 'ausgewaehlt · ' : '') + getAvailabilityLabel(slot) + '</span>';
 						button.addEventListener("click", () => selectTime(slot));
 						timeList.appendChild(button);
 					});
@@ -509,7 +509,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					renderTimes();
 
 					try {
-						const response = await fetch("availability.php?offer_id=" + encodeURIComponent(offerIdInput.value) + "&date=" + encodeURIComponent(dateValue));
+						const response = await fetch("availability.php?offer_id=" + encodeURIComponent(offerIdInput.value) + "&date=" + encodeURIComponent(dateValue) + "&count=" + encodeURIComponent(count.value));
 						const responseText = await response.text();
 						let data = {};
 
@@ -522,6 +522,12 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 						if (!response.ok || data.error) {
 							throw new Error(data.error || "Zeiten konnten nicht geladen werden.");
+						}
+
+						if (data.apiCalls) {
+							console.group("SimplyBook API results");
+							data.apiCalls.forEach((call) => console.log(call.method, call));
+							console.groupEnd();
 						}
 
 						availabilityByDate = data.dates || {};
@@ -550,8 +556,21 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				loadAvailability();
 
 				const count = document.querySelector("[data-count]");
-				document.querySelector("[data-count-down]").addEventListener("click", () => { count.value = Math.max(1, Number(count.value) - 1); });
-				document.querySelector("[data-count-up]").addEventListener("click", () => { count.value = Number(count.value) + 1; });
+				const updateCount = (value) => {
+					const nextValue = Math.max(1, value);
+
+					if (Number(count.value) === nextValue) {
+						return;
+					}
+
+					count.value = nextValue;
+
+					if (offerIdInput.value) {
+						loadAvailability();
+					}
+				};
+				document.querySelector("[data-count-down]").addEventListener("click", () => updateCount(Number(count.value) - 1));
+				document.querySelector("[data-count-up]").addEventListener("click", () => updateCount(Number(count.value) + 1));
 
 				const accountTabs = Array.from(document.querySelectorAll("[data-account-tab]"));
 				const accountPanels = Array.from(document.querySelectorAll("[data-account-panel]"));

@@ -114,7 +114,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 		<?php $currentPage = 'reservieren'; include '../resources/header.php'; ?>
 
 		<main class="flex flex-col items-center gap-8 px-[100px] py-[25px] max-[1260px]:px-[15px] max-[775px]:px-[5px]" data-booking-wizard>
-			<nav class="<?= $section ?> grid grid-cols-3 gap-3 max-[700px]:grid-cols-1" aria-label="Buchungsschritte">
+			<nav class="<?= $section ?> grid grid-cols-4 gap-3 max-[900px]:grid-cols-2 max-[520px]:grid-cols-1" aria-label="Buchungsschritte">
 				<button class="rounded-2xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 p-4 text-left text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" type="button" data-wizard-tab="offer" aria-pressed="true">
 					<span class="<?= $label ?> block">Schritt 1</span>
 					<span class="mt-1 block text-[24px]">Angebot</span>
@@ -126,6 +126,10 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-left text-white/70" type="button" data-wizard-tab="account">
 					<span class="<?= $label ?> block">Schritt 3</span>
 					<span class="mt-1 block text-[24px]">Konto</span>
+				</button>
+				<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-left text-white/70" type="button" data-wizard-tab="confirm">
+					<span class="<?= $label ?> block">Schritt 4</span>
+					<span class="mt-1 block text-[24px]">Bestaetigen</span>
 				</button>
 			</nav>
 
@@ -257,7 +261,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 							<div class="mt-5 space-y-4">
 								<div><label class="<?= $label ?>" for="login-email">E-Mail</label><input id="login-email" class="<?= $field ?>" type="email" name="login_email" placeholder="kunde@example.de" /></div>
 								<div><label class="<?= $label ?>" for="login-password">Passwort</label><input id="login-password" class="<?= $field ?>" type="password" placeholder="Passwort" /></div>
-								<button class="Button_Book opacity-70" type="button" aria-disabled="true">Einloggen & bestaetigen</button>
+								<button class="Button_Book" type="button" data-go-step="confirm">Weiter zur Bestaetigung</button>
 							</div>
 						</div>
 
@@ -269,12 +273,44 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 								<div><label class="<?= $label ?>" for="register-phone">Telefon</label><input id="register-phone" class="<?= $field ?>" type="tel" name="client[phone]" placeholder="0123 456789" /></div>
 								<div class="col-span-2 max-[520px]:col-auto"><label class="<?= $label ?>" for="register-email">E-Mail</label><input id="register-email" class="<?= $field ?>" type="email" name="client[email]" placeholder="max@example.de" /></div>
 							</div>
-							<button class="Button_Book mt-5 opacity-70" type="button" aria-disabled="true">Konto erstellen & bestaetigen</button>
+							<button class="Button_Book mt-5" type="button" data-go-step="confirm">Weiter zur Bestaetigung</button>
 						</div>
 					</div>
 
 					<div class="mt-5 rounded-2xl border border-[#73ffff]/30 bg-[#73ffff]/10 p-4">
 						<p class="<?= $bodyText ?> text-base">Design-only: Login, Registrierung und Terminbestaetigung sind UI-Elemente. Es wird keine echte Buchung erstellt.</p>
+					</div>
+				</section>
+
+				<section class="<?= $panel ?> hidden border border-white/10 p-6 max-[775px]:p-4" data-wizard-step="confirm">
+					<div class="mb-6 flex items-center justify-between gap-4 max-[700px]:flex-col max-[700px]:items-start">
+						<div><p class="<?= $eyebrow ?>">Schritt 4</p><h2 class="mt-2 text-[32px] leading-tight max-[775px]:text-[26px]">Buchung pruefen und bestaetigen</h2></div>
+						<span class="<?= $stepPill ?>">Letzter Schritt</span>
+					</div>
+
+					<div class="grid grid-cols-[1fr_0.72fr] gap-5 max-[900px]:grid-cols-1">
+						<div class="rounded-[22px] border border-[#00aaaa]/35 bg-[#00aaaa]/10 p-5">
+							<p class="text-[26px] text-[#73ffff]">Eure Auswahl</p>
+							<div class="mt-5 grid grid-cols-2 gap-4 font-[Arial,Helvetica,sans-serif] max-[560px]:grid-cols-1">
+								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Angebot</p><p class="mt-2 text-lg" data-confirm-offer>Standardspiel 2 Stunden</p></div>
+								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Teilnehmer</p><p class="mt-2 text-lg"><span data-confirm-count>8</span> Personen</p></div>
+								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Datum</p><p class="mt-2 text-lg" data-confirm-date></p></div>
+								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Startzeit</p><p class="mt-2 text-lg" data-confirm-time>Bitte waehlen</p></div>
+							</div>
+						</div>
+
+						<aside class="rounded-[22px] border border-white/10 bg-black/25 p-5">
+							<p class="text-[26px]">Bereit?</p>
+							<p class="<?= $bodyText ?> mt-2 text-base">Prueft die Angaben ein letztes Mal. Danach kann die Buchung bestaetigt werden.</p>
+							<div class="mt-5 flex flex-col gap-3">
+								<button class="Button_Book" type="submit">Buchung bestaetigen</button>
+								<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-go-step="schedule">Termin aendern</button>
+							</div>
+						</aside>
+					</div>
+
+					<div class="mt-5 rounded-2xl border border-[#73ffff]/30 bg-[#73ffff]/10 p-4">
+						<p class="<?= $bodyText ?> text-base">Design-only: Der Bestaetigen-Button sendet aktuell kein echtes Buchungssystem ab.</p>
 					</div>
 				</section>
 			</form>
@@ -298,7 +334,9 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const tabs = Array.from(document.querySelectorAll("[data-wizard-tab]"));
 				const steps = Array.from(document.querySelectorAll("[data-wizard-step]"));
 				let loadAvailability = () => {};
+				let updateConfirmationSummary = () => {};
 				const goToStep = (step) => {
+					updateConfirmationSummary();
 					steps.forEach((item) => item.classList.toggle("hidden", item.dataset.wizardStep !== step));
 					activateChoice(document.querySelector(`[data-wizard-tab="${step}"]`), tabs);
 					window.scrollTo({ top: 0, behavior: "smooth" });
@@ -350,6 +388,10 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const timeList = document.querySelector("[data-time-list]");
 				const monthInput = document.querySelector("[data-month-input]");
 				const count = document.querySelector("[data-count]");
+				const confirmOffer = document.querySelector("[data-confirm-offer]");
+				const confirmCount = document.querySelector("[data-confirm-count]");
+				const confirmDate = document.querySelector("[data-confirm-date]");
+				const confirmTime = document.querySelector("[data-confirm-time]");
 				const today = new Date();
 				today.setHours(0, 0, 0, 0);
 				let selectedDate = new Date(selectedDateInput.value + "T00:00:00");
@@ -368,6 +410,13 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const toDateValue = (date) => date.getFullYear() + "-" + padDatePart(date.getMonth() + 1) + "-" + padDatePart(date.getDate());
 				const toDisplayDate = (date) => dayNames[date.getDay()] + ", " + padDatePart(date.getDate()) + "." + padDatePart(date.getMonth() + 1) + "." + date.getFullYear();
 				const formatTimeLabel = (value) => value.slice(0, 5) + " Uhr";
+				updateConfirmationSummary = () => {
+					const offer = offers[offerIdInput.value] || offers[defaultOfferId];
+					confirmOffer.textContent = offer.title;
+					confirmCount.textContent = count.value;
+					confirmDate.textContent = toDisplayDate(selectedDate);
+					confirmTime.textContent = selectedTimeInput.value ? formatTimeLabel(selectedTimeInput.value) : "Bitte waehlen";
+				};
 				const getSelectedTimes = () => availabilityByDate[toDateValue(selectedDate)] || [];
 				const getSlotTime = (slot) => typeof slot === "string" ? slot : slot.time;
 				const getAvailabilityLabel = (slot) => {
@@ -406,6 +455,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					const time = getSlotTime(slot);
 					selectedTimeInput.value = time;
 					selectedTimeLabel.textContent = time ? formatTimeLabel(time) : "Bitte waehlen";
+					updateConfirmationSummary();
 					renderTimes();
 				};
 
@@ -456,6 +506,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					selectedDateInput.value = toDateValue(selectedDate);
 					document.querySelector("[data-selected-day]").textContent = "am " + dayNames[selectedDate.getDay()];
 					selectedDateLabel.textContent = toDisplayDate(selectedDate);
+					updateConfirmationSummary();
 					renderTimes();
 				};
 
@@ -591,6 +642,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					}
 
 					count.value = nextValue;
+					updateConfirmationSummary();
 
 					if (offerIdInput.value) {
 						clearTimeout(countChangeTimer);

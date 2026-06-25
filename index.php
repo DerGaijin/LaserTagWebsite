@@ -1,3 +1,23 @@
+<?php
+$newsItems = [
+    [
+        'label' => 'Aktuelle News',
+        'title' => 'Wir bauen unsere Arena um',
+        'text' => 'Wir überarbeiten aktuell unsere Lasertaghalle, damit euer nächstes Spiel noch besser wird.',
+        'highlight' => 'Geschlossen vom <b>02.07.26</b> bis <b>12.08.26</b>',
+        'image' => 'resources/renovieren.avif',
+        'imageAlt' => 'Renovieren',
+    ],
+    [
+        'label' => 'Aktuelle News',
+        'title' => 'Wir sind fertig mit dem Umbau',
+        'text' => 'Unsere Arena ist frisch überarbeitet und bereit für eure nächsten Spiele.',
+        'highlight' => 'Reservierungen sind wieder möglich.',
+        'image' => 'resources/renovieren.avif',
+        'imageAlt' => 'Renovierte Arena',
+    ],
+];
+?>
 <!doctype html>
 <html lang="de">
 
@@ -9,23 +29,26 @@
     <?php include 'resources/header.php'; ?>
 
     <main class="mx-auto flex w-full max-w-[1180px] flex-col gap-8 px-6 py-8 max-[700px]:px-3">
-        <section
-            class="rounded-[24px] border-2 border-[#00aaaa] bg-[rgba(18,18,18,.94)] p-5 shadow-[0_12px_35px_rgba(0,0,0,.65)]">
-            <div class="grid items-center gap-5 lg:grid-cols-[1fr_260px]">
-                <div>
-                    <p
-                        class="mb-3 w-fit rounded-md bg-[#00aaaa] px-3 py-1 text-sm uppercase tracking-[.18em] text-black">
-                        Aktuelle Info</p>
-                    <h1 class="text-[36px] uppercase leading-tight text-white max-[700px]:text-[28px]">Wir bauen unsere
-                        Arena um</h1>
-                    <p class="mt-3 max-w-[760px] text-xl leading-snug text-white/90">Wir überarbeiten aktuell unsere
-                        Lasertaghalle, damit euer nächstes Spiel noch besser wird.</p>
-                    <p class="mt-3 text-2xl text-white max-[700px]:text-xl">Geschlossen vom <b>02.07.26</b> bis
-                        <b>12.08.26</b></p>
-                </div>
-                <img src="resources/renovieren.avif" alt="Renovieren"
-                    class="max-h-[180px] w-full rounded-[18px] object-cover" />
-            </div>
+        <section class="grid gap-4">
+            <?php foreach ($newsItems as $newsItem): ?>
+                <article
+                    class="rounded-[24px] border-2 border-[#00aaaa] bg-[rgba(18,18,18,.94)] p-5 shadow-[0_12px_35px_rgba(0,0,0,.65)]">
+                    <div class="grid items-center gap-5 lg:grid-cols-[1fr_260px]">
+                        <div>
+                            <p
+                                class="mb-3 w-fit rounded-md bg-[#00aaaa] px-3 py-1 text-sm uppercase tracking-[.18em] text-black">
+                                <?= htmlspecialchars($newsItem['label']) ?></p>
+                            <h1 class="text-[36px] uppercase leading-tight text-white max-[700px]:text-[28px]">
+                                <?= htmlspecialchars($newsItem['title']) ?></h1>
+                            <p class="mt-3 max-w-[760px] text-xl leading-snug text-white/90">
+                                <?= htmlspecialchars($newsItem['text']) ?></p>
+                            <p class="mt-3 text-2xl text-white max-[700px]:text-xl"><?= $newsItem['highlight'] ?></p>
+                        </div>
+                        <img src="<?= htmlspecialchars($newsItem['image']) ?>" alt="<?= htmlspecialchars($newsItem['imageAlt']) ?>"
+                            class="max-h-[180px] w-full rounded-[18px] object-cover" />
+                    </div>
+                </article>
+            <?php endforeach; ?>
         </section>
 
         <section

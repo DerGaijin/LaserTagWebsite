@@ -6,6 +6,7 @@ $eyebrow = 'text-sm uppercase tracking-[0.24em] text-[#73ffff]';
 $headline = 'mt-2 text-[42px] uppercase leading-tight max-[775px]:text-[32px]';
 $bodyText = 'font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/90 max-[775px]:text-base';
 $card = $panel . ' p-6 max-[775px]:p-4';
+$gameLink = 'mt-5 inline-flex rounded-md border border-[#73ffff]/60 px-4 py-2 font-[Arial,Helvetica,sans-serif] text-sm uppercase tracking-[0.14em] text-[#73ffff] no-underline transition hover:bg-[#73ffff]/10';
 $list = 'space-y-3 font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/90 max-[775px]:text-base';
 $minimumAge = 'ab 6 Jahren';
 $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
@@ -65,8 +66,8 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                 <p class="<?= $eyebrow ?>">Laserforce Spielmodi</p>
                 <h2 class="mt-2 text-[34px] leading-tight max-[775px]:text-[28px]">Unsere Spiele kurz erklärt</h2>
                 <p class="<?= $bodyText ?> mt-3 max-w-[900px]">
-                    Bei uns spielt ihr nicht nur eine Variante. Je nach Gruppe, Erfahrung und Stimmung wählen wir den
-                    passenden Modus aus und erklären euch die Regeln vor jeder Runde direkt vor Ort.
+                    Bei uns spielt ihr nicht nur eine Variante. Je nach Gruppe, Erfahrung und Stimmung entscheidet ihr,
+                    welchen Modus ihr spielen möchtet. Die Regeln erklären wir euch vor jeder Runde direkt vor Ort.
                 </p>
             </div>
 
@@ -79,6 +80,8 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                     <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
                     <p class="<?= $bodyText ?> mt-4">Teams kämpfen um farbige Zonen und versuchen, möglichst viel
                         Kontrolle in der Arena zu halten. Wer nur Treffer sammelt, lässt wichtige Punkte liegen.</p>
+                    <a class="<?= $gameLink ?>" href="https://www.iplaylaserforce.com/games/colour-conquest/"
+                        target="_blank" rel="noopener noreferrer">Offizielle Beschreibung</a>
                 </article>
 
                 <article id="spiel-laserball" class="<?= $card ?> scroll-mt-32">
@@ -89,6 +92,8 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                     <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
                     <p class="<?= $bodyText ?> mt-4">Hier zählt Zusammenspiel: Sichert euch den Ball, bringt ihn in die
                         richtige Position und schützt eure Mitspieler gegen das gegnerische Team.</p>
+                    <a class="<?= $gameLink ?>" href="https://www.iplaylaserforce.com/games/laserball/"
+                        target="_blank" rel="noopener noreferrer">Offizielle Beschreibung</a>
                 </article>
 
                 <article id="spiel-tag" class="<?= $card ?> scroll-mt-32">
@@ -98,7 +103,9 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                     <h3 class="mt-2 text-[30px] leading-tight">Tag</h3>
                     <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
                     <p class="<?= $bodyText ?> mt-4">Der direkte Lasertag-Modus: Bewegen, zielen, treffen und wieder in
-                        Deckung. Ideal zum Reinkommen und fuer schnelle, intensive Runden.</p>
+                        Deckung. Ideal zum Reinkommen und für schnelle, intensive Runden.</p>
+                    <a class="<?= $gameLink ?>" href="https://www.iplaylaserforce.com/games/tag/" target="_blank"
+                        rel="noopener noreferrer">Offizielle Beschreibung</a>
                 </article>
 
                 <article id="spiel-challange-royal" class="<?= $card ?> scroll-mt-32">
@@ -109,6 +116,8 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                     <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
                     <p class="<?= $bodyText ?> mt-4">Ein intensiver Wettkampfmodus, in dem jede Entscheidung zählt. Wer
                         clever spielt, die Arena nutzt und ruhig bleibt, hat am Ende die besten Chancen.</p>
+                    <a class="<?= $gameLink ?>" href="https://www.iplaylaserforce.com/games/individual/"
+                        target="_blank" rel="noopener noreferrer">Offizielle Beschreibung</a>
                 </article>
 
                 <article id="spiel-shadows" class="<?= $card ?> scroll-mt-32">
@@ -118,7 +127,9 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                     <h3 class="mt-2 text-[30px] leading-tight">Shadows</h3>
                     <p class="<?= $ageNote ?>">Mindestalter: ab 14 Jahren</p>
                     <p class="<?= $bodyText ?> mt-4">In diesem Modus wird es taktischer: Spieler sind schwerer zu
-                        erkennen und muessen mehr auf Geraeusche, Bewegung und Positionen achten.</p>
+                        erkennen und müssen mehr auf Geräusche, Bewegung und Positionen achten.</p>
+                    <a class="<?= $gameLink ?>" href="https://www.iplaylaserforce.com/games/shadows/" target="_blank"
+                        rel="noopener noreferrer">Offizielle Beschreibung</a>
                 </article>
 
                 <article id="spiel-standard" class="<?= $card ?> scroll-mt-32">
@@ -127,8 +138,10 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                     <p class="<?= $eyebrow ?>">Klassiker</p>
                     <h3 class="mt-2 text-[30px] leading-tight">Standard</h3>
                     <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
-                    <p class="<?= $bodyText ?> mt-4">Der klassische Modus fuer neue und erfahrene Spieler. Ziel ist es,
+                    <p class="<?= $bodyText ?> mt-4">Der klassische Modus für neue und erfahrene Spieler. Ziel ist es,
                         Treffer zu landen, Punkte zu sammeln und als Team oder solo oben zu stehen.</p>
+                    <a class="<?= $gameLink ?>" href="https://www.iplaylaserforce.com/type/standard/" target="_blank"
+                        rel="noopener noreferrer">Offizielle Beschreibung</a>
                 </article>
             </div>
         </section>

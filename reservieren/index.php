@@ -31,7 +31,7 @@ $offerSections = [
 				'price' => '34,90 €',
 				'priceNote' => 'pro Gast',
 				'details' => ['Getränkeflat für die Gruppe ist enthalten.', 'Das Geburtstagskind bekommt einen Slushy dazu.'],
-				'description' => '2 Stunden Geburtstagspaket mit Getraenkeflat und Slushy fuer das Geburtstagskind.',
+				'description' => '2 Stunden Geburtstagspaket mit Getränkeflat und Slushy für das Geburtstagskind.',
 			],
 			[
 				'id' => 2,
@@ -40,7 +40,7 @@ $offerSections = [
 				'price' => '39,90 €',
 				'priceNote' => 'pro Gast',
 				'details' => ['Alle Leistungen aus dem 2-Stunden-Paket sind inklusive.', 'Zusätzlich erhält das Geburtstagskind eine Membercard; jeder Gast bekommt eine Snackbox.'],
-				'description' => '3 Stunden Geburtstagspaket mit Getraenkeflat, Membercard und Snackboxen.',
+				'description' => '3 Stunden Geburtstagspaket mit Getränkeflat, Membercard und Snackboxen.',
 			],
 		],
 	],
@@ -56,7 +56,7 @@ $offerSections = [
 				'price' => '15,00 €',
 				'priceNote' => 'pro Person',
 				'details' => ['Spielzeit von 10:00 bis 11:30 Uhr.', 'Erwachsene erhalten wahlweise Kaffee oder Tee.'],
-				'description' => 'Wochenend-Spielzeit von 10:00 bis 11:30 Uhr fuer Familien.',
+				'description' => 'Wochenend-Spielzeit von 10:00 bis 11:30 Uhr für Familien.',
 			],
 			[
 				'id' => 4,
@@ -80,7 +80,7 @@ $offerSections = [
 				'serviceTitle' => 'Standardspiel 1 Stunde',
 				'price' => '18,50 €',
 				'priceNote' => 'pro Person',
-				'description' => 'Eine Stunde Lasertag fuer kurze Matches und spontane Gruppen.',
+				'description' => 'Eine Stunde Lasertag für kurze Matches und spontane Gruppen.',
 			],
 			[
 				'id' => 6,
@@ -88,7 +88,7 @@ $offerSections = [
 				'serviceTitle' => 'Standardspiel 2 Stunden',
 				'price' => '36,00 €',
 				'priceNote' => 'pro Person',
-				'description' => 'Zwei Stunden Lasertag fuer Gruppen, Teams und laengere Spielrunden.',
+				'description' => 'Zwei Stunden Lasertag für Gruppen, Teams und längere Spielrunden.',
 			],
 		],
 	],
@@ -129,7 +129,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				</button>
 				<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-left text-white/70" type="button" data-wizard-tab="confirm">
 					<span class="<?= $label ?> block">Schritt 4</span>
-					<span class="mt-1 block text-[24px]">Bestaetigen</span>
+					<span class="mt-1 block text-[24px]">Bestätigen</span>
 				</button>
 			</nav>
 
@@ -178,9 +178,9 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						<div>
 							<p class="<?= $eyebrow ?>">Schritt 2</p>
 							<h2 class="mt-2 text-[32px] leading-tight max-[775px]:text-[26px]">Wann wollt ihr spielen?</h2>
-							<p class="<?= $bodyText ?> mt-3">Ausgewaehlt: <span class="text-[#73ffff]" data-offer-title>Standardspiel 2 Stunden</span></p>
+							<p class="<?= $bodyText ?> mt-3">Ausgewählt: <span class="text-[#73ffff]" data-offer-title>Standardspiel 2 Stunden</span></p>
 						</div>
-						<button class="Button_Book" type="button" data-go-step="offer">Angebot aendern</button>
+						<button class="Button_Book" type="button" data-go-step="offer">Angebot ändern</button>
 					</div>
 
 					<input type="hidden" name="offer_id" value="" data-offer-id />
@@ -192,9 +192,9 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						<div class="rounded-[22px] border border-white/10 bg-black/25 p-4">
 							<input type="hidden" name="month" value="<?= htmlspecialchars($defaultMonth) ?>" data-month-input />
 							<div class="flex items-center justify-between gap-4 max-[560px]:flex-col max-[560px]:items-stretch">
-								<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-calendar-prev>Zurueck</button>
+								<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-calendar-prev>Zurück</button>
 								<div class="text-center">
-									<p class="<?= $label ?>">Datum waehlen</p>
+									<p class="<?= $label ?>">Datum wählen</p>
 									<h3 class="mt-1 text-[30px] leading-none text-[#73ffff] max-[775px]:text-[24px]" data-calendar-title></h3>
 								</div>
 								<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-calendar-next>Weiter</button>
@@ -208,11 +208,11 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 							<div class="mt-5 rounded-2xl border border-[#00aaaa]/35 bg-[#00aaaa]/10 p-4">
 								<div class="flex items-start justify-between gap-4 max-[700px]:flex-col">
 									<div>
-										<p class="<?= $label ?>">Ausgewaehlter Termin</p>
+										<p class="<?= $label ?>">Ausgewählter Termin</p>
 										<p class="mt-1 text-[24px] leading-tight text-[#73ffff]" data-selected-date-label></p>
-										<p class="<?= $bodyText ?> mt-1 text-base">Start: <span class="text-white" data-selected-time-label>Bitte waehlen</span></p>
+										<p class="<?= $bodyText ?> mt-1 text-base">Start: <span class="text-white" data-selected-time-label>Bitte wählen</span></p>
 									</div>
-									<span class="<?= $stepPill ?>" data-availability-label>Angebot auswaehlen</span>
+									<span class="<?= $stepPill ?>" data-availability-label>Angebot auswählen</span>
 								</div>
 							</div>
 						</div>
@@ -231,12 +231,11 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 								<div class="flex items-end justify-between gap-3 max-[520px]:flex-col max-[520px]:items-start">
 									<div>
 										<p class="<?= $label ?>">Zeitfenster <span data-selected-day>am Samstag</span></p>
-										<p class="<?= $bodyText ?> mt-1 text-base">Kompakte Auswahl fuer Tage mit vielen Startzeiten.</p>
+										<p class="<?= $bodyText ?> mt-1 text-base">Kompakte Auswahl für Tage mit vielen Startzeiten.</p>
 									</div>
-									<span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/55">scrollen</span>
 								</div>
-								<div class="mt-3 grid max-h-[360px] grid-cols-3 gap-2 overflow-y-auto pr-1 max-[1200px]:grid-cols-2 max-[520px]:grid-cols-1" data-time-list>
-									<div class="col-span-full rounded-xl border border-white/10 bg-black/25 p-4 font-[Arial,Helvetica,sans-serif] text-sm text-white/70">Waehlt zuerst ein Angebot aus, danach pruefen wir die freien Startzeiten.</div>
+								<div class="mt-3 grid max-h-[360px] gap-1.5 overflow-y-auto pr-1" data-time-list>
+									<div class="col-span-full rounded-xl border border-white/10 bg-black/25 p-4 font-[Arial,Helvetica,sans-serif] text-sm text-white/70">Wählt zuerst ein Angebot aus, danach prüfen wir die freien Startzeiten.</div>
 							</div>
 						</div>
 						</aside>
@@ -244,62 +243,79 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					<div class="mt-6 flex justify-end"><button class="Button_Book" type="button" data-go-step="account">Weiter zum Konto</button></div>
 				</section>
 
-				<section class="<?= $panel ?> hidden border border-white/10 p-6 max-[775px]:p-4" data-wizard-step="account">
-					<div class="mb-6 flex items-center justify-between gap-4 max-[700px]:flex-col max-[700px]:items-start">
-						<div><p class="<?= $eyebrow ?>">Schritt 3</p><h2 class="mt-2 text-[32px] leading-tight max-[775px]:text-[26px]">Einloggen oder Konto erstellen</h2></div>
-						<span class="<?= $stepPill ?>">Kundenkonto</span>
-					</div>
+				<section class="<?= $panel ?> hidden overflow-hidden border border-white/10 p-0" data-wizard-step="account">
+					<div class="grid grid-cols-[0.78fr_1fr] max-[980px]:grid-cols-1">
+						<aside class="border-r border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(0,170,170,0.24),transparent_42%),rgba(0,0,0,0.22)] p-6 max-[775px]:p-4 max-[980px]:border-r-0 max-[980px]:border-b">
+							<p class="<?= $eyebrow ?>">Schritt 3</p>
+							<h2 class="mt-2 text-[34px] leading-tight text-[#73ffff] max-[775px]:text-[28px]">Wer bucht?</h2>
+							<p class="<?= $bodyText ?> mt-3 text-base">Wählt aus, ob ihr ein bestehendes Konto nutzen oder ein neues Konto erstellen wollt.</p>
 
-					<div class="mb-5 flex gap-3 max-[520px]:flex-col">
-						<button class="rounded-full border border-[#00aaaa] bg-[#00aaaa]/20 px-5 py-2 text-[#73ffff]" type="button" data-account-tab="login" aria-pressed="true">Einloggen</button>
-						<button class="rounded-full border border-white/15 px-5 py-2 text-white/70" type="button" data-account-tab="register">Konto erstellen</button>
-					</div>
-
-					<div class="grid grid-cols-[1fr_1fr] gap-5 max-[900px]:grid-cols-1">
-						<div class="rounded-[22px] border-2 border-[#00aaaa] bg-[#00aaaa]/10 p-5" data-account-panel="login">
-							<p class="text-[26px] text-[#73ffff]">Einloggen</p>
-							<p class="<?= $bodyText ?> mt-2 text-base">Bestehende Kunden bestaetigen schneller mit gespeicherten Daten.</p>
-							<div class="mt-5 space-y-4" data-login-form>
-								<div><label class="<?= $label ?>" for="login-email">E-Mail</label><input id="login-email" class="<?= $field ?>" type="email" name="login_email" placeholder="kunde@example.de" autocomplete="email" data-login-email /></div>
-								<div><label class="<?= $label ?>" for="login-password">Passwort</label><input id="login-password" class="<?= $field ?>" type="password" placeholder="Passwort" autocomplete="current-password" data-login-password /></div>
-								<p class="hidden rounded-xl border border-white/10 bg-black/25 p-3 font-[Arial,Helvetica,sans-serif] text-sm" data-login-message></p>
-								<button class="Button_Book" type="button" data-login-submit>Einloggen</button>
+							<div class="mt-6 grid gap-3">
+								<button class="rounded-[22px] border border-[#00aaaa] bg-[#00aaaa]/20 p-4 text-left text-[#73ffff] transition hover:border-[#73ffff]" type="button" data-account-tab="login" aria-pressed="true">
+									<span class="<?= $label ?> block">Bestehendes Konto</span>
+									<span class="mt-1 block text-[24px] leading-tight">Einloggen</span>
+									<span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-sm text-white/65">Schnell weiter mit gespeicherten Kundendaten.</span>
+								</button>
+								<button class="rounded-[22px] border border-white/15 bg-black/25 p-4 text-left text-white/70 transition hover:border-[#00aaaa]/70 hover:text-[#73ffff]" type="button" data-account-tab="register">
+									<span class="<?= $label ?> block">Neu bei uns</span>
+									<span class="mt-1 block text-[24px] leading-tight">Konto erstellen</span>
+									<span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-sm text-white/65">Einmal registrieren und die Buchung direkt abschließen.</span>
+								</button>
 							</div>
-							<div class="mt-5 hidden rounded-2xl border border-[#00aaaa]/40 bg-black/25 p-4" data-logged-in-panel>
-								<p class="<?= $label ?>">Eingeloggt als</p>
-								<p class="mt-2 text-[24px] leading-tight text-[#73ffff]" data-client-name></p>
-								<p class="<?= $bodyText ?> mt-1 text-base" data-client-email></p>
-								<p class="<?= $bodyText ?> mt-1 hidden text-base" data-client-phone></p>
-								<div class="mt-5 flex flex-wrap gap-3">
-									<button class="Button_Book" type="button" data-go-step="confirm">Weiter zur Bestaetigung</button>
-									<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-login-logout>Anderes Konto nutzen</button>
+						</aside>
+
+						<div class="grid gap-5 p-6 max-[775px]:p-4">
+							<div class="rounded-[26px] border-2 border-[#00aaaa] bg-[#00aaaa]/10 p-5 shadow-[0_0_28px_rgba(0,170,170,0.16)]" data-account-panel="login">
+								<div class="flex items-start justify-between gap-4 max-[600px]:flex-col">
+									<div>
+										<p class="<?= $label ?>">Login</p>
+										<p class="mt-1 text-[28px] leading-tight text-[#73ffff]">Willkommen zurück</p>
+									</div>
+								</div>
+								<p class="<?= $bodyText ?> mt-3 text-base">Nutzt euer SimplyBook-Konto, um den Termin ohne erneute Dateneingabe zu bestätigen.</p>
+
+								<div class="mt-5 grid grid-cols-2 gap-4 max-[700px]:grid-cols-1" data-login-form>
+									<div><label class="<?= $label ?>" for="login-email">E-Mail</label><input id="login-email" class="<?= $field ?>" type="email" name="login_email" placeholder="kunde@example.de" autocomplete="email" data-login-email /></div>
+									<div><label class="<?= $label ?>" for="login-password">Passwort</label><input id="login-password" class="<?= $field ?>" type="password" placeholder="Passwort" autocomplete="current-password" data-login-password /></div>
+									<p class="hidden rounded-xl border border-white/10 bg-black/25 p-3 font-[Arial,Helvetica,sans-serif] text-sm max-[700px]:col-auto" data-login-message></p>
+									<div class="flex items-end"><button class="Button_Book w-full" type="button" data-login-submit>Einloggen</button></div>
+								</div>
+
+								<div class="mt-5 hidden rounded-2xl border border-[#00aaaa]/40 bg-black/25 p-4" data-logged-in-panel>
+									<p class="<?= $label ?>">Eingeloggt als</p>
+									<p class="mt-2 text-[24px] leading-tight text-[#73ffff]" data-client-name></p>
+									<p class="<?= $bodyText ?> mt-1 text-base" data-client-email></p>
+									<p class="<?= $bodyText ?> mt-1 hidden text-base" data-client-phone></p>
+									<div class="mt-5 flex flex-wrap gap-3">
+										<button class="Button_Book" type="button" data-go-step="confirm">Weiter zur Bestätigung</button>
+										<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-login-logout>Anderes Konto nutzen</button>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<div class="rounded-[22px] border border-white/10 bg-black/25 p-5 opacity-60" data-account-panel="register">
-							<p class="text-[26px]">Konto erstellen</p>
-							<p class="<?= $bodyText ?> mt-2 text-base">Neue Kunden registrieren sich, bevor der Termin verbindlich bestaetigt wird.</p>
-							<div class="mt-5 grid grid-cols-2 gap-4 max-[520px]:grid-cols-1" data-register-form>
-								<div><label class="<?= $label ?>" for="register-name">Name</label><input id="register-name" class="<?= $field ?>" type="text" name="client[name]" placeholder="Max Mustermann" autocomplete="name" data-register-name /></div>
-								<div><label class="<?= $label ?>" for="register-phone">Telefon</label><input id="register-phone" class="<?= $field ?>" type="tel" name="client[phone]" placeholder="0123 456789" autocomplete="tel" data-register-phone /></div>
-								<div class="col-span-2 max-[520px]:col-auto"><label class="<?= $label ?>" for="register-email">E-Mail</label><input id="register-email" class="<?= $field ?>" type="email" name="client[email]" placeholder="max@example.de" autocomplete="email" data-register-email /></div>
-								<div><label class="<?= $label ?>" for="register-password">Passwort</label><input id="register-password" class="<?= $field ?>" type="password" autocomplete="new-password" data-register-password /></div>
-								<div><label class="<?= $label ?>" for="register-password-confirm">Passwort wiederholen</label><input id="register-password-confirm" class="<?= $field ?>" type="password" autocomplete="new-password" data-register-password-confirm /></div>
+							<div class="hidden rounded-[26px] border border-white/10 bg-black/25 p-5 opacity-60" data-account-panel="register">
+								<div>
+									<p class="<?= $label ?>">Registrierung</p>
+									<p class="mt-1 text-[28px] leading-tight">Neues Kundenkonto</p>
+									<p class="<?= $bodyText ?> mt-3 text-base">Erstellt ein Konto für diese und spätere Reservierungen.</p>
+								</div>
+								<div class="mt-5 grid grid-cols-2 gap-4 max-[700px]:grid-cols-1" data-register-form>
+									<div><label class="<?= $label ?>" for="register-name">Name</label><input id="register-name" class="<?= $field ?>" type="text" name="client[name]" placeholder="Max Mustermann" autocomplete="name" data-register-name /></div>
+									<div><label class="<?= $label ?>" for="register-phone">Telefon</label><input id="register-phone" class="<?= $field ?>" type="tel" name="client[phone]" placeholder="0123 456789" autocomplete="tel" data-register-phone /></div>
+									<div class="col-span-2 max-[700px]:col-auto"><label class="<?= $label ?>" for="register-email">E-Mail</label><input id="register-email" class="<?= $field ?>" type="email" name="client[email]" placeholder="max@example.de" autocomplete="email" data-register-email /></div>
+									<div><label class="<?= $label ?>" for="register-password">Passwort</label><input id="register-password" class="<?= $field ?>" type="password" autocomplete="new-password" data-register-password /></div>
+									<div><label class="<?= $label ?>" for="register-password-confirm">Passwort wiederholen</label><input id="register-password-confirm" class="<?= $field ?>" type="password" autocomplete="new-password" data-register-password-confirm /></div>
+								</div>
+								<p class="mt-4 hidden rounded-xl border border-white/10 bg-black/25 p-3 font-[Arial,Helvetica,sans-serif] text-sm" data-register-message></p>
+								<button class="Button_Book mt-5" type="button" data-register-submit>Konto erstellen</button>
 							</div>
-							<p class="mt-4 hidden rounded-xl border border-white/10 bg-black/25 p-3 font-[Arial,Helvetica,sans-serif] text-sm" data-register-message></p>
-							<button class="Button_Book mt-5" type="button" data-register-submit>Konto erstellen</button>
 						</div>
-					</div>
-
-					<div class="mt-5 rounded-2xl border border-[#73ffff]/30 bg-[#73ffff]/10 p-4">
-						<p class="<?= $bodyText ?> text-base">Der Login wird ueber SimplyBook geprueft. Registrierung und Terminbestaetigung sind noch UI-Elemente.</p>
 					</div>
 				</section>
 
 				<section class="<?= $panel ?> hidden border border-white/10 p-6 max-[775px]:p-4" data-wizard-step="confirm">
 					<div class="mb-6 flex items-center justify-between gap-4 max-[700px]:flex-col max-[700px]:items-start">
-						<div><p class="<?= $eyebrow ?>">Schritt 4</p><h2 class="mt-2 text-[32px] leading-tight max-[775px]:text-[26px]">Buchung pruefen und bestaetigen</h2></div>
+						<div><p class="<?= $eyebrow ?>">Schritt 4</p><h2 class="mt-2 text-[32px] leading-tight max-[775px]:text-[26px]">Buchung prüfen und bestätigen</h2></div>
 						<span class="<?= $stepPill ?>">Letzter Schritt</span>
 					</div>
 
@@ -310,7 +326,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Angebot</p><p class="mt-2 text-lg" data-confirm-offer>Standardspiel 2 Stunden</p></div>
 								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Teilnehmer</p><p class="mt-2 text-lg"><span data-confirm-count>8</span> Personen</p></div>
 								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Datum</p><p class="mt-2 text-lg" data-confirm-date></p></div>
-								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Startzeit</p><p class="mt-2 text-lg" data-confirm-time>Bitte waehlen</p></div>
+								<div class="rounded-2xl border border-white/10 bg-black/25 p-4"><p class="<?= $label ?>">Startzeit</p><p class="mt-2 text-lg" data-confirm-time>Bitte wählen</p></div>
 								<div class="col-span-2 rounded-2xl border border-white/10 bg-black/25 p-4 max-[560px]:col-auto">
 									<p class="<?= $label ?>">Kundenkonto</p>
 									<p class="mt-2 text-lg text-[#73ffff]" data-confirm-client-name>Nicht eingeloggt</p>
@@ -322,10 +338,10 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 						<aside class="rounded-[22px] border border-white/10 bg-black/25 p-5">
 							<p class="text-[26px]">Bereit?</p>
-							<p class="<?= $bodyText ?> mt-2 text-base">Prueft die Angaben ein letztes Mal. Danach kann die Buchung bestaetigt werden.</p>
+							<p class="<?= $bodyText ?> mt-2 text-base">Prüft die Angaben ein letztes Mal. Danach kann die Buchung bestätigt werden.</p>
 							<div class="mt-5 flex flex-col gap-3">
-								<button class="Button_Book" type="submit" data-booking-submit>Buchung bestaetigen</button>
-								<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-go-step="schedule">Termin aendern</button>
+								<button class="Button_Book" type="submit" data-booking-submit>Buchung bestätigen</button>
+								<button class="rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80 hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-go-step="schedule">Termin ändern</button>
 							</div>
 						</aside>
 					</div>
@@ -341,7 +357,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					<div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#73ffff] bg-[#00aaaa]/25 text-[42px] text-[#73ffff] shadow-[0_0_28px_rgba(115,255,255,0.35)]">✓</div>
 					<p class="<?= $eyebrow ?> mt-6 justify-self-center">Reservierung erfolgreich</p>
 					<h2 id="booking-success-title" class="mt-2 text-[38px] leading-tight text-[#73ffff] max-[560px]:text-[30px]">Euer Termin ist gebucht</h2>
-					<p class="<?= $bodyText ?> mt-4">Die Buchung wurde verbindlich in unserem System hinterlegt. Bitte achtet auf eure E-Mails fuer weitere Informationen.</p>
+					<p class="<?= $bodyText ?> mt-4">Die Buchung wurde verbindlich in unserem System hinterlegt. Bitte achtet auf eure E-Mails für weitere Informationen.</p>
 					<div class="mt-6 grid grid-cols-3 gap-3 font-[Arial,Helvetica,sans-serif] max-[620px]:grid-cols-1" data-success-summary></div>
 					<div class="mt-7 flex justify-center gap-3 max-[520px]:flex-col">
 						<a class="Button_Book" href="./">Neue Reservierung</a>
@@ -370,15 +386,25 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const steps = Array.from(document.querySelectorAll("[data-wizard-step]"));
 				let loadAvailability = () => {};
 				let updateConfirmationSummary = () => {};
+				let updateWizardTabAvailability = () => {};
+				let canOpenWizardStep = () => true;
+				let currentStep = "offer";
 				const goToStep = (step) => {
+					currentStep = step;
 					updateConfirmationSummary();
 					steps.forEach((item) => item.classList.toggle("hidden", item.dataset.wizardStep !== step));
 					activateChoice(document.querySelector(`[data-wizard-tab="${step}"]`), tabs);
+					updateWizardTabAvailability();
 					window.scrollTo({ top: 0, behavior: "smooth" });
 				};
+				const requestStep = (step) => {
+					if (canOpenWizardStep(step)) {
+						goToStep(step);
+					}
+				};
 
-				document.querySelectorAll("[data-go-step]").forEach((button) => button.addEventListener("click", () => goToStep(button.dataset.goStep)));
-				tabs.forEach((tab) => tab.addEventListener("click", () => goToStep(tab.dataset.wizardTab)));
+				document.querySelectorAll("[data-go-step]").forEach((button) => button.addEventListener("click", () => requestStep(button.dataset.goStep)));
+				tabs.forEach((tab) => tab.addEventListener("click", () => requestStep(tab.dataset.wizardTab)));
 
 				const setOfferUrl = (offerId) => {
 					const url = new URL(window.location.href);
@@ -410,7 +436,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					selectOffer(params.get("id"), false);
 				}
 
-				const monthNames = ["Januar", "Februar", "Maerz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+				const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 				const dayNames = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
 				const calendarGrid = document.querySelector("[data-calendar-grid]");
 				const calendarTitle = document.querySelector("[data-calendar-title]");
@@ -459,8 +485,46 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					confirmOffer.textContent = offer.title;
 					confirmCount.textContent = count.value;
 					confirmDate.textContent = toDisplayDate(selectedDate);
-					confirmTime.textContent = selectedTimeInput.value ? formatTimeLabel(selectedTimeInput.value) : "Bitte waehlen";
+					confirmTime.textContent = selectedTimeInput.value ? formatTimeLabel(selectedTimeInput.value) : "Bitte wählen";
+					updateWizardTabAvailability();
 				};
+				const wizardStepOrder = ["offer", "schedule", "account", "confirm"];
+				canOpenWizardStep = (step) => {
+					const targetIndex = wizardStepOrder.indexOf(step);
+					const currentIndex = wizardStepOrder.indexOf(currentStep);
+
+					if (targetIndex === -1) {
+						return false;
+					}
+
+					if (targetIndex <= currentIndex) {
+						return true;
+					}
+
+					if (step === "schedule") {
+						return Boolean(offerIdInput.value);
+					}
+
+					if (step === "account") {
+						return Boolean(offerIdInput.value && selectedTimeInput.value);
+					}
+
+					if (step === "confirm") {
+						return Boolean(offerIdInput.value && selectedTimeInput.value && clientIdInput.value);
+					}
+
+					return false;
+				};
+				updateWizardTabAvailability = () => {
+					tabs.forEach((tab) => {
+						const canOpen = canOpenWizardStep(tab.dataset.wizardTab);
+						tab.disabled = !canOpen;
+						tab.setAttribute("aria-disabled", canOpen ? "false" : "true");
+						tab.classList.toggle("cursor-not-allowed", !canOpen);
+						tab.classList.toggle("opacity-50", !canOpen);
+					});
+				};
+				updateWizardTabAvailability();
 				const getSelectedTimes = () => availabilityByDate[toDateValue(selectedDate)] || [];
 				const getSlotTime = (slot) => typeof slot === "string" ? slot : slot.time;
 				const getAvailabilityLabel = (slot) => {
@@ -468,7 +532,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						return "frei";
 					}
 
-					return "verfuegbar fuer " + slot.count + " Personen";
+					return "verfügbar für " + slot.count + " Personen";
 				};
 				const showTimeMessage = (message, title = "Hinweis", isLoading = false) => {
 					timeList.innerHTML = "";
@@ -498,7 +562,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const selectTime = (slot) => {
 					const time = getSlotTime(slot);
 					selectedTimeInput.value = time;
-					selectedTimeLabel.textContent = time ? formatTimeLabel(time) : "Bitte waehlen";
+					selectedTimeLabel.textContent = time ? formatTimeLabel(time) : "Bitte wählen";
 					updateConfirmationSummary();
 					renderTimes();
 				};
@@ -508,13 +572,13 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					timeList.innerHTML = "";
 
 					if (!offerIdInput.value) {
-						availabilityLabel.textContent = "Angebot auswaehlen";
-						showTimeMessage("Waehlt zuerst ein Angebot aus, danach pruefen wir die freien Startzeiten.", "Noch kein Angebot");
+						availabilityLabel.textContent = "Angebot auswählen";
+						showTimeMessage("Wählt zuerst ein Angebot aus, danach prüfen wir die freien Startzeiten.", "Noch kein Angebot");
 						return;
 					}
 
 					if (isLoadingAvailability) {
-						showTimeMessage("Wir fragen gerade die freien Startzeiten fuer " + toDisplayDate(selectedDate) + " ab.", "Verfuegbarkeit wird geprueft", true);
+						showTimeMessage("Wir fragen gerade die freien Startzeiten für " + toDisplayDate(selectedDate) + " ab.", "Verfügbarkeit wird geprüft", true);
 						return;
 					}
 
@@ -524,10 +588,10 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						return;
 					}
 
-					availabilityLabel.textContent = times.length === 0 ? "keine Zeiten verfuegbar" : times.length + " Zeitfenster verfuegbar";
+					availabilityLabel.textContent = times.length === 0 ? "keine Zeiten verfügbar" : times.length + " Zeitfenster verfügbar";
 
 					if (times.length === 0) {
-						showTimeMessage("Fuer diesen Tag sind aktuell keine Startzeiten frei. Waehlt bitte ein anderes Datum.", "Keine freien Zeiten");
+						showTimeMessage("Für diesen Tag sind aktuell keine Startzeiten frei. Wählt bitte ein anderes Datum.", "Keine freien Zeiten");
 						return;
 					}
 
@@ -538,8 +602,8 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						button.type = "button";
 						button.dataset.time = time;
 						button.setAttribute("aria-pressed", isSelected ? "true" : "false");
-						button.className = isSelected ? "rounded-xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 px-3 py-2 text-left text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" : "rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
-						button.innerHTML = '<span class="block text-[21px] leading-tight">' + time.slice(0, 5) + '</span><span class="font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/80' : 'text-white/60') + '">' + (isSelected ? 'ausgewaehlt · ' : '') + getAvailabilityLabel(slot) + '</span>';
+						button.className = isSelected ? "flex items-center justify-between gap-3 rounded-xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 px-3 py-2 text-left text-[#73ffff] shadow-[0_0_16px_rgba(0,170,170,0.2)]" : "flex items-center justify-between gap-3 rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
+						button.innerHTML = '<span class="text-[18px] leading-none">' + time.slice(0, 5) + '</span><span class="font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/80' : 'text-white/60') + '">' + getAvailabilityLabel(slot) + '</span>';
 						button.addEventListener("click", () => selectTime(slot));
 						timeList.appendChild(button);
 					});
@@ -576,7 +640,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						button.className = "min-h-[76px] rounded-2xl border p-2 text-left transition max-[560px]:min-h-[58px]";
 						button.className += isSelected ? " border-[#00aaaa] bg-[#00aaaa]/25 text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)] cursor-default" : isDisabled ? " border-white/5 bg-black/20 text-white/30" : " border-white/10 bg-black/30 text-white/75 hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
 						button.disabled = isDisabled;
-						button.innerHTML = '<span class="block text-[22px] leading-none max-[560px]:text-[18px]">' + day + '</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/85' : 'text-white/45') + '">' + (isPast ? 'vergangen' : isLoadingAvailability && isSelected ? 'laden...' : 'waehlen') + '</span>';
+						button.innerHTML = '<span class="block text-[22px] leading-none max-[560px]:text-[18px]">' + day + '</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/85' : 'text-white/45') + '">' + (isPast ? 'vergangen' : isLoadingAvailability && isSelected ? 'laden...' : 'wählen') + '</span>';
 						if (!isDisabled) {
 							button.addEventListener("click", () => {
 								updateSelectedDate(date);
@@ -609,8 +673,8 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					isLoadingAvailability = true;
 					availabilityError = "";
 					selectedTimeInput.value = "";
-					selectedTimeLabel.textContent = "Bitte waehlen";
-					availabilityLabel.textContent = "Pruefe Verfuegbarkeit";
+					selectedTimeLabel.textContent = "Bitte wählen";
+					availabilityLabel.textContent = "Prüfe Verfügbarkeit";
 					renderCalendar();
 					renderTimes();
 
@@ -643,7 +707,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						availabilityByDate = data.dates || {};
 						const times = getSelectedTimes();
 						selectedTimeInput.value = times[0] ? getSlotTime(times[0]) : "";
-						selectedTimeLabel.textContent = selectedTimeInput.value ? formatTimeLabel(selectedTimeInput.value) : "Bitte waehlen";
+						selectedTimeLabel.textContent = selectedTimeInput.value ? formatTimeLabel(selectedTimeInput.value) : "Bitte wählen";
 					} catch (error) {
 						if (error.name === "AbortError") {
 							return;
@@ -702,15 +766,16 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					tab.addEventListener("click", () => {
 						accountTabs.forEach((item) => {
 							item.setAttribute("aria-pressed", "false");
-							item.classList.remove("border-[#00aaaa]", "bg-[#00aaaa]/20", "text-[#73ffff]");
-							item.classList.add("border-white/15", "text-white/70");
+							item.classList.remove("border-[#00aaaa]", "bg-[#00aaaa]/20", "text-[#73ffff]", "shadow-[0_0_22px_rgba(0,170,170,0.22)]");
+							item.classList.add("border-white/15", "bg-black/25", "text-white/70");
 						});
 						tab.setAttribute("aria-pressed", "true");
-						tab.classList.remove("border-white/15", "text-white/70");
-						tab.classList.add("border-[#00aaaa]", "bg-[#00aaaa]/20", "text-[#73ffff]");
+						tab.classList.remove("border-white/15", "bg-black/25", "text-white/70");
+						tab.classList.add("border-[#00aaaa]", "bg-[#00aaaa]/20", "text-[#73ffff]", "shadow-[0_0_22px_rgba(0,170,170,0.22)]");
 
 						accountPanels.forEach((panel) => {
 							const isActive = panel.dataset.accountPanel === tab.dataset.accountTab;
+							panel.classList.toggle("hidden", !isActive);
 							panel.classList.toggle("border-2", isActive);
 							panel.classList.toggle("border-[#00aaaa]", isActive);
 							panel.classList.toggle("bg-[#00aaaa]/10", isActive);
@@ -776,6 +841,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					confirmClientPhone.classList.toggle("hidden", !client.phone);
 					loginForm.classList.add("hidden");
 					loggedInPanel.classList.remove("hidden");
+					updateWizardTabAvailability();
 				};
 
 				const resetLoggedInClient = () => {
@@ -789,6 +855,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					loginMessage.classList.add("hidden");
 					loggedInPanel.classList.add("hidden");
 					loginForm.classList.remove("hidden");
+					updateWizardTabAvailability();
 				};
 
 				const readJsonResponse = async (response) => {
@@ -835,7 +902,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					}
 
 					if (password !== passwordConfirm) {
-						showRegisterMessage("Die Passwoerter stimmen nicht ueberein.", true);
+						showRegisterMessage("Die Passwörter stimmen nicht überein.", true);
 						return;
 					}
 
@@ -879,8 +946,8 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					}
 
 					loginSubmit.disabled = true;
-					loginSubmit.textContent = "Login wird geprueft...";
-					showLoginMessage("Wir pruefen eure Zugangsdaten bei SimplyBook.");
+					loginSubmit.textContent = "Login wird geprüft...";
+					showLoginMessage("Wir prüfen eure Zugangsdaten bei SimplyBook.");
 
 					try {
 						const formData = new FormData();
@@ -908,7 +975,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					event.preventDefault();
 
 					if (!offerIdInput.value || !selectedDateInput.value || !selectedTimeInput.value) {
-						showBookingMessage("Bitte zuerst Angebot, Datum und Startzeit auswaehlen.", true);
+						showBookingMessage("Bitte zuerst Angebot, Datum und Startzeit auswählen.", true);
 						goToStep("schedule");
 						return;
 					}
@@ -937,11 +1004,11 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						}
 
 						showSuccessScreen();
-						bookingSubmit.textContent = "Buchung bestaetigt";
+						bookingSubmit.textContent = "Buchung bestätigt";
 					} catch (error) {
 						showBookingMessage(error.message || "Buchung fehlgeschlagen.", true);
 						bookingSubmit.disabled = false;
-						bookingSubmit.textContent = "Buchung bestaetigen";
+						bookingSubmit.textContent = "Buchung bestätigen";
 					}
 				};
 

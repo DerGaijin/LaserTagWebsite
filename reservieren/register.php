@@ -81,7 +81,7 @@ try {
 	]);
 
 	if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 6) {
-		jsonResponse(['error' => 'Bitte Name, gueltige E-Mail und ein Passwort mit mindestens 6 Zeichen eingeben.'], 400);
+		jsonResponse(['error' => 'Bitte Name, gültige E-Mail und ein Passwort mit mindestens 6 Zeichen eingeben.'], 400);
 	}
 
 	$companyLogin = envValue('SIMPLYBOOK_COMPANY_LOGIN');

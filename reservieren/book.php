@@ -19,11 +19,11 @@ try {
 	$phone = trim((string) ($_POST['client_phone'] ?? ''));
 
 	if (!in_array($offerId, validOfferIds(), true) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) || !preg_match('/^\d{2}:\d{2}(:\d{2})?$/', $time)) {
-		jsonResponse(['error' => 'Bitte Angebot, Datum und Startzeit auswaehlen.'], 400);
+		jsonResponse(['error' => 'Bitte Angebot, Datum und Startzeit auswählen.'], 400);
 	}
 
 	if ($clientId === '' || $name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		jsonResponse(['error' => 'Bitte zuerst mit einem gueltigen Kundenkonto einloggen oder registrieren.'], 400);
+		jsonResponse(['error' => 'Bitte zuerst mit einem gültigen Kundenkonto einloggen oder registrieren.'], 400);
 	}
 
 	[$companyLogin, $apiKey] = simplyBookCredentials();

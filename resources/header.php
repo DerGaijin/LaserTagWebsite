@@ -15,7 +15,7 @@ function navClass(string $page, string $currentPage): string
 }
 ?>
 <header id="MainHeader" class="relative h-[140px] w-full max-[910px]:h-[180px]">
-    <div id="FixedHeaderContent" class="fixed z-[5] mt-2.5 flex w-full flex-col justify-between border-y-[5px] border-[#00aaaa] bg-[#151515] text-white transition-transform duration-200 ease-in-out max-[910px]:-translate-y-[285px]">
+    <div id="FixedHeaderContent" class="fixed z-[5] mt-2.5 flex w-full flex-col justify-between border-y-[5px] border-[#00aaaa] bg-[#151515] text-white transition-transform duration-200 ease-in-out max-[910px]:-translate-y-[270px]">
         <div id="HeaderContent" class="flex items-center p-2.5 max-[910px]:flex-col-reverse">
             <div id="HeaderToggle" class="hidden w-full cursor-pointer justify-center p-[5px] max-[910px]:flex" onclick="ToggleMainHeader()"><i id="HeaderToggleIcon" class="translate-y-[-4px] rotate-45 border-b-[3px] border-r-[3px] border-white p-[7px]"></i></div>
             <a href="<?= $relativeRoot ?>">

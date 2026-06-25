@@ -7,6 +7,8 @@ $headline = 'mt-2 text-[42px] uppercase leading-tight max-[775px]:text-[32px]';
 $bodyText = 'font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/90 max-[775px]:text-base';
 $card = $panel . ' p-6 max-[775px]:p-4';
 $list = 'space-y-3 font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/90 max-[775px]:text-base';
+$minimumAge = 'ab 6 Jahren';
+$ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
 ?>
 <html lang="de">
 
@@ -63,44 +65,50 @@ $list = 'space-y-3 font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-whit
                 <p class="<?= $eyebrow ?>">Laserforce Spielmodi</p>
                 <h2 class="mt-2 text-[34px] leading-tight max-[775px]:text-[28px]">Unsere Spiele kurz erklärt</h2>
                 <p class="<?= $bodyText ?> mt-3 max-w-[900px]">
-                    Laserforce bietet viele unterschiedliche Spielvarianten. Welche Modi wir in eurer Runde spielen,
-                    hängt von Gruppe, Erfahrung und Buchung ab. Vor dem Start erklären wir euch die Regeln direkt vor
-                    Ort.
+                    Bei uns spielt ihr nicht nur eine Variante. Je nach Gruppe, Erfahrung und Stimmung wählen wir den
+                    passenden Modus aus und erklären euch die Regeln vor jeder Runde direkt vor Ort.
                 </p>
             </div>
 
             <div class="grid grid-cols-2 gap-5 max-[900px]:grid-cols-1">
-                <article id="spiel-standard" class="<?= $card ?> scroll-mt-32">
-                    <img src="../resources/LaserForceBlasters.webp" alt="Laserforce Blaster"
+                <article id="spiel-color-conquest" class="<?= $card ?> scroll-mt-32">
+                    <img src="../resources/PrimeTimeIcon.webp" alt="Color Conquest Spielmodus"
                         class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
-                    <p class="<?= $eyebrow ?>">Klassiker</p>
-                    <h3 class="mt-2 text-[30px] leading-tight">Standard Solo</h3>
-                    <p class="<?= $bodyText ?> mt-4">Jeder spielt für sich. Ziel ist es, möglichst viele Treffer zu
-                        landen und am Ende die höchste Punktzahl zu erreichen.</p>
-                    <a class="Button_Book mt-5 inline-block" href="../resources/anleitungen/standard-solo.pdf"
-                        download>Anleitung downloaden</a>
+                    <p class="<?= $eyebrow ?>">Gebiete sichern</p>
+                    <h3 class="mt-2 text-[30px] leading-tight">Color Conquest</h3>
+                    <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
+                    <p class="<?= $bodyText ?> mt-4">Teams kämpfen um farbige Zonen und versuchen, möglichst viel
+                        Kontrolle in der Arena zu halten. Wer nur Treffer sammelt, lässt wichtige Punkte liegen.</p>
                 </article>
 
-                <article id="spiel-team" class="<?= $card ?> scroll-mt-32">
-                    <img src="../resources/LaserForceGen8.webp" alt="Laserforce Gen8 Ausrüstung"
+                <article id="spiel-laserball" class="<?= $card ?> scroll-mt-32">
+                    <img src="../resources/LargeIcon.webp" alt="Laserball Spielmodus"
                         class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
-                    <p class="<?= $eyebrow ?>">Teamplay</p>
-                    <h3 class="mt-2 text-[30px] leading-tight">Teamspiel</h3>
-                    <p class="<?= $bodyText ?> mt-4">Mehrere Teams treten gegeneinander an. Kommunikation, Deckung und
-                        gemeinsame Angriffe bringen hier mehr als reines Draufhalten.</p>
-                    <a class="Button_Book mt-5 inline-block" href="../resources/anleitungen/teamspiel.pdf"
-                        download>Anleitung downloaden</a>
+                    <p class="<?= $eyebrow ?>">Teamziel</p>
+                    <h3 class="mt-2 text-[30px] leading-tight">Laserball</h3>
+                    <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
+                    <p class="<?= $bodyText ?> mt-4">Hier zählt Zusammenspiel: Sichert euch den Ball, bringt ihn in die
+                        richtige Position und schützt eure Mitspieler gegen das gegnerische Team.</p>
                 </article>
 
-                <article id="spiel-highlander" class="<?= $card ?> scroll-mt-32">
-                    <img src="../resources/LargeIcon.webp" alt="Highlander Spielmodus"
+                <article id="spiel-tag" class="<?= $card ?> scroll-mt-32">
+                    <img src="../resources/LaserForceBlasters.webp" alt="Tag Spielmodus"
                         class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
-                    <p class="<?= $eyebrow ?>">Power-Spieler</p>
-                    <h3 class="mt-2 text-[30px] leading-tight">Highlander</h3>
-                    <p class="<?= $bodyText ?> mt-4">Ein starker Spieler tritt gegen den Rest an. Der Highlander hält
-                        mehr aus und ist schwerer zu stoppen, muss aber gegen viele Gegner bestehen.</p>
-                    <a class="Button_Book mt-5 inline-block" href="../resources/anleitungen/highlander.pdf"
-                        download>Anleitung downloaden</a>
+                    <p class="<?= $eyebrow ?>">Schnelle Duelle</p>
+                    <h3 class="mt-2 text-[30px] leading-tight">Tag</h3>
+                    <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
+                    <p class="<?= $bodyText ?> mt-4">Der direkte Lasertag-Modus: Bewegen, zielen, treffen und wieder in
+                        Deckung. Ideal zum Reinkommen und fuer schnelle, intensive Runden.</p>
+                </article>
+
+                <article id="spiel-challange-royal" class="<?= $card ?> scroll-mt-32">
+                    <img src="../resources/Stud.png" alt="Challange Royal Spielmodus"
+                        class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
+                    <p class="<?= $eyebrow ?>">Alle gegen alle</p>
+                    <h3 class="mt-2 text-[30px] leading-tight">Challange Royal</h3>
+                    <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
+                    <p class="<?= $bodyText ?> mt-4">Ein intensiver Wettkampfmodus, in dem jede Entscheidung zählt. Wer
+                        clever spielt, die Arena nutzt und ruhig bleibt, hat am Ende die besten Chancen.</p>
                 </article>
 
                 <article id="spiel-shadows" class="<?= $card ?> scroll-mt-32">
@@ -108,32 +116,19 @@ $list = 'space-y-3 font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-whit
                         class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
                     <p class="<?= $eyebrow ?>">Tarnung</p>
                     <h3 class="mt-2 text-[30px] leading-tight">Shadows</h3>
+                    <p class="<?= $ageNote ?>">Mindestalter: ab 14 Jahren</p>
                     <p class="<?= $bodyText ?> mt-4">In diesem Modus wird es taktischer: Spieler sind schwerer zu
-                        erkennen und müssen mehr auf Geräusche, Bewegung und Positionen achten.</p>
-                    <a class="Button_Book mt-5 inline-block" href="../resources/anleitungen/shadows.pdf"
-                        download>Anleitung downloaden</a>
+                        erkennen und muessen mehr auf Geraeusche, Bewegung und Positionen achten.</p>
                 </article>
 
-                <article id="spiel-zombies" class="<?= $card ?> scroll-mt-32">
-                    <img src="../resources/Stud.png" alt="Zombies Spielmodus"
+                <article id="spiel-standard" class="<?= $card ?> scroll-mt-32">
+                    <img src="../resources/LaserForceGen8.webp" alt="Standard Spielmodus"
                         class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
-                    <p class="<?= $eyebrow ?>">Überleben</p>
-                    <h3 class="mt-2 text-[30px] leading-tight">Zombies</h3>
-                    <p class="<?= $bodyText ?> mt-4">Eine Gruppe versucht zu überleben, während Zombies immer mehr
-                        Spieler auf ihre Seite ziehen. Das Spiel kippt oft kurz vor Schluss.</p>
-                    <a class="Button_Book mt-5 inline-block" href="../resources/anleitungen/zombies.pdf"
-                        download>Anleitung downloaden</a>
-                </article>
-
-                <article id="spiel-bases" class="<?= $card ?> scroll-mt-32">
-                    <img src="../resources/PrimeTimeIcon.webp" alt="Bases Spielmodus"
-                        class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
-                    <p class="<?= $eyebrow ?>">Ziele</p>
-                    <h3 class="mt-2 text-[30px] leading-tight">Bases</h3>
-                    <p class="<?= $bodyText ?> mt-4">Zusätzlich zu Treffern auf Spieler werden Basen oder Ziele in der
-                        Arena wichtig. Wer nur Gegner jagt, lässt Punkte liegen.</p>
-                    <a class="Button_Book mt-5 inline-block" href="../resources/anleitungen/bases.pdf"
-                        download>Anleitung downloaden</a>
+                    <p class="<?= $eyebrow ?>">Klassiker</p>
+                    <h3 class="mt-2 text-[30px] leading-tight">Standard</h3>
+                    <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
+                    <p class="<?= $bodyText ?> mt-4">Der klassische Modus fuer neue und erfahrene Spieler. Ziel ist es,
+                        Treffer zu landen, Punkte zu sammeln und als Team oder solo oben zu stehen.</p>
                 </article>
             </div>
         </section>
@@ -147,10 +142,11 @@ $list = 'space-y-3 font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-whit
                         uns kommen.</p>
                     <p>Bitte bringt bei Bedarf den ausgefüllten Muttizettel mit. Das Formular findet ihr direkt auf
                         unserer Website.</p>
+                    <p><b>Wichtig:</b> Minderjährige benötigen einen vollständig ausgefüllten und unterschriebenen
+                        Muttizettel sowie die darauf eingetragene Begleitperson vor Ort. Ohne Muttizettel oder ohne
+                        eingetragene Begleitperson ist keine Teilnahme erlaubt.</p>
                     <p>Bei Geburtstagen, Schulklassen oder größeren Jugendgruppen empfehlen wir, die Rahmenbedingungen
                         vor der Buchung kurz mit uns abzustimmen.</p>
-                    <p>Vor Ort achten wir auf eine klare Einweisung, faires Spiel und einen sicheren Ablauf in der
-                        Arena.</p>
                 </div>
                 <div class="mt-6 flex flex-wrap gap-3 text-xl">
                     <a class="Button_Book" href="../muttizettel/">Zum Muttizettel</a>

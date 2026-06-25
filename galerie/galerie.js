@@ -12,19 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
 		thumbnailBorderVertical: 0,
 
 		// DISPLAY ANIMATION
-		// thumbnailDisplayTransition: "flipUp", // thumbnail display animation
-		// thumbnailDisplayTransitionDuration: 400,
-		// thumbnailDisplayInterval: 200,
-		// thumbnailDisplayOrder: "rowByRow",
+		thumbnailDisplayTransition: "flipUp",
+		thumbnailDisplayTransitionDuration: 400,
+		thumbnailDisplayInterval: 120,
+		thumbnailDisplayOrder: "rowByRow",
 
 		// THUMBNAIL'S HOVER ANIMATION
-		// thumbnailHoverEffect2: "toolsSlideUp|labelSlideDown",
-		// touchAnimation: true,
-		// touchAutoOpenDelay: -1,
+		thumbnailHoverEffect2: "imageScale150|imageSepiaOff|toolsSlideUp|labelSlideDown|borderLighter",
+		touchAnimation: true,
+		touchAutoOpenDelay: -1,
 
 		// GALLERY THEME
-		// galleryTheme: {
-		// 	thumbnail: { titleShadow: "none", descriptionShadow: "none", titleColor: "#fff", borderColor: "#fff" },
-		// },
+		galleryTheme: {
+			thumbnail: { titleShadow: "none", descriptionShadow: "none", titleColor: "#fff", borderColor: "#73ffff" },
+		},
 	});
 });

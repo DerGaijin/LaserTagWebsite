@@ -46,30 +46,53 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
             </p>
         </section>
 
-        <section class="<?= $section ?> flex flex-col gap-5">
-            <article class="<?= $card ?>">
-                <p class="<?= $eyebrow ?>">Ablauf</p>
-                <h2 class="mt-2 text-[32px] leading-tight">So läuft euer Besuch ab</h2>
-                <div class="<?= $list ?> mt-5">
-                    <p><b>1. Ankommen:</b> Meldet euch vor Ort an und plant etwas Zeit vor der ersten Runde ein.</p>
-                    <p><b>2. Einweisung:</b> Wir erklären euch Ausrüstung, Regeln und Sicherheit in der Arena.</p>
-                    <p><b>3. Spielen:</b> Eine Runde dauert 12 Minuten. Zwischen den Runden könnt ihr kurz durchatmen
-                        und eure Punkte ansehen.</p>
-                    <p><b>4. Wiederholen:</b> Je nach Paket spielt ihr mehrere Runden oder nutzt eure gebuchte Zeit
-                        flexibel aus.</p>
-                </div>
-            </article>
-        </section>
+		<section class="<?= $section ?> flex flex-col gap-5">
+			<article class="<?= $card ?>">
+				<p class="<?= $eyebrow ?>">Ablauf</p>
+				<h2 class="mt-2 text-[32px] leading-tight">So läuft euer Besuch ab</h2>
+				<div class="mt-6 grid gap-0 font-[Arial,Helvetica,sans-serif] text-white/90">
+					<?php foreach ([
+						['Ankommen', 'Meldet euch vor Ort an und plant etwas Zeit vor der ersten Runde ein.'],
+						['Einweisung', 'Wir erklären euch Ausrüstung, Regeln und Sicherheit in der Arena.'],
+						['Spielen', 'Eine Runde dauert 12 Minuten. Zwischen den Runden könnt ihr kurz durchatmen und eure Punkte ansehen.'],
+						['Wiederholen', 'Je nach Paket spielt ihr mehrere Runden oder nutzt eure gebuchte Zeit flexibel aus.'],
+					] as $index => $step): ?>
+						<div class="grid grid-cols-[54px_1fr] gap-4 <?= $index < 3 ? 'pb-5' : '' ?>">
+							<div class="relative flex justify-center">
+								<?php if ($index < 3): ?><span class="absolute top-11 h-full w-px bg-[#00aaaa]/45"></span><?php endif; ?>
+								<span class="Timeline_Marker relative z-[1] flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#73ffff] bg-[#00aaaa]/20 text-[#73ffff]"><?= $index + 1 ?></span>
+							</div>
+							<div class="rounded-2xl border border-white/10 bg-black/25 p-4">
+								<p class="text-[22px] font-bold text-[#73ffff]"><?= htmlspecialchars($step[0]) ?></p>
+								<p class="mt-2 text-lg leading-7 max-[775px]:text-base"><?= htmlspecialchars($step[1]) ?></p>
+							</div>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			</article>
+		</section>
 
         <section class="<?= $section ?> flex flex-col gap-5">
-            <div>
-                <p class="<?= $eyebrow ?>">Laserforce Spielmodi</p>
-                <h2 class="mt-2 text-[34px] leading-tight max-[775px]:text-[28px]">Unsere Spiele kurz erklärt</h2>
-                <p class="<?= $bodyText ?> mt-3 max-w-[900px]">
-                    Bei uns spielt ihr nicht nur eine Variante. Je nach Gruppe, Erfahrung und Stimmung entscheidet ihr,
-                    welchen Modus ihr spielen möchtet. Die Regeln erklären wir euch vor jeder Runde direkt vor Ort.
-                </p>
-            </div>
+			<div>
+				<p class="<?= $eyebrow ?>">Laserforce Spielmodi</p>
+				<h2 class="mt-2 text-[34px] leading-tight max-[775px]:text-[28px]">Unsere Spiele kurz erklärt</h2>
+				<p class="<?= $bodyText ?> mt-3 max-w-[900px]">
+					Bei uns spielt ihr nicht nur eine Variante. Je nach Gruppe, Erfahrung und Stimmung entscheidet ihr,
+					welchen Modus ihr spielen möchtet. Die Regeln erklären wir euch vor jeder Runde direkt vor Ort.
+				</p>
+				<nav class="mt-5 flex flex-wrap gap-2" aria-label="Spielmodi direkt anwählen">
+					<?php foreach ([
+						['#spiel-color-conquest', 'Color Conquest'],
+						['#spiel-laserball', 'Laserball'],
+						['#spiel-tag', 'Tag'],
+						['#spiel-challange-royal', 'Challange Royal'],
+						['#spiel-shadows', 'Shadows'],
+						['#spiel-standard', 'Standard'],
+					] as $mode): ?>
+						<a class="rounded-full border border-[#73ffff]/45 bg-black/30 px-4 py-2 font-[Arial,Helvetica,sans-serif] text-sm text-[#73ffff] no-underline transition hover:bg-[#73ffff]/10" href="<?= $mode[0] ?>"><?= htmlspecialchars($mode[1]) ?></a>
+					<?php endforeach; ?>
+				</nav>
+			</div>
 
             <div class="grid grid-cols-2 gap-5 max-[900px]:grid-cols-1">
                 <article id="spiel-color-conquest" class="<?= $card ?> scroll-mt-32">

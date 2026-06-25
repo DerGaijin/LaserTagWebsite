@@ -1,3 +1,12 @@
+<?php
+$now = new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin'));
+$weekday = (int) $now->format('N');
+$openAt = new DateTimeImmutable($now->format('Y-m-d') . ' 13:00', new DateTimeZone('Europe/Berlin'));
+$closeAt = new DateTimeImmutable($now->format('Y-m-d') . ' 18:00', new DateTimeZone('Europe/Berlin'));
+$phoneReachable = $weekday >= 2 && $weekday <= 7 && $now >= $openAt && $now < $closeAt;
+$phoneStatus = $phoneReachable ? 'Telefonisch erreichbar' : 'Aktuell nicht telefonisch erreichbar';
+$phoneStatusClass = $phoneReachable ? 'border-[#238636] bg-[#238636]/25 text-[#9dffad]' : 'border-[#00aaaa] bg-[#00aaaa]/15 text-[#73ffff]';
+?>
 <!DOCTYPE html>
 <html lang="de">
     <head>
@@ -6,7 +15,12 @@
     <body>
         <?php $currentPage = 'kontakt'; include '../resources/header.php'; ?>
 
-        <main class="grid max-w-[1200px] grid-cols-3 grid-rows-[0fr_1fr] gap-2.5 justify-self-center px-[5px] py-[25px] max-[850px]:grid-cols-1 max-[850px]:grid-rows-[1fr_1fr_1fr_2fr] max-[850px]:justify-self-auto">
+        <main class="grid max-w-[1200px] grid-cols-3 grid-rows-[auto_auto_1fr] gap-2.5 justify-self-center px-[5px] py-[25px] max-[850px]:grid-cols-1 max-[850px]:grid-rows-none max-[850px]:justify-self-auto">
+            <div class="col-span-3 rounded-[15px] border <?= $phoneStatusClass ?> p-4 text-center shadow-[0_0_24px_rgba(0,170,170,.18)] max-[850px]:col-span-1">
+                <p class="text-sm uppercase tracking-[0.2em]">Live Status</p>
+                <p class="mt-1 text-[28px] leading-tight"><?= $phoneStatus ?></p>
+                <p class="mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/75">Telefonzeiten: Dienstag bis Sonntag, 13:00-18:00 Uhr</p>
+            </div>
             <div class="flex flex-col items-center rounded-[15px] bg-[#2a2a2a] p-2.5 text-center">
                 <img src="../resources/LocationIcon.webp" alt="Location" class="w-[50px]" />
                 <h2 class="p-2.5 pt-5 text-[24px] font-bold">Adresse</h2>
@@ -42,7 +56,7 @@
             </div>
 
             <iframe
-                class="col-span-3 flex flex-col items-center rounded-[15px] bg-[#2a2a2a] p-2.5 text-center max-[850px]:col-span-1"
+                class="col-span-3 flex min-h-[420px] flex-col items-center rounded-[15px] bg-[#2a2a2a] p-2.5 text-center max-[850px]:col-span-1"
                 data-cmp-vendor="s1104"
                 data-cmp-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2405.870322787447!2d9.2389109!3d52.914761899999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b0e4cd17fe60cd%3A0xc61486b665dfc8c!2sBernhard-Warnecke-Stra%C3%9Fe%205%2C%2027283%20Verden%20(Aller)%2C%20Deutschland!5e0!3m2!1sde!2s!4v1701259019377!5m2!1sde!2s"
                 width="100%"

@@ -5,13 +5,13 @@ $relativeRoot = $scriptDirectory === '' ? '' : str_repeat('../', substr_count($s
 
 function navClass(string $page, string $currentPage): string
 {
-    $classes = 'm-[5px] p-[5px] text-xl text-inherit no-underline whitespace-nowrap';
+	$classes = 'Nav_Link m-[5px] p-[5px] text-xl text-inherit no-underline whitespace-nowrap';
 
-    if ($page === 'booking' && in_array($currentPage, ['preise', 'reservieren'], true)) {
-        return $classes . ' border-b-[3px] border-[aqua]';
-    }
+	if ($page === 'booking' && in_array($currentPage, ['preise', 'reservieren'], true)) {
+		return $classes . ' is-active border-b-[3px] border-[aqua]';
+	}
 
-    return $page === $currentPage ? $classes . ' border-b-[3px] border-[aqua]' : $classes;
+	return $page === $currentPage ? $classes . ' is-active border-b-[3px] border-[aqua]' : $classes;
 }
 ?>
 <header id="MainHeader" class="relative h-[140px] w-full max-[910px]:h-[180px]">

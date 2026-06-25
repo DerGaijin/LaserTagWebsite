@@ -6,16 +6,28 @@
 	<body>
 		<?php include '../resources/header.php'; ?>
 
-		<main class="flex max-w-[900px] flex-col items-center justify-center justify-self-center px-[5px] py-[25px]">
-			<div class="m-2.5 flex w-full flex-col rounded-[25px] bg-[var(--ContentBoxBackground)] p-5 font-[Arial,Helvetica,sans-serif] shadow-[10px_10px_20px_black] [&_h1]:mb-2.5 [&_h1]:mt-5 [&_h1]:text-[28px] [&_h1]:font-bold [&_h1]:leading-[44px] [&_h2]:mb-2.5 [&_h2]:mt-5 [&_h2]:text-[26px] [&_h2]:font-bold [&_h2]:leading-9 [&_h3]:mb-2.5 [&_h3]:mt-4 [&_h3]:text-[22px] [&_h3]:font-bold [&_p]:mb-2.5 [&_ul]:mb-2.5 [&_ul]:mt-0 [&_ul]:list-disc [&_ul]:pl-10">
-				<h1>Nutzungsbedingungen und AGB</h1>
-				<h2>1 Arena</h2>
+		<main class="mx-auto grid w-full max-w-[1200px] grid-cols-[260px_1fr] gap-5 px-[15px] py-[25px] max-[900px]:grid-cols-1">
+			<aside class="sticky top-[120px] h-fit rounded-[20px] border border-white/10 bg-[var(--ContentBoxBackground)] p-4 font-[Arial,Helvetica,sans-serif] shadow-[10px_10px_20px_black] max-[900px]:static">
+				<p class="text-sm uppercase tracking-[0.18em] text-[#73ffff]">Inhalt</p>
+				<nav class="mt-3 flex flex-col gap-2 text-sm leading-6">
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#agb">AGB</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#arena">Arena</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#ausruestung">Ausrüstung</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#stornierung">Eintritt & Stornierung</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#regeln">Regeln vor Ort</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#haftung">Haftung</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#gutscheine">Gutscheine</a>
+				</nav>
+			</aside>
+			<article class="flex w-full flex-col rounded-[25px] bg-[var(--ContentBoxBackground)] p-6 font-[Arial,Helvetica,sans-serif] leading-7 shadow-[10px_10px_20px_black] [&_h1]:mb-2.5 [&_h1]:mt-0 [&_h1]:scroll-mt-32 [&_h1]:text-[32px] [&_h1]:font-bold [&_h1]:leading-[44px] [&_h2]:mb-2.5 [&_h2]:mt-7 [&_h2]:scroll-mt-32 [&_h2]:text-[26px] [&_h2]:font-bold [&_h2]:leading-9 [&_h3]:mb-2.5 [&_h3]:mt-4 [&_h3]:text-[22px] [&_h3]:font-bold [&_p]:mb-3 [&_p]:text-white/90 [&_ul]:mb-3 [&_ul]:mt-0 [&_ul]:list-disc [&_ul]:pl-10">
+				<h1 id="agb">Nutzungsbedingungen und AGB</h1>
+				<h2 id="arena">1 Arena</h2>
 				<p>
 					Die Benutzung der LaserTag-Arena geschieht auf eigene Gefahr. Die Arena darf nur während der Spielzeit und nur im Rahmen des Spielablaufs genutzt werden. Das Klettern auf oder Verschieben
 					von Hindernissen ist untersagt. In den ersten Minuten des Spiels ist größere Vorsicht walten zu lassen, bis sich die Augen an die Dunkelheit gewöhnt haben, Rennen ist generell untersagt. Der
 					Betreiber behält sich das Recht vor, den Betrieb der kompletten Anlage oder vonTeilen der Anlage aus sicherheitstechnischen Gründen einzustellen.
 				</p>
-				<h2>2 Ausrüstung</h2>
+				<h2 id="ausruestung">2 Ausrüstung</h2>
 				<br />
 				<p>
 					Die Spielgeräte werden durch den Spieler auf eigene Gefahr genutzt. Die Spieler sind verpflichtet, sorgsam mit dem Spielgerät umzugehen. Bei vom Spieler verursachten Schäden oder
@@ -29,10 +41,10 @@
 					Sämtlichen Anweisungen und Entscheidungen des Betreibers und des Personals ist Folge zu leisten. Bei Zuwiderhandlungen oder Verstößen gegen Anweisungen des Betreibers können die betreffenden
 					Teilnehmer vom Besuch der LaserTag-Arena ausgeschlossen werden, ohne Anspruch auf die Rückzahlung des Entgeltes.
 				</p>
-				<h2>4 Eintrittspreis &amp; Stornierung</h2>
+				<h2 id="stornierung">4 Eintrittspreis &amp; Stornierung</h2>
 				<br />
 				<p>Änderungen / Stornierungen sind nur innerhalb von 24h vorm Termin möglich.</p>
-				<h2>5 Spielabbruch</h2>
+				<h2 id="regeln">5 Spielabbruch</h2>
 				<br />
 				<p>Beendet der Spieler die Nutzung der Arena frühzeitig auf eigenem Wunsch, besteht kein Anspruch auf anteilige oder komplette Rückerstattung des Eintrittspreises.</p>
 				<h2>6 Garderobe</h2>
@@ -50,7 +62,7 @@
 				<h2>10 Fotos</h2>
 				<br />
 				<p>Das Fertigen von Foto- oder Filmmaterial zu gewerblichen Zwecken ist innerhalb der kompletten Anlage ohne ausdrückliche Genehmigung untersagt.</p>
-				<h2>11 Haftungsbegrenzung</h2>
+				<h2 id="haftung">11 Haftungsbegrenzung</h2>
 				<br />
 				<p>
 					Für selbstverschuldete Unfälle oder Unfälle, die durch Missachtung der Spielregeln oder der Einweisung geschehen, wird keine Haftung übernommen. Dasselbe gilt für Schäden, die durch Dritte
@@ -60,7 +72,7 @@
 					Die Haftung für leicht fahrlässige Pflichtverletzungen ist ausgeschlossen, sofern diese keine vertragswesentlichen Pflichten, Schäden aus der Verletzung des Lebens, des Körpers oder der
 					Gesundheit betreffen. Gleiches gilt für Pflichtverletzungen unserer Erfüllungsgehilfen und gesetzlichen Vertreter.
 				</p>
-				<h2>12 Gutscheine</h2>
+				<h2 id="gutscheine">12 Gutscheine</h2>
 				<h3>Kauf eines Gutscheins</h3>
 				<ul>
 					<li>Sie müssen mindestens 18 Jahre alt sein, um einen Gutschein zu kaufen.</li>
@@ -111,7 +123,7 @@
 				</p>
 				<p>Es gilt das Recht der Bundesrepublik Deutschland. Gerichtsstand ist soweit zulässig Frankfurt am Main.</p>
 				<p>Verden, den 11.10.2022</p>
-			</div>
+			</article>
 		</main>
 
 		<?php $currentFooter = 'agb'; include '../resources/footer.php'; ?>

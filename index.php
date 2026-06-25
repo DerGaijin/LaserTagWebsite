@@ -15,8 +15,39 @@ $newsItems = [
         'highlight' => 'Reservierungen sind wieder möglich.',
         'image' => 'resources/renovieren.avif',
         'imageAlt' => 'Renovierte Arena',
-    ],
+	],
 ];
+$openingHours = [
+	1 => ['Montag', 'Geschlossen*', null, null],
+	2 => ['Dienstag', 'Geschlossen*', null, null],
+	3 => ['Mittwoch', 'Geschlossen*', null, null],
+	4 => ['Donnerstag', '15:00 - 20:00', '15:00', '20:00'],
+	5 => ['Freitag', '15:00 - 20:00', '15:00', '20:00'],
+	6 => ['Samstag', '10:00 - 21:00', '10:00', '21:00'],
+	7 => ['Sonntag', '10:00 - 21:00', '10:00', '21:00'],
+];
+$now = new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin'));
+$todayIndex = (int) $now->format('N');
+$todayHours = $openingHours[$todayIndex];
+$isOpenNow = false;
+
+if ($todayHours[2] && $todayHours[3]) {
+	$openAt = new DateTimeImmutable($now->format('Y-m-d') . ' ' . $todayHours[2], new DateTimeZone('Europe/Berlin'));
+	$closeAt = new DateTimeImmutable($now->format('Y-m-d') . ' ' . $todayHours[3], new DateTimeZone('Europe/Berlin'));
+	$isOpenNow = $now >= $openAt && $now < $closeAt;
+}
+
+$openingStatus = $isOpenNow ? 'Jetzt geöffnet' : 'Heute geschlossen';
+$openingStatusClass = $isOpenNow ? 'border-[#238636] bg-[#238636]/25 text-[#9dffad]' : 'border-[#00aaaa] bg-[#00aaaa]/15 text-[#73ffff]';
+
+function openingRowClass(int $dayIndex, int $todayIndex): string
+{
+	if ($dayIndex === $todayIndex) {
+		return 'bg-[#00aaaa44] text-[#73ffff] shadow-[0_0_18px_rgba(0,170,170,0.22)]';
+	}
+
+	return $dayIndex >= 4 ? 'bg-[#00aaaa26]' : 'bg-black/25';
+}
 ?>
 <!doctype html>
 <html lang="de">
@@ -69,11 +100,16 @@ $newsItems = [
                     <p class="max-w-[640px] text-2xl leading-snug text-white/85 max-[700px]:text-xl">Taucht ein in
                         unsere Lasertaghalle mit LaserForce Gen8 Equipment, taktischen Runden und Action für Teams,
                         Geburtstage und Firmen.</p>
-                    <div class="flex flex-wrap gap-3 text-xl">
-                        <a class="Button_Book px-7 py-3" href="preise/">Jetzt Buchen</a>
-                        <a class="rounded-md border border-white/35 bg-white/10 px-7 py-3 text-white no-underline transition hover:bg-white/20"
-                            href="galerie/">Arena ansehen</a>
-                    </div>
+					<div class="grid grid-cols-3 gap-3 max-w-[640px] max-[620px]:grid-cols-1">
+						<div class="rounded-2xl border border-white/10 bg-black/25 p-3 text-center"><span class="block text-[28px] text-[#73ffff]">400 m²</span><span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/70">Arena</span></div>
+						<div class="rounded-2xl border border-white/10 bg-black/25 p-3 text-center"><span class="block text-[28px] text-[#73ffff]">12 Min.</span><span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/70">pro Runde</span></div>
+						<div class="rounded-2xl border border-white/10 bg-black/25 p-3 text-center"><span class="block text-[28px] text-[#73ffff]">Gen8</span><span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/70">Equipment</span></div>
+					</div>
+					<div class="flex flex-wrap gap-3 text-xl">
+						<a class="Button_Book Pulse_CTA px-7 py-3" href="preise/">Jetzt Buchen</a>
+						<a class="rounded-md border border-white/35 bg-white/10 px-7 py-3 text-white no-underline transition hover:bg-white/20"
+							href="galerie/">Arena ansehen</a>
+					</div>
                 </div>
 
                 <div
@@ -93,24 +129,18 @@ $newsItems = [
         <section class="grid gap-6 lg:grid-cols-[.95fr_1.05fr]">
             <div
                 class="rounded-[28px] border border-white/10 bg-[var(--ContentBoxBackground)] p-6 shadow-[0_18px_40px_rgba(0,0,0,.65)]">
-                <h2 class="mb-5 border-b-2 border-[#00aaaa] pb-3 text-center text-[32px] uppercase">Öffnungszeiten</h2>
-                <div id="OpeningsTable"
-                    class="grid grid-cols-[1fr_auto] gap-x-4 gap-y-3 text-[23px] max-[520px]:text-lg">
-                    <p class="rounded-l-xl bg-black/25 px-4 py-3">Montag</p>
-                    <p class="rounded-r-xl bg-black/25 px-4 py-3 text-right">Geschlossen*</p>
-                    <p class="rounded-l-xl bg-black/25 px-4 py-3">Dienstag</p>
-                    <p class="rounded-r-xl bg-black/25 px-4 py-3 text-right">Geschlossen*</p>
-                    <p class="rounded-l-xl bg-black/25 px-4 py-3">Mittwoch</p>
-                    <p class="rounded-r-xl bg-black/25 px-4 py-3 text-right">Geschlossen*</p>
-                    <p class="rounded-l-xl bg-[#00aaaa26] px-4 py-3">Donnerstag</p>
-                    <p class="rounded-r-xl bg-[#00aaaa26] px-4 py-3 text-right">15:00 - 20:00</p>
-                    <p class="rounded-l-xl bg-[#00aaaa26] px-4 py-3">Freitag</p>
-                    <p class="rounded-r-xl bg-[#00aaaa26] px-4 py-3 text-right">15:00 - 20:00</p>
-                    <p class="rounded-l-xl bg-[#23863636] px-4 py-3">Samstag</p>
-                    <p class="rounded-r-xl bg-[#23863636] px-4 py-3 text-right">10:00 - 21:00</p>
-                    <p class="rounded-l-xl bg-[#23863636] px-4 py-3">Sonntag</p>
-                    <p class="rounded-r-xl bg-[#23863636] px-4 py-3 text-right">10:00 - 21:00</p>
-                </div>
+				<div class="mb-5 flex items-center justify-between gap-4 border-b-2 border-[#00aaaa] pb-3 max-[520px]:flex-col">
+					<h2 class="text-center text-[32px] uppercase">Öffnungszeiten</h2>
+					<span class="rounded-full border px-3 py-1 text-xs uppercase tracking-[0.08em] whitespace-nowrap <?= $openingStatusClass ?>"><?= $openingStatus ?></span>
+				</div>
+				<div id="OpeningsTable"
+					class="grid grid-cols-[1fr_auto] gap-x-4 gap-y-3 text-[23px] max-[520px]:text-lg">
+					<?php foreach ($openingHours as $dayIndex => $hours): ?>
+						<?php $rowClass = openingRowClass($dayIndex, $todayIndex); ?>
+						<p class="rounded-l-xl px-4 py-3 <?= $rowClass ?>"><?= htmlspecialchars($hours[0]) ?><?= $dayIndex === $todayIndex ? ' <span class="text-sm uppercase tracking-[0.12em] text-white/70">Heute</span>' : '' ?></p>
+						<p class="rounded-r-xl px-4 py-3 text-right <?= $rowClass ?>"><?= htmlspecialchars($hours[1]) ?></p>
+					<?php endforeach; ?>
+				</div>
                 <p class="mt-5 rounded-2xl border border-[#00ffff44] bg-black/25 p-4 text-center text-xl">*Montag bis
                     Mittwoch geschlossen, außer bei Buchung der Halle.</p>
                 <div class="mt-5 flex flex-wrap justify-center gap-3 text-xl">

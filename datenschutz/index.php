@@ -6,11 +6,23 @@
 	<body>
 		<?php include '../resources/header.php'; ?>
 
-		<main class="flex max-w-[900px] flex-col items-center justify-center justify-self-center px-[5px] py-[25px]">
-			<div class="m-2.5 flex w-full flex-col rounded-[25px] bg-[var(--ContentBoxBackground)] p-5 font-[Arial,Helvetica,sans-serif] shadow-[10px_10px_20px_black] [&_h1]:mb-2.5 [&_h1]:mt-5 [&_h1]:text-[28px] [&_h1]:font-bold [&_h1]:leading-[44px] [&_h2]:mb-2.5 [&_h2]:mt-5 [&_h2]:text-[26px] [&_h2]:font-bold [&_h2]:leading-9 [&_p]:mb-2.5">
-				<h1>Datenschutzerklärung</h1>
+		<main class="mx-auto grid w-full max-w-[1200px] grid-cols-[260px_1fr] gap-5 px-[15px] py-[25px] max-[900px]:grid-cols-1">
+			<aside class="sticky top-[120px] h-fit rounded-[20px] border border-white/10 bg-[var(--ContentBoxBackground)] p-4 font-[Arial,Helvetica,sans-serif] shadow-[10px_10px_20px_black] max-[900px]:static">
+				<p class="text-sm uppercase tracking-[0.18em] text-[#73ffff]">Inhalt</p>
+				<nav class="mt-3 flex flex-col gap-2 text-sm leading-6">
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#datenschutz">Datenschutzerklärung</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#zugriffsdaten">Zugriffsdaten</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#vertragsabwicklung">Vertragsabwicklung</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#cookies">Cookies</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#webanalyse">Webanalyse</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#social-media">Social Media</a>
+					<a class="text-white/80 no-underline hover:text-[#73ffff]" href="#rechte">Ihre Rechte</a>
+				</nav>
+			</aside>
+			<article class="flex w-full flex-col rounded-[25px] bg-[var(--ContentBoxBackground)] p-6 font-[Arial,Helvetica,sans-serif] leading-7 shadow-[10px_10px_20px_black] [&_a]:text-[#73ffff] [&_h1]:mb-2.5 [&_h1]:mt-0 [&_h1]:scroll-mt-32 [&_h1]:text-[32px] [&_h1]:font-bold [&_h1]:leading-[44px] [&_h2]:mb-2.5 [&_h2]:mt-7 [&_h2]:scroll-mt-32 [&_h2]:text-[26px] [&_h2]:font-bold [&_h2]:leading-9 [&_p]:mb-3 [&_p]:text-white/90">
+				<h1 id="datenschutz">Datenschutzerklärung</h1>
 				<p>Debora Dobias<br />Bernhard-Warnecke-Straße, 5<br />Verden<br />Deutschland<br />E-Mail: allgemein@lasertagverden.de</p>
-				<h2>1. Zugriffsdaten und Hosting</h2>
+				<h2 id="zugriffsdaten">1. Zugriffsdaten und Hosting</h2>
 				<p>
 					Sie können unsere Webseiten besuchen, ohne Angaben zu Ihrer Person zu machen. Bei jedem Aufruf einer Webseite speichert der Webserver lediglich automatisch ein sogenanntes Server-Logfile,
 					das z.&nbsp;B. den Namen der angeforderten Datei, Ihre IP-Adresse, Datum und Uhrzeit des Abrufs, übertragene Datenmenge und den anfragenden Provider (Zugriffsdaten) enthält und den Abruf
@@ -34,7 +46,7 @@
 					beschriebenen Kontaktmöglichkeit. Unsere Dienstleister sitzen in den USA. Für die USA liegt kein Angemessenheitsbeschluss der Europäischen Kommission vor. Unsere Zusammenarbeit mit ihnen
 					stützt sich auf Standarddatenschutzklauseln der Europäischen Kommission.
 				</p>
-				<h2>2. Datenverarbeitung zur Vertragsabwicklung und zur Kontaktaufnahme</h2>
+				<h2 id="vertragsabwicklung">2. Datenverarbeitung zur Vertragsabwicklung und zur Kontaktaufnahme</h2>
 				<h2>2.1 Datenverarbeitung zur Vertragsabwicklung</h2>
 				<p>
 					Wir erheben personenbezogene Daten, wenn Sie uns diese im Rahmen Ihrer Bestellung oder bei einer Kontaktaufnahme mit uns (z.B. per Kontaktformular oder E-Mail) freiwillig mitteilen.
@@ -85,7 +97,7 @@
 					eine weitere Nutzung Ihrer Daten gemäß Art. 6 Abs. 1 S. 1 lit. a DSGVO eingewilligt haben oder wir uns eine darüber hinausgehende Datenverwendung vorbehalten, die gesetzlich erlaubt ist und
 					über die wir Sie in dieser Erklärung informieren.6. Cookies und weitere Technologien
 				</p>
-				<h2>6.1 Allgemeine Informationen</h2>
+				<h2 id="cookies">6.1 Allgemeine Informationen</h2>
 				<p>
 					Um den Besuch unserer Webseite attraktiv zu gestalten und die Nutzung bestimmter Funktionen zu ermöglichen, verwenden wir auf verschiedenen Seiten Technologien einschließlich sogenannter
 					Cookies. Cookies sind kleine Textdateien, die automatisch auf Ihrem Endgerät gespeichert werden. Einige der von uns verwendeten Cookies werden nach Ende der Browser-Sitzung, also nach
@@ -113,7 +125,7 @@
 					haben, können Sie Ihre Einwilligung jederzeit widerrufen durch eine Nachricht an die in der Datenschutzerklärung beschriebenen Kontaktmöglichkeit. Alternativ können Sie auch folgenden Link
 					aufrufen: https://www.lasertag-verden.de/datenschutz/. Bei der Nichtannahme von Cookies kann die Funktionalität unserer Webseite eingeschränkt sein.
 				</p>
-				<h2>7. Einsatz von Cookies und anderen Technologien zu Webanalyse und Werbezwecken</h2>
+				<h2 id="webanalyse">7. Einsatz von Cookies und anderen Technologien zu Webanalyse und Werbezwecken</h2>
 				<p>
 					Soweit Sie hierzu Ihre Einwilligung nach Art. 6 Abs. 1 S. 1 lit. a DSGVO erteilt haben, verwenden wir auf unserer Webseite die nachfolgenden Cookies und andere Technologien von
 					Drittanbietern. Nach Zweckfortfall und Ende des Einsatzes der jeweiligen Technologie durch uns werden die in diesem Zusammenhang erhobenen Daten gelöscht. Sie können Ihre Einwilligung
@@ -137,7 +149,7 @@
 					automatisch erhoben und gespeichert, aus denen unter Verwendung von Pseudonymen Nutzungsprofile erstellt werden. Hierzu können Cookies eingesetzt werden. Ihre IP-Adresse wird grundsätzlich
 					nicht mit anderen Daten von Google zusammengeführt. Die Datenverarbeitung erfolgt auf Grundlage einer Vereinbarung über die Auftragsverarbeitung durch Google.
 				</p>
-				<h2>8. Social Media</h2>
+				<h2 id="social-media">8. Social Media</h2>
 				<p>
 					Unsere Onlinepräsenz auf Facebook (by Meta), Instagram (by Meta), Youtube<br /><br />Soweit Sie hierzu Ihre Einwilligung nach Art. 6 Abs. 1 S. 1 lit. a DSGVO gegenüber dem jeweiligen Social
 					Media Betreiber erteilt haben, werden bei Besuch unserer Onlinepräsenzen auf den in der oben genannten sozialen Medien Ihre Daten für Marktforschungs- und Werbezwecke automatisch erhoben und
@@ -170,7 +182,7 @@
 					Online-Präsenz auf YouTube werden in der Regel an einen Server der Google LLC, 1600 Amphitheatre Parkway Mountain View, CA 94043, USA übertragen und dort gespeichert. Für die USA liegt kein
 					Angemessenheitsbeschluss der Europäischen Kommission vor. Unsere Zusammenarbeit mit ihnen stützt sich auf Standarddatenschutzklauseln der Europäischen Kommission.
 				</p>
-				<h2>9. Kontaktmöglichkeiten und Ihre Rechte</h2>
+				<h2 id="rechte">9. Kontaktmöglichkeiten und Ihre Rechte</h2>
 				<h2>9.1 Ihre Rechte als Betroffener haben Sie folgende Rechte:</h2>
 				<p>
 					Gemäß Art. 15 DSGVO das Recht, in dem dort bezeichneten Umfang Auskunft über Ihre von uns verarbeiteten personenbezogenen Daten zu verlangen;<br /><br />gemäß Art. 16 DSGVO das Recht,
@@ -198,7 +210,7 @@
 					Bei Fragen zur Erhebung, Verarbeitung oder Nutzung Ihrer personenbezogenen Daten, bei Auskünften, Berichtigung, Einschränkung oder Löschung von Daten sowie Widerruf erteilter Einwilligungen
 					oder Widerspruch gegen eine bestimmte Datenverwendung wenden Sie sich bitte direkt an uns über die Kontaktdaten in unserem Impressum.
 				</p>
-			</div>
+			</article>
 		</main>
 
 		<?php $currentFooter = 'datenschutz'; include '../resources/footer.php'; ?>

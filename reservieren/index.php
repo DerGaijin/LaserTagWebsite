@@ -133,6 +133,13 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				</button>
 			</nav>
 
+			<aside class="<?= $section ?> sticky top-[120px] z-[3] hidden rounded-[22px] border border-[#00aaaa]/35 bg-[#151515]/95 p-4 shadow-[0_12px_30px_rgba(0,0,0,.45)] backdrop-blur lg:grid lg:grid-cols-4 lg:gap-4" data-booking-summary>
+				<div><p class="<?= $label ?>">Angebot</p><p class="mt-1 text-[#73ffff]" data-summary-offer>Bitte wählen</p></div>
+				<div><p class="<?= $label ?>">Termin</p><p class="mt-1 text-[#73ffff]" data-summary-date>Bitte wählen</p></div>
+				<div><p class="<?= $label ?>">Start</p><p class="mt-1 text-[#73ffff]" data-summary-time>Bitte wählen</p></div>
+				<div><p class="<?= $label ?>">Spieler</p><p class="mt-1 text-[#73ffff]"><span data-summary-count>8</span> Personen</p></div>
+			</aside>
+
 			<form class="<?= $section ?> flex flex-col gap-8" action="book.php" method="post" data-booking-form>
 				<section data-wizard-step="offer">
 					<?php foreach ($offerSections as $offerSection): ?>
@@ -354,7 +361,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 			<div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 px-4 backdrop-blur-sm" data-booking-success>
 				<section class="w-full max-w-[680px] rounded-[30px] border-2 border-[#00aaaa] bg-[var(--ContentBoxBackground)] p-8 text-center text-white shadow-[0_0_55px_rgba(0,170,170,0.45)] max-[560px]:p-5" role="dialog" aria-modal="true" aria-labelledby="booking-success-title">
-					<div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#73ffff] bg-[#00aaaa]/25 text-[42px] text-[#73ffff] shadow-[0_0_28px_rgba(115,255,255,0.35)]">✓</div>
+					<div class="Success_Check mx-auto flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#73ffff] bg-[#00aaaa]/25 text-[42px] text-[#73ffff] shadow-[0_0_28px_rgba(115,255,255,0.35)]">✓</div>
 					<p class="<?= $eyebrow ?> mt-6 justify-self-center">Reservierung erfolgreich</p>
 					<h2 id="booking-success-title" class="mt-2 text-[38px] leading-tight text-[#73ffff] max-[560px]:text-[30px]">Euer Termin ist gebucht</h2>
 					<p class="<?= $bodyText ?> mt-4">Die Buchung wurde verbindlich in unserem System hinterlegt. Bitte achtet auf eure E-Mails für weitere Informationen.</p>
@@ -384,15 +391,40 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 				const tabs = Array.from(document.querySelectorAll("[data-wizard-tab]"));
 				const steps = Array.from(document.querySelectorAll("[data-wizard-step]"));
+				steps.forEach((step) => step.classList.add("Booking_Step"));
+				tabs.forEach((tab) => {
+					if (!tab.querySelector("[data-step-check]")) {
+						const check = document.createElement("span");
+						check.dataset.stepCheck = "";
+						check.className = "mt-3 hidden rounded-full border border-[#73ffff]/60 px-2 py-1 text-xs uppercase tracking-[0.14em] text-[#73ffff]";
+						check.textContent = "✓ erledigt";
+						tab.appendChild(check);
+					}
+				});
 				let loadAvailability = () => {};
 				let updateConfirmationSummary = () => {};
 				let updateWizardTabAvailability = () => {};
 				let canOpenWizardStep = () => true;
 				let currentStep = "offer";
+				const initialStep = steps.find((item) => item.dataset.wizardStep === currentStep);
+				if (initialStep) {
+					initialStep.classList.add("is-visible");
+				}
 				const goToStep = (step) => {
 					currentStep = step;
 					updateConfirmationSummary();
-					steps.forEach((item) => item.classList.toggle("hidden", item.dataset.wizardStep !== step));
+					steps.forEach((item) => {
+						const isActive = item.dataset.wizardStep === step;
+						item.classList.toggle("hidden", !isActive);
+						item.classList.toggle("is-visible", false);
+						item.classList.toggle("is-entering", isActive);
+						if (isActive) {
+							requestAnimationFrame(() => {
+								item.classList.remove("is-entering");
+								item.classList.add("is-visible");
+							});
+						}
+					});
 					activateChoice(document.querySelector(`[data-wizard-tab="${step}"]`), tabs);
 					updateWizardTabAvailability();
 					window.scrollTo({ top: 0, behavior: "smooth" });
@@ -453,6 +485,10 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const confirmCount = document.querySelector("[data-confirm-count]");
 				const confirmDate = document.querySelector("[data-confirm-date]");
 				const confirmTime = document.querySelector("[data-confirm-time]");
+				const summaryOffer = document.querySelector("[data-summary-offer]");
+				const summaryDate = document.querySelector("[data-summary-date]");
+				const summaryTime = document.querySelector("[data-summary-time]");
+				const summaryCount = document.querySelector("[data-summary-count]");
 				const clientIdInput = document.querySelector("[data-client-id]");
 				const confirmClientName = document.querySelector("[data-confirm-client-name]");
 				const confirmClientEmail = document.querySelector("[data-confirm-client-email]");
@@ -486,6 +522,10 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					confirmCount.textContent = count.value;
 					confirmDate.textContent = toDisplayDate(selectedDate);
 					confirmTime.textContent = selectedTimeInput.value ? formatTimeLabel(selectedTimeInput.value) : "Bitte wählen";
+					summaryOffer.textContent = offerIdInput.value ? offer.title : "Bitte wählen";
+					summaryDate.textContent = selectedDateInput.value ? toDisplayDate(selectedDate) : "Bitte wählen";
+					summaryTime.textContent = selectedTimeInput.value ? formatTimeLabel(selectedTimeInput.value) : "Bitte wählen";
+					summaryCount.textContent = count.value;
 					updateWizardTabAvailability();
 				};
 				const wizardStepOrder = ["offer", "schedule", "account", "confirm"];
@@ -518,10 +558,17 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				updateWizardTabAvailability = () => {
 					tabs.forEach((tab) => {
 						const canOpen = canOpenWizardStep(tab.dataset.wizardTab);
+						const isCompleted = wizardStepOrder.indexOf(tab.dataset.wizardTab) < wizardStepOrder.indexOf(currentStep);
 						tab.disabled = !canOpen;
 						tab.setAttribute("aria-disabled", canOpen ? "false" : "true");
 						tab.classList.toggle("cursor-not-allowed", !canOpen);
 						tab.classList.toggle("opacity-50", !canOpen);
+						tab.classList.toggle("shadow-[0_0_22px_rgba(115,255,255,0.22)]", isCompleted);
+						tab.classList.toggle("border-[#73ffff]", isCompleted);
+						const check = tab.querySelector("[data-step-check]");
+						if (check) {
+							check.classList.toggle("hidden", !isCompleted);
+						}
 					});
 				};
 				updateWizardTabAvailability();
@@ -557,6 +604,14 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					card.appendChild(heading);
 					card.appendChild(text);
 					timeList.appendChild(card);
+
+					if (isLoading) {
+						for (let i = 0; i < 4; i++) {
+							const skeleton = document.createElement("div");
+							skeleton.className = "Availability_Skeleton";
+							timeList.appendChild(skeleton);
+						}
+					}
 				};
 
 				const selectTime = (slot) => {
@@ -632,15 +687,19 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 					for (let day = 1; day <= lastDay.getDate(); day++) {
 						const date = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), day);
+						const dateKey = toDateValue(date);
+						const daySlots = availabilityByDate[dateKey] || [];
 						const isSelected = toDateValue(date) === toDateValue(selectedDate);
 						const isPast = date < today;
 						const isDisabled = isPast || isLoadingAvailability || isSelected;
 						const button = document.createElement("button");
 						button.type = "button";
 						button.className = "min-h-[76px] rounded-2xl border p-2 text-left transition max-[560px]:min-h-[58px]";
-						button.className += isSelected ? " border-[#00aaaa] bg-[#00aaaa]/25 text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)] cursor-default" : isDisabled ? " border-white/5 bg-black/20 text-white/30" : " border-white/10 bg-black/30 text-white/75 hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
+						const availabilityClass = daySlots.length >= 5 ? " border-[#238636]/70 bg-[#238636]/20 text-[#9dffad]" : daySlots.length > 0 ? " border-[#d8b94a]/70 bg-[#d8b94a]/15 text-[#ffe58a]" : " border-white/10 bg-black/30 text-white/75";
+						button.className += isSelected ? " border-[#00aaaa] bg-[#00aaaa]/25 text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)] cursor-default" : isDisabled ? " border-white/5 bg-black/20 text-white/30" : availabilityClass + " hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
 						button.disabled = isDisabled;
-						button.innerHTML = '<span class="block text-[22px] leading-none max-[560px]:text-[18px]">' + day + '</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/85' : 'text-white/45') + '">' + (isPast ? 'vergangen' : isLoadingAvailability && isSelected ? 'laden...' : 'wählen') + '</span>';
+						const dayLabel = isPast ? 'vergangen' : isLoadingAvailability && isSelected ? 'laden...' : daySlots.length >= 5 ? 'viele frei' : daySlots.length > 0 ? 'wenige frei' : offerIdInput.value ? 'voll' : 'wählen';
+						button.innerHTML = '<span class="block text-[22px] leading-none max-[560px]:text-[18px]">' + day + '</span><span class="mt-2 block font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/85' : 'text-white/55') + '">' + dayLabel + '</span>';
 						if (!isDisabled) {
 							button.addEventListener("click", () => {
 								updateSelectedDate(date);

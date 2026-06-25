@@ -45,3 +45,49 @@ document.addEventListener("click", (event) => {
 		document.getElementById("HeaderToggleIcon").classList.remove("!-rotate-[135deg]");
 	}
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+	const nav = document.getElementById("HeaderNavigation");
+	if (nav) {
+		const links = Array.from(nav.querySelectorAll(".Nav_Link"));
+		const active = nav.querySelector(".Nav_Link.is-active");
+
+		const moveUnderline = (link) => {
+			if (!link) {
+				nav.style.setProperty("--nav-underline-width", "0px");
+				return;
+			}
+			const navBox = nav.getBoundingClientRect();
+			const linkBox = link.getBoundingClientRect();
+			nav.style.setProperty("--nav-underline-left", linkBox.left - navBox.left + "px");
+			nav.style.setProperty("--nav-underline-width", linkBox.width + "px");
+		};
+
+		links.forEach((link) => {
+			link.addEventListener("mouseenter", () => moveUnderline(link));
+			link.addEventListener("focus", () => moveUnderline(link));
+		});
+
+		nav.addEventListener("mouseleave", () => moveUnderline(active));
+		window.addEventListener("resize", () => moveUnderline(active));
+		moveUnderline(active);
+	}
+
+	document.querySelectorAll("[data-copy-value]").forEach((button) => {
+		const originalText = button.textContent;
+		button.addEventListener("click", async () => {
+			try {
+				await navigator.clipboard.writeText(button.dataset.copyValue);
+				button.textContent = "kopiert";
+				button.classList.add("text-[#73ffff]", "border-[#73ffff]");
+				window.setTimeout(() => {
+					button.textContent = originalText;
+					button.classList.remove("text-[#73ffff]", "border-[#73ffff]");
+				}, 1400);
+			} catch (error) {
+				button.textContent = "nicht kopiert";
+				window.setTimeout(() => (button.textContent = originalText), 1400);
+			}
+		});
+	});
+});

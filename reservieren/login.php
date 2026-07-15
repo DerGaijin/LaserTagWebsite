@@ -1,33 +1,33 @@
 <?php
-declare(strict_types=1);
 
-ini_set('display_errors', '0');
-ini_set('html_errors', '0');
-require __DIR__ . '/Shared.php';
+require_once __DIR__ . '/shared.php';
+
+registerJsonFatalHandler();
 
 try {
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        respond(405, ['error' => 'Method not allowed.']);
-    }
+	loadReservationEnv();
+	requirePostRequest();
+	requireCurlExtension();
 
-    $email = trim((string) ($_POST['email'] ?? ''));
-    $password = (string) ($_POST['password'] ?? '');
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $password === '') {
-        respond(400, ['error' => 'Bitte E-Mail und Passwort eingeben.']);
-    }
+	$email = trim((string) ($_POST['email'] ?? ''));
+	$password = (string) ($_POST['password'] ?? '');
 
-    $client = simplyBookRequest(SIMPLYBOOK_API_URL, 'getClientInfoByLoginPassword', [$email, $password], simplyBookHeaders())['result'] ?? null;
-    if (!is_array($client) || empty($client['id'])) {
-        respond(401, ['error' => 'E-Mail oder Passwort ist nicht korrekt.']);
-    }
+	if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $password === '') {
+		jsonResponse(['error' => 'Bitte E-Mail und Passwort eingeben.'], 400);
+	}
 
-    respond(200, ['client' => [
-        'id' => (string) $client['id'],
-        'name' => (string) ($client['name'] ?? ''),
-        'email' => (string) ($client['email'] ?? $client['login'] ?? $email),
-        'phone' => (string) ($client['phone'] ?? ''),
-    ]]);
+	[$companyLogin, $apiKey] = simplyBookCredentials();
+
+	$token = getSimplyBookToken($companyLogin, $apiKey);
+	$authHeaders = ['X-Company-Login: ' . $companyLogin, 'X-Token: ' . $token];
+	$client = jsonRpcCall(SIMPLYBOOK_API_URL, 'getClientInfoByLoginPassword', [$email, $password], $authHeaders);
+	$clientData = publicClientData($client);
+
+	if ($clientData === [] || $clientData['id'] === '') {
+		jsonResponse(['error' => 'E-Mail oder Passwort ist nicht korrekt.'], 401);
+	}
+
+	jsonResponse(['client' => $clientData]);
 } catch (Throwable $exception) {
-    error_log('SimplyBook login endpoint: ' . $exception->getMessage());
-    respond(401, ['error' => 'E-Mail oder Passwort ist nicht korrekt.']);
+	jsonResponse(['error' => 'E-Mail oder Passwort ist nicht korrekt.'], 401);
 }

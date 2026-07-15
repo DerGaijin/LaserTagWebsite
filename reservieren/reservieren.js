@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     const STEP_ORDER = ["offer", "schedule", "account", "confirm"];
-    const TIMES = ["10:00 Uhr", "12:00 Uhr", "14:00 Uhr", "16:00 Uhr", "18:00 Uhr"];
     const MONTH_NAMES = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
     const DAY_NAMES = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
     const ACTIVE_STEP_CLASSES = "booking-tab rounded-xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 px-3 py-2 text-left text-[#73ffff] shadow-[0_0_16px_rgba(0,170,170,0.18)]";
@@ -25,7 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
         offerId: "",
         date: getDateParameter(urlParameters.get("date")) || new Date(),
         time: "",
-        count: 8
+        count: 8,
+        client: null
     };
     const elements = {
         calendarGrid: $('[data-calendar-grid]'),
@@ -34,10 +34,15 @@ document.addEventListener("DOMContentLoaded", () => {
         successDialog: $('[data-booking-success]'),
         successSummary: $('[data-success-summary]'),
         servicesList: $('[data-services-list]'),
-        servicesStatus: $('[data-services-status]')
+        servicesStatus: $('[data-services-status]'),
+        timeStatus: $('[data-time-status]'),
+        timeStatusText: $('[data-time-status-text]'),
+        timeSpinner: $('[data-time-spinner]')
     };
     let currentStep = "offer";
     let visibleMonth = new Date(state.date.getFullYear(), state.date.getMonth(), 1);
+    let availableTimes = [];
+    let availabilityController;
 
     function getDateParameter(value) {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(value || "")) {
@@ -56,6 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function toDateParameter(date) {
         return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    }
+
+    function formatTime(time) {
+        return time ? `${time} Uhr` : "Bitte wählen";
     }
 
     // Keep a shareable URL in sync with the choices that identify a time slot.
@@ -83,13 +92,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const values = {
             "[data-summary-offer]": state.offer || "Bitte wählen",
             "[data-summary-date]": state.offer ? formatDate(state.date) : "Bitte wählen",
-            "[data-summary-time]": state.time || "Bitte wählen",
+            "[data-summary-time]": formatTime(state.time),
             "[data-selected-offer]": state.offer || "Bitte Angebot wählen",
             "[data-selected-date]": formatDate(state.date),
-            "[data-selected-time]": state.time || "Bitte wählen",
+            "[data-selected-time]": formatTime(state.time),
             "[data-confirm-offer]": state.offer || "Bitte wählen",
             "[data-confirm-date]": state.offer ? formatDate(state.date) : "Bitte wählen",
-            "[data-confirm-time]": state.time || "Bitte wählen"
+            "[data-confirm-time]": formatTime(state.time)
         };
 
         Object.entries(values).forEach(([selector, value]) => {
@@ -98,6 +107,17 @@ document.addEventListener("DOMContentLoaded", () => {
         $$('[data-summary-count], [data-count], [data-confirm-count]').forEach((element) => {
             element.textContent = state.count;
         });
+        const clientName = $('[data-confirm-client-name]');
+        const clientDetails = $('[data-confirm-client-details]');
+        const clientPhone = $('[data-confirm-client-phone]');
+        if (clientName && clientDetails) {
+            clientName.textContent = state.client ? state.client.name : "Nicht eingeloggt";
+            clientDetails.textContent = state.client ? state.client.email : "Bitte in Schritt 3 einloggen.";
+        }
+        if (clientPhone) {
+            clientPhone.textContent = state.client?.phone || "";
+            clientPhone.classList.toggle("hidden", !state.client?.phone);
+        }
     }
 
     function showStep(stepName) {
@@ -124,13 +144,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderTimes() {
-        // Rebuild the list so the selected style always matches the current state.
         elements.timeList.replaceChildren();
 
-        TIMES.forEach((time) => {
+        availableTimes.forEach((time) => {
             const button = document.createElement("button");
             button.type = "button";
-            button.textContent = time;
+            button.textContent = `${time} Uhr`;
             button.className = time === state.time ? ACTIVE_TIME_CLASSES : INACTIVE_TIME_CLASSES;
             button.addEventListener("click", () => {
                 state.time = time;
@@ -140,6 +159,56 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             elements.timeList.append(button);
         });
+    }
+
+    function setAvailabilityStatus(message, isLoading = false) {
+        elements.timeStatusText.textContent = message;
+        elements.timeSpinner.classList.toggle("hidden", !isLoading);
+        elements.timeStatus.setAttribute("aria-busy", String(isLoading));
+    }
+
+    function renderTimePlaceholders() {
+        const placeholders = Array.from({ length: 3 }, () => {
+            const placeholder = document.createElement("span");
+            placeholder.className = "h-11 animate-pulse rounded-xl border border-white/10 bg-white/10";
+            return placeholder;
+        });
+        elements.timeList.replaceChildren(...placeholders);
+    }
+
+    async function loadAvailability() {
+        if (!state.offerId) {
+            return;
+        }
+        availabilityController?.abort();
+        availabilityController = new AbortController();
+        const request = availabilityController;
+        state.time = "";
+        availableTimes = [];
+        renderTimePlaceholders();
+        updateSummary();
+        updateUrl();
+        setAvailabilityStatus(`Wir prüfen freie Zeiten für ${state.count} ${state.count === 1 ? "Person" : "Personen"}...`, true);
+
+        try {
+            const parameters = new URLSearchParams({ serviceId: state.offerId, date: toDateParameter(state.date), count: state.count });
+            const response = await fetch(`availability.php?${parameters}`, { headers: { Accept: "application/json" }, signal: request.signal });
+            const payload = await response.json();
+            if (!response.ok || !Array.isArray(payload.times)) {
+                throw new Error(payload.error || "Die Verfügbarkeit konnte nicht geladen werden.");
+            }
+            if (availabilityController !== request) {
+                return;
+            }
+            availableTimes = payload.times;
+            setAvailabilityStatus(availableTimes.length ? "Diese Startzeiten sind für eure Auswahl frei:" : "Für diese Auswahl sind keine Startzeiten verfügbar.");
+            renderTimes();
+        } catch (error) {
+            if (error.name === "AbortError") {
+                return;
+            }
+            setAvailabilityStatus(error instanceof Error ? error.message : "Die Verfügbarkeit konnte nicht geladen werden.");
+        }
     }
 
     function renderCalendar() {
@@ -308,32 +377,146 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function selectDate(date) {
-        // A different date invalidates a previously selected start time.
         state.date = date;
-        state.time = "";
         renderCalendar();
-        renderTimes();
         updateSummary();
         updateUrl();
+        loadAvailability();
+    }
+
+    function createField(label, type, name, autocomplete) {
+        const wrapper = document.createElement("label");
+        const labelText = document.createElement("span");
+        const input = document.createElement("input");
+        wrapper.className = "block text-sm uppercase tracking-[.12em] text-white/70";
+        labelText.textContent = label;
+        input.className = "mt-2 w-full rounded-xl border border-white/15 bg-black/35 px-4 py-3 font-[Arial,Helvetica,sans-serif] normal-case tracking-normal text-white outline-none focus:border-[#00aaaa]";
+        input.type = type;
+        input.name = name;
+        input.autocomplete = autocomplete;
+        input.required = true;
+        wrapper.append(labelText, input);
+        return wrapper;
+    }
+
+    function setAccountMessage(panel, message, isError = false) {
+        const status = panel.querySelector("[data-account-message]");
+        status.textContent = message;
+        status.className = `rounded-xl border p-3 font-[Arial,Helvetica,sans-serif] text-sm ${isError ? "border-red-400/50 bg-red-950/30 text-red-100" : "border-[#00aaaa]/35 bg-[#00aaaa]/10 text-[#73ffff]"}`;
+        status.classList.toggle("hidden", !message);
+    }
+
+    function renderAccountPanels() {
+        const loginPanel = $('[data-account-panel="login"]');
+        const registerPanel = $('[data-account-panel="register"]');
+        const createPanel = (panel, title, description, buttonText, fields) => {
+            const form = document.createElement("form");
+            const eyebrow = document.createElement("p");
+            const heading = document.createElement("h2");
+            const copy = document.createElement("p");
+            const grid = document.createElement("div");
+            const message = document.createElement("p");
+            const button = document.createElement("button");
+            eyebrow.className = "text-sm uppercase tracking-[.12em] text-white/70";
+            eyebrow.textContent = title;
+            heading.className = "mt-1 text-[28px] text-[#73ffff]";
+            heading.textContent = title === "Login" ? "Willkommen zurück" : "Neues Kundenkonto";
+            copy.className = "mt-3 font-[Arial,Helvetica,sans-serif] text-base text-white/90";
+            copy.textContent = description;
+            grid.className = "mt-5 grid grid-cols-2 gap-4 max-[700px]:grid-cols-1";
+            grid.append(...fields);
+            message.dataset.accountMessage = "";
+            message.className = "hidden";
+            button.className = "Button_Book mt-5";
+            button.type = "submit";
+            button.textContent = buttonText;
+            form.append(eyebrow, heading, copy, grid, message, button);
+            panel.replaceChildren(form);
+            return form;
+        };
+        const loginForm = createPanel(loginPanel, "Login", "Nutzt euer SimplyBook-Konto, um den Termin zu bestätigen.", "Einloggen", [
+            createField("E-Mail", "email", "email", "email"),
+            createField("Passwort", "password", "password", "current-password")
+        ]);
+        const registerForm = createPanel(registerPanel, "Registrierung", "Erstellt ein Konto für diese und spätere Reservierungen.", "Konto erstellen", [
+            createField("Name", "text", "name", "name"),
+            createField("Telefon", "tel", "phone", "tel"),
+            createField("E-Mail", "email", "email", "email"),
+            createField("Passwort", "password", "password", "new-password")
+        ]);
+        registerForm.elements.phone.required = false;
+        return { loginForm, registerForm };
+    }
+
+    async function sendForm(url, form) {
+        const response = await fetch(url, { method: "POST", headers: { Accept: "application/json" }, body: new FormData(form) });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || !payload.client) {
+            throw new Error(payload.error || "Die Anfrage konnte nicht verarbeitet werden.");
+        }
+        return payload.client;
+    }
+
+    function showLoggedInClient() {
+        const panel = $('[data-account-panel]:not(.hidden)');
+        const form = panel.querySelector("form");
+        form.classList.add("hidden");
+        const actions = document.createElement("div");
+        const label = document.createElement("p");
+        const name = document.createElement("p");
+        const email = document.createElement("p");
+        const phone = document.createElement("p");
+        const buttonGroup = document.createElement("div");
+        const confirmButton = document.createElement("button");
+        const changeButton = document.createElement("button");
+        actions.className = "mt-5 rounded-2xl border border-[#00aaaa]/40 bg-black/25 p-4";
+        label.className = "text-sm uppercase tracking-[.12em] text-white/70";
+        label.textContent = "Eingeloggt als";
+        name.className = "mt-2 text-[24px] leading-tight text-[#73ffff]";
+        name.textContent = state.client.name;
+        email.className = "mt-1 font-[Arial,Helvetica,sans-serif] text-base text-white/90";
+        email.textContent = state.client.email;
+        phone.className = "mt-1 font-[Arial,Helvetica,sans-serif] text-base text-white/90";
+        phone.textContent = state.client.phone || "";
+        phone.classList.toggle("hidden", !state.client.phone);
+        buttonGroup.className = "mt-5 flex flex-wrap gap-3";
+        confirmButton.className = "Button_Book";
+        confirmButton.type = "button";
+        confirmButton.textContent = "Weiter zur Bestätigung";
+        changeButton.className = "rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-white/80";
+        changeButton.type = "button";
+        changeButton.textContent = "Anderes Konto nutzen";
+        confirmButton.addEventListener("click", () => showStep("confirm"));
+        changeButton.addEventListener("click", () => {
+            state.client = null;
+            actions.remove();
+            form.classList.remove("hidden");
+            updateSummary();
+        });
+        buttonGroup.append(confirmButton, changeButton);
+        actions.append(label, name, email, phone, buttonGroup);
+        panel.append(actions);
+        updateSummary();
     }
 
     function addConfirmationAccountCard() {
-        // The account card is shared content that does not need to be duplicated in the page markup.
         const confirmationGrid = $('[data-confirm-time]').closest(".grid");
-        const accountCard = document.createElement("div");
-        const heading = document.createElement("p");
-        const status = document.createElement("p");
-        const hint = document.createElement("p");
-
-        accountCard.className = "col-span-2 rounded-2xl border border-white/10 bg-black/25 p-4 max-[560px]:col-auto";
-        heading.className = "text-sm uppercase tracking-[.12em] text-white/70";
-        heading.textContent = "Kundenkonto";
-        status.className = "mt-2 text-lg text-[#73ffff]";
-        status.textContent = "Nicht eingeloggt";
-        hint.className = "mt-1 text-sm text-white/70";
-        hint.textContent = "Bitte in Schritt 3 einloggen.";
-        accountCard.append(heading, status, hint);
-        confirmationGrid.append(accountCard);
+        const card = document.createElement("div");
+        const label = document.createElement("p");
+        const name = document.createElement("p");
+        const details = document.createElement("p");
+        const phone = document.createElement("p");
+        card.className = "col-span-2 rounded-2xl border border-white/10 bg-black/25 p-4 max-[560px]:col-auto";
+        label.className = "text-sm uppercase tracking-[.12em] text-white/70";
+        label.textContent = "Kundenkonto";
+        name.className = "mt-2 text-lg text-[#73ffff]";
+        name.dataset.confirmClientName = "";
+        details.className = "mt-1 text-sm text-white/70";
+        details.dataset.confirmClientDetails = "";
+        phone.className = "mt-1 hidden text-sm text-white/70";
+        phone.dataset.confirmClientPhone = "";
+        card.append(label, name, details, phone);
+        confirmationGrid.append(card);
     }
 
     function createSuccessSummaryItem(label, value) {
@@ -355,7 +538,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const summaryItems = [
             ["Angebot", state.offer || "Bitte wählen"],
             ["Datum", formatDate(state.date)],
-            ["Start", state.time || "Bitte wählen"]
+            ["Start", formatTime(state.time)]
         ];
 
         elements.successSummary.replaceChildren(...summaryItems.map(([label, value]) => createSuccessSummaryItem(label, value)));
@@ -369,6 +552,7 @@ document.addEventListener("DOMContentLoaded", () => {
             selectOffer(button.closest("[data-offer]"));
             updateUrl();
             showStep("schedule");
+            loadAvailability();
         }
     });
     stepTabs.forEach((tab) => {
@@ -379,15 +563,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
     $$('[data-go-step]').forEach((button) => {
-        button.addEventListener("click", () => showStep(button.dataset.goStep));
+        button.addEventListener("click", () => {
+            if (button.dataset.goStep === "account" && !state.time) {
+                setAvailabilityStatus("Bitte wählt zuerst eine verfügbare Startzeit.");
+                return;
+            }
+            showStep(button.dataset.goStep);
+        });
     });
     $('[data-count-down]').addEventListener("click", () => {
         state.count = Math.max(1, state.count - 1);
         updateSummary();
+        loadAvailability();
     });
     $('[data-count-up]').addEventListener("click", () => {
         state.count += 1;
         updateSummary();
+        loadAvailability();
     });
     $('[data-calendar-prev]').addEventListener("click", () => {
         visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1);
@@ -407,12 +599,56 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     });
-    $('[data-demo-submit]').addEventListener("click", showSuccessDialog);
-
     addConfirmationAccountCard();
+    const accountForms = renderAccountPanels();
+    [accountForms.loginForm, accountForms.registerForm].forEach((form) => {
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const button = form.querySelector('[type="submit"]');
+            const panel = form.closest("[data-account-panel]");
+            button.disabled = true;
+            setAccountMessage(panel, "Daten werden geprüft...");
+            try {
+                state.client = await sendForm(form === accountForms.loginForm ? "login.php" : "register.php", form);
+                showLoggedInClient();
+            } catch (error) {
+                setAccountMessage(panel, error instanceof Error ? error.message : "Die Anfrage konnte nicht verarbeitet werden.", true);
+            } finally {
+                button.disabled = false;
+            }
+        });
+    });
+    $('[data-demo-submit]').addEventListener("click", async () => {
+        if (!state.client) {
+            showStep("account");
+            setAccountMessage($('[data-account-panel]:not(.hidden)'), "Bitte loggt euch ein oder erstellt ein Konto.", true);
+            return;
+        }
+        const button = $('[data-demo-submit]');
+        button.disabled = true;
+        try {
+            const response = await fetch("book.php", { method: "POST", headers: { Accept: "application/json" }, body: new URLSearchParams({ serviceId: state.offerId, date: toDateParameter(state.date), time: state.time, count: state.count, clientId: state.client.id, name: state.client.name, email: state.client.email, phone: state.client.phone || "" }) });
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok || !payload.success) {
+                throw new Error(payload.error || "Die Buchung konnte nicht abgeschlossen werden.");
+            }
+            showSuccessDialog();
+        } catch (error) {
+            const confirmPanel = $('[data-booking-step="confirm"]');
+            let message = confirmPanel.querySelector("[data-booking-message]");
+            if (!message) {
+                message = document.createElement("p");
+                message.dataset.bookingMessage = "";
+                message.className = "mt-5 rounded-xl border border-red-400/50 bg-red-950/30 p-3 font-[Arial,Helvetica,sans-serif] text-sm text-red-100";
+                confirmPanel.append(message);
+            }
+            message.textContent = error instanceof Error ? error.message : "Die Buchung konnte nicht abgeschlossen werden.";
+        } finally {
+            button.disabled = false;
+        }
+    });
 
     renderCalendar();
-    renderTimes();
     updateSummary();
 
     async function loadServices() {
@@ -432,12 +668,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (selectedOfferCard) {
                 selectOffer(selectedOfferCard);
             }
-            const timeParameter = urlParameters.get("time");
-            if (state.offer && TIMES.some((time) => time === `${timeParameter} Uhr`)) {
-                state.time = `${timeParameter} Uhr`;
-            }
             updateSummary();
             showStep(state.offer ? "schedule" : "offer");
+            if (state.offer) {
+                loadAvailability();
+            }
         } catch (error) {
             elements.servicesStatus.textContent = error instanceof Error ? error.message : "Die Angebote konnten nicht geladen werden.";
             showStep("offer");

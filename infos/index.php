@@ -96,8 +96,8 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
 
             <div class="grid grid-cols-2 gap-5 max-[900px]:grid-cols-1">
                 <article id="spiel-color-conquest" class="<?= $card ?> scroll-mt-32">
-                    <img src="../resources/PrimeTimeIcon.webp" alt="Color Conquest Spielmodus"
-                        class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
+                    <img src="../resources/Logo Color Conquest.png" alt="Color Conquest Spielmodus"
+                        class="mb-5 h-28 w-full rounded-2xl bg-black/25 object-contain" />
                     <p class="<?= $eyebrow ?>">Gebiete sichern</p>
                     <h3 class="mt-2 text-[30px] leading-tight">Color Conquest</h3>
                     <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
@@ -108,8 +108,8 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                 </article>
 
                 <article id="spiel-laserball" class="<?= $card ?> scroll-mt-32">
-                    <img src="../resources/LargeIcon.webp" alt="Laserball Spielmodus"
-                        class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
+                    <img src="../resources/Logo Laserball.png" alt="Laserball Spielmodus"
+                        class="mb-5 h-28 w-full rounded-2xl bg-black/25 object-contain" />
                     <p class="<?= $eyebrow ?>">Teamziel</p>
                     <h3 class="mt-2 text-[30px] leading-tight">Laserball</h3>
                     <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
@@ -120,8 +120,8 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                 </article>
 
                 <article id="spiel-tag" class="<?= $card ?> scroll-mt-32">
-                    <img src="../resources/LaserForceBlasters.webp" alt="Tag Spielmodus"
-                        class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
+                    <img src="../resources/Logo Tag.png" alt="Tag Spielmodus"
+                        class="mb-5 h-28 w-full rounded-2xl bg-black/25 object-contain" />
                     <p class="<?= $eyebrow ?>">Schnelle Duelle</p>
                     <h3 class="mt-2 text-[30px] leading-tight">Tag</h3>
                     <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
@@ -132,8 +132,8 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                 </article>
 
                 <article id="spiel-challange-royal" class="<?= $card ?> scroll-mt-32">
-                    <img src="../resources/Stud.png" alt="Challange Royal Spielmodus"
-                        class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
+                    <img src="../resources/Logo Challange Royal.png" alt="Challange Royal Spielmodus"
+                        class="mb-5 h-28 w-full rounded-2xl bg-black/25 object-contain" />
                     <p class="<?= $eyebrow ?>">Alle gegen alle</p>
                     <h3 class="mt-2 text-[30px] leading-tight">Challange Royal</h3>
                     <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>
@@ -144,8 +144,8 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                 </article>
 
                 <article id="spiel-shadows" class="<?= $card ?> scroll-mt-32">
-                    <img src="../resources/NightSpecialIcon.webp" alt="Shadows Spielmodus"
-                        class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
+                    <img src="../resources/Logo Shadows.png" alt="Shadows Spielmodus"
+                        class="mb-5 h-28 w-full rounded-2xl bg-black/25 object-contain" />
                     <p class="<?= $eyebrow ?>">Tarnung</p>
                     <h3 class="mt-2 text-[30px] leading-tight">Shadows</h3>
                     <p class="<?= $ageNote ?>">Mindestalter: ab 14 Jahren</p>
@@ -156,8 +156,8 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                 </article>
 
                 <article id="spiel-standard" class="<?= $card ?> scroll-mt-32">
-                    <img src="../resources/LaserForceGen8.webp" alt="Standard Spielmodus"
-                        class="mb-5 h-44 w-full rounded-2xl bg-black/25 object-contain p-4" />
+                    <img src="../resources/Logo Standard.png" alt="Standard Spielmodus"
+                        class="mb-5 h-28 w-full rounded-2xl bg-black/25 object-contain" />
                     <p class="<?= $eyebrow ?>">Klassiker</p>
                     <h3 class="mt-2 text-[30px] leading-tight">Standard</h3>
                     <p class="<?= $ageNote ?>">Mindestalter: <?= $minimumAge ?></p>

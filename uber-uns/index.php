@@ -22,7 +22,7 @@
 				</article>
 				<article class="rounded-[24px] border border-white/10 bg-[#2a2a2a] p-5 shadow-[10px_10px_20px_black]">
 					<h2 class="text-[28px] text-[#73ffff]">Für Events</h2>
-					<p class="mt-3 font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/85">Geburtstage, Weihnachtsfeiern, Junggesellenabschiede oder Teamtage können nach Absprache auch außerhalb der Öffnungszeiten stattfinden.</p>
+					<p class="mt-3 font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/85">Weihnachtsfeiern, Junggesellenabschiede oder Teamtage können nach Absprache auch außerhalb der Öffnungszeiten stattfinden.</p>
 				</article>
 				<article class="rounded-[24px] border border-white/10 bg-[#2a2a2a] p-5 shadow-[10px_10px_20px_black]">
 					<h2 class="text-[28px] text-[#73ffff]">Für Action</h2>

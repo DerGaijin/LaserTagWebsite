@@ -27,6 +27,17 @@ $bodyText = 'font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/90 m
 				Angebote werden aktualisiert...
 			</div>
 			<div class="<?= $section ?> hidden" data-offer-sections hidden></div>
+
+			<section class="<?= $section ?> <?= $panel ?> p-6 max-[775px]:p-4">
+				<div class="grid grid-cols-[auto_1fr] items-center gap-5 max-[850px]:grid-cols-1">
+					<div class="flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#00aaaa] text-[28px] text-[#73ffff]">+</div>
+					<div>
+						<p class="<?= $eyebrow ?>">Optional</p>
+						<h2 class="mt-2 text-[28px] leading-tight max-[775px]:text-[24px]">Getränkeflat</h2>
+						<p class="<?= $bodyText ?> mt-2">Für 9,90 € pro Person sind kleine Getränke sowie 1-Liter-Wasserflaschen dabei. Cola, Fanta und Sprite sind davon ausgenommen.</p>
+					</div>
+				</div>
+			</section>
 		</main>
 
 		<?php include '../resources/footer.php'; ?>
@@ -55,10 +66,11 @@ $bodyText = 'font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/90 m
 						const heading = element("div", "mb-4");
 						heading.append(element("p", "text-sm uppercase tracking-[0.24em] text-[#73ffff]", category.eyebrow));
 						heading.append(element("h2", "text-[30px] leading-tight max-[775px]:text-[25px]", category.title));
+						if (category.note) heading.append(element("p", "mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/75", category.note));
 						section.append(heading);
 						const grid = element("div", "grid grid-cols-2 gap-5 max-[900px]:grid-cols-1");
 						offers.forEach((service) => {
-							const card = element("article", "flex min-h-[250px] flex-col overflow-hidden rounded-[25px] border border-white/10 bg-[var(--ContentBoxBackground)] shadow-[10px_10px_20px_black]");
+							const card = element("article", "relative flex min-h-[250px] flex-col overflow-visible rounded-[25px] border border-white/10 bg-[var(--ContentBoxBackground)] shadow-[10px_10px_20px_black]");
 							const header = element("div", "flex items-start justify-between gap-4 border-b border-white/10 p-5 max-[520px]:flex-col");
 							const title = document.createElement("div");
 							const label = service.label || service.duration;
@@ -78,12 +90,13 @@ $bodyText = 'font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/90 m
 								content.append(description);
 							}
 							const actions = element("div", "mt-auto flex flex-col gap-3");
-							if (service.note) actions.append(element("p", "w-full rounded-xl border border-[#73ffff]/35 bg-[#73ffff]/10 p-3 font-[Arial,Helvetica,sans-serif] text-sm leading-6 text-white/90", "Hinweis: " + service.note));
+							if (service.note) actions.append(element("p", "w-full rounded-xl border border-[#73ffff]/35 bg-[#73ffff]/10 p-2.5 font-[Arial,Helvetica,sans-serif] text-xs leading-5 text-white/90", "Hinweis: " + service.note));
 							const book = element("a", "Button_Book self-start", "Jetzt buchen");
 							book.href = "../reservieren/?id=" + encodeURIComponent(service.id);
 							actions.append(book);
 							content.append(actions);
 							card.append(content);
+							if (service.bestseller) card.append(element("span", "pointer-events-none absolute left-1/2 top-[-16px] z-[1] -translate-x-1/2 rounded-full border-2 border-white bg-[#73ffff] px-5 py-2 font-[Arial,Helvetica,sans-serif] text-sm font-bold uppercase tracking-[0.16em] text-black shadow-[0_0_22px_rgba(115,255,255,0.9)]", "Bestseller"));
 							grid.append(card);
 						});
 						section.append(grid);

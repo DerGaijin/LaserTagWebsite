@@ -8,7 +8,7 @@ const SIMPLYBOOK_SERVICE_CACHE_SECONDS = 300;
 
 const SERVICE_DETAILS = [
 	16 => ['price' => '27,90 €', 'priceNote' => 'pro Gast', 'note' => 'Bis zu 4 Runden möglich, 2 Runden garantiert.', 'category' => 'birthday'],
-	17 => ['price' => '32,90 €', 'priceNote' => 'pro Gast', 'note' => 'Bis zu 4 Runden möglich, 2 Runden garantiert.', 'category' => 'birthday'],
+	17 => ['price' => '32,90 €', 'priceNote' => 'pro Gast', 'note' => 'Bis zu 4 Runden möglich, 2 Runden garantiert.', 'category' => 'birthday', 'bestseller' => true],
 	18 => ['price' => '15,00 €', 'priceNote' => 'pro Person', 'category' => 'weekend', 'label' => 'Samstag & Sonntag'],
 	19 => ['price' => '27,00 €', 'priceNote' => 'pro Person', 'category' => 'weekend', 'label' => 'Samstag & Sonntag'],
 	20 => ['price' => '18,50 €', 'priceNote' => 'pro Person', 'category' => 'standard'],
@@ -16,9 +16,9 @@ const SERVICE_DETAILS = [
 ];
 
 const SERVICE_CATEGORIES = [
-	'birthday' => ['eyebrow' => 'Feiern', 'title' => 'Geburtstagspakete'],
+	'birthday' => ['eyebrow' => 'Feiern', 'title' => 'Geburtstagspakete', 'note' => 'Bitte seid 10 Minuten vor Beginn da.'],
 	'weekend' => ['eyebrow' => 'Aktionen', 'title' => 'Flats am Wochenende'],
-	'standard' => ['eyebrow' => 'Spielzeit', 'title' => 'Standardbuchungen'],
+	'standard' => ['eyebrow' => 'Spielzeit', 'title' => 'Standardbuchungen', 'note' => 'Bitte seid 10 Minuten vor Beginn da.'],
 	'other' => ['eyebrow' => 'Weitere Angebote', 'title' => 'Weitere Spielzeiten'],
 ];
 

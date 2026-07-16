@@ -1,0 +1,56 @@
+#Loading {
+    position: absolute;
+    z-index: 0;
+}
+
+#BookingFrame {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: calc(100vh - 230px);
+}
+
+.loader {
+    width: 200px;
+    height: 200px;
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    border: 3px dotted #fff;
+    border-radius: 50%;
+    border-style: solid solid dotted dotted;
+    animation: rotation 2s linear infinite;
+}
+
+.loader::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 180px;
+    height: 180px;
+    box-sizing: border-box;
+    margin: auto;
+    border: 3px dotted turquoise;
+    border-radius: 50%;
+    border-style: solid solid dotted;
+    transform-origin: center center;
+    animation: rotationBack 1s linear infinite;
+}
+
+@keyframes rotation {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotationBack {
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@media screen and (max-width: 775px) {
+    #BookingFrame {
+        min-height: calc(100vh - 210px);
+    }
+}

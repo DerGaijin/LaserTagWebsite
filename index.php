@@ -7,15 +7,7 @@ $newsItems = [
         'highlight' => 'Geschlossen vom <b>02.07.26</b> bis <b>12.08.26</b>',
         'image' => 'resources/renovieren.avif',
         'imageAlt' => 'Renovieren',
-    ],
-    [
-        'label' => 'Aktuelle News',
-        'title' => 'Wir sind fertig mit dem Umbau',
-        'text' => 'Unsere Arena ist frisch überarbeitet und bereit für eure nächsten Spiele.',
-        'highlight' => 'Reservierungen sind wieder möglich.',
-        'image' => 'resources/renovieren.avif',
-        'imageAlt' => 'Renovierte Arena',
-	],
+    ]
 ];
 $openingHours = [
 	1 => ['Montag', 'Geschlossen*', null, null],

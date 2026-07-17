@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <?php
+require '../resources/news.php';
+
 $section = 'w-full max-w-[1180px]';
 $panel = 'rounded-[25px] border border-white/10 bg-[var(--ContentBoxBackground)] shadow-[10px_10px_20px_black]';
 $eyebrow = 'text-sm uppercase tracking-[0.24em] text-[#73ffff]';
@@ -14,6 +16,10 @@ $bodyText = 'font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/90 m
 		<?php $currentPage = 'preise'; include '../resources/header.php'; ?>
 
 		<main class="flex flex-col items-center gap-8 px-[100px] py-[25px] max-[1260px]:px-[15px] max-[775px]:px-[5px]">
+			<div class="<?= $section ?> grid gap-4">
+				<?php renderNews(activeNewsForPage('prices'), '../'); ?>
+			</div>
+
 			<section class="<?= $section ?> <?= $panel ?> overflow-hidden">
 				<div class="bg-[radial-gradient(circle_at_top_left,rgba(0,170,170,0.28),transparent_48%),rgba(0,0,0,0.18)] p-6 max-[775px]:p-4">
 					<p class="<?= $eyebrow ?>">Preise & Angebote</p>
@@ -78,8 +84,14 @@ $bodyText = 'font-[Arial,Helvetica,sans-serif] text-lg leading-7 text-white/90 m
 							title.append(element("h3", "mt-3 text-[26px] leading-tight max-[775px]:text-[22px]", service.title || "Angebot"));
 							header.append(title);
 							if (service.price) {
-								const price = element("p", "whitespace-nowrap text-right text-[30px] leading-none text-[#73ffff] max-[520px]:text-left", service.price);
-								if (service.priceNote) price.append(element("span", "mt-1 block text-base text-white/80", service.priceNote));
+								const price = element("div", "whitespace-nowrap text-right max-[520px]:text-left");
+								if (service.originalPrice) {
+									price.append(element("p", "text-base leading-none text-white/55 line-through", service.originalPrice));
+									price.append(element("p", "mt-1 inline-flex rounded-full border border-[#73ffff]/60 bg-[#73ffff]/10 px-2 py-1 font-[Arial,Helvetica,sans-serif] text-xs font-bold uppercase tracking-[0.12em] text-[#73ffff]", service.discountPercent + "% Rabatt"));
+								}
+								const currentPrice = element("p", "mt-1 text-[30px] leading-none text-[#73ffff]", service.price);
+								if (service.priceNote) currentPrice.append(element("span", "mt-1 block text-base text-white/80", service.priceNote));
+								price.append(currentPrice);
 								header.append(price);
 							}
 							card.append(header);

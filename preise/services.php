@@ -1,6 +1,7 @@
 <?php
 
 ob_start();
+require '../resources/news.php';
 
 const SIMPLYBOOK_API_URL = 'https://user-api.simplybook.me';
 const SIMPLYBOOK_TOKEN_CACHE_SECONDS = 3600;
@@ -8,11 +9,11 @@ const SIMPLYBOOK_SERVICE_CACHE_SECONDS = 300;
 
 const SERVICE_DETAILS = [
 	16 => ['price' => '27,90 €', 'priceNote' => 'pro Gast', 'note' => 'Bis zu 4 Runden möglich, 2 Runden garantiert.', 'category' => 'birthday'],
-	17 => ['price' => '32,90 €', 'priceNote' => 'pro Gast', 'note' => 'Bis zu 4 Runden möglich, 2 Runden garantiert.', 'category' => 'birthday', 'bestseller' => true],
+	17 => ['price' => '32,90 €', 'priceNote' => 'pro Gast', 'note' => 'Bis zu 6 Runden möglich, 4 Runden garantiert.', 'category' => 'birthday', 'bestseller' => true],
 	18 => ['price' => '15,00 €', 'priceNote' => 'pro Person', 'category' => 'weekend', 'label' => 'Samstag & Sonntag'],
 	19 => ['price' => '27,00 €', 'priceNote' => 'pro Person', 'category' => 'weekend', 'label' => 'Samstag & Sonntag'],
-	20 => ['price' => '18,50 €', 'priceNote' => 'pro Person', 'category' => 'standard'],
-	21 => ['price' => '36,00 €', 'priceNote' => 'pro Person', 'category' => 'standard'],
+	20 => ['price' => '22,00 €', 'priceNote' => 'pro Person', 'category' => 'standard'],
+	21 => ['price' => '27,00 €', 'priceNote' => 'pro Person', 'category' => 'standard'],
 ];
 
 const SERVICE_CATEGORIES = [
@@ -148,11 +149,21 @@ function serviceDescription(array $service): string
 	return trim((string) preg_replace('/<(p|br|strong|b|em|i|u|ul|ol|li|h[1-6]|blockquote)\b[^>]*>/i', '<$1>', $description));
 }
 
+function serviceDiscountedPrice(string $price, int $discountPercent): string
+{
+	$normalized = str_replace(['€', '.', ','], ['', '', '.'], $price);
+	$amount = (float) trim($normalized);
+	$discountedAmount = round($amount * (100 - $discountPercent) / 100, 2);
+	return number_format($discountedAmount, 2, ',', '.') . ' €';
+}
+
 try {
 	if (!function_exists('curl_init')) {
 		throw new RuntimeException('PHP cURL extension is not enabled.');
 	}
 	loadServiceEnv();
+	$activeNews = activeNewsForPage('prices');
+	$discountPercent = max(array_map(static fn(array $newsItem): int => (int) ($newsItem['discountPercent'] ?? 0), $activeNews) ?: [0]);
 	$companyLogin = serviceEnvValue('SIMPLYBOOK_COMPANY_LOGIN');
 	$apiKey = serviceEnvValue('SIMPLYBOOK_API_KEY');
 	if ($companyLogin === '' || $apiKey === '') {
@@ -177,13 +188,19 @@ try {
 			continue;
 		}
 		$details = SERVICE_DETAILS[(int) $service['id']] ?? [];
-		$services[] = array_merge([
+		$serviceData = array_merge([
 			'id' => (string) $service['id'],
 			'title' => trim((string) ($service['name'] ?? '')),
 			'duration' => serviceDuration($service['duration'] ?? ''),
 			'description' => serviceDescription($service),
 			'category' => $details['category'] ?? 'other',
 		], $details);
+		if ($discountPercent > 0 && isset($serviceData['price'])) {
+			$serviceData['originalPrice'] = $serviceData['price'];
+			$serviceData['price'] = serviceDiscountedPrice($serviceData['price'], $discountPercent);
+			$serviceData['discountPercent'] = $discountPercent;
+		}
+		$services[] = $serviceData;
 	}
 	serviceResponse(['services' => $services, 'categories' => SERVICE_CATEGORIES]);
 } catch (Throwable $exception) {

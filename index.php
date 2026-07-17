@@ -1,14 +1,7 @@
 <?php
-$newsItems = [
-    [
-        'label' => 'Aktuelle News',
-        'title' => 'Wir bauen unsere Arena um',
-        'text' => 'Wir überarbeiten aktuell unsere Lasertaghalle, damit euer nächstes Spiel noch besser wird.',
-        'highlight' => 'Geschlossen vom <b>02.07.26</b> bis <b>12.08.26</b>',
-        'image' => 'resources/renovieren.avif',
-        'imageAlt' => 'Renovieren',
-    ]
-];
+require 'resources/news.php';
+
+$newsItems = activeNewsForPage('home');
 $openingHours = [
 	1 => ['Montag', 'Geschlossen*', null, null],
 	2 => ['Dienstag', 'Geschlossen*', null, null],
@@ -53,25 +46,7 @@ function openingRowClass(int $dayIndex, int $todayIndex): string
 
     <main class="mx-auto flex w-full max-w-[1180px] flex-col gap-8 px-6 py-8 max-[700px]:px-3">
         <section class="grid gap-4">
-            <?php foreach ($newsItems as $newsItem): ?>
-                <article
-                    class="rounded-[24px] border-2 border-[#00aaaa] bg-[rgba(18,18,18,.94)] p-5 shadow-[0_12px_35px_rgba(0,0,0,.65)]">
-                    <div class="grid items-center gap-5 lg:grid-cols-[1fr_260px]">
-                        <div>
-                            <p
-                                class="mb-3 w-fit rounded-md bg-[#00aaaa] px-3 py-1 text-sm uppercase tracking-[.18em] text-black">
-                                <?= htmlspecialchars($newsItem['label']) ?></p>
-                            <h1 class="text-[36px] uppercase leading-tight text-white max-[700px]:text-[28px]">
-                                <?= htmlspecialchars($newsItem['title']) ?></h1>
-                            <p class="mt-3 max-w-[760px] text-xl leading-snug text-white/90">
-                                <?= htmlspecialchars($newsItem['text']) ?></p>
-                            <p class="mt-3 text-2xl text-white max-[700px]:text-xl"><?= $newsItem['highlight'] ?></p>
-                        </div>
-                        <img src="<?= htmlspecialchars($newsItem['image']) ?>" alt="<?= htmlspecialchars($newsItem['imageAlt']) ?>"
-                            class="max-h-[180px] w-full rounded-[18px] object-cover" />
-                    </div>
-                </article>
-            <?php endforeach; ?>
+            <?php renderNews($newsItems); ?>
         </section>
 
         <section
@@ -83,9 +58,6 @@ function openingRowClass(int $dayIndex, int $todayIndex): string
 
             <div class="relative grid items-center gap-8 lg:grid-cols-[1.15fr_.85fr]">
                 <div class="flex flex-col gap-5">
-                    <p
-                        class="w-fit rounded-full border border-[#00ffff66] bg-black/35 px-4 py-2 text-sm uppercase tracking-[.22em] text-[#9fffff]">
-                        LaserTag Verden</p>
                     <h2
                         class="text-[64px] uppercase leading-[.92] tracking-wide text-white drop-shadow-[0_0_18px_rgba(0,255,255,.45)] max-[700px]:text-[42px]">
                         Adrenalin im Arena-Modus</h2>

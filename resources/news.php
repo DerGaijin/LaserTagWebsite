@@ -4,7 +4,7 @@ $newsItems = [
     [
         'label' => 'Wichtige Information',
         'title' => 'Arena-Modernisierung',
-        'text' => 'Unsere Lasertag-Arena wird modernisiert und bleibt während der Arbeiten geschlossen. Zur Wiedereröffnung erhaltet ihr 15 % Rabatt auf alle Spielpakete.',
+        'text' => 'Unsere Lasertag-Arena wird modernisiert und bleibt während der Arbeiten geschlossen. Zur Wiedereröffnung erhaltet ihr 15 % Rabatt auf alle Spielpakete bis zum 31 August.',
         'highlight' => 'Geschlossen: <b>02.07.26 - 12.08.26</b>',
         'image' => 'resources/renovieren.avif',
         'imageAlt' => 'Modernisierung der Lasertag-Arena',
@@ -17,7 +17,7 @@ $newsItems = [
     [
         'label' => 'Wiedereröffnung',
         'title' => 'Wiedereröffnung am 13. August',
-        'text' => 'Der Umbau ist abgeschlossen und unsere Arena wieder für euch geöffnet. Sichert euch 15 % Rabatt auf alle Spielpakete.',
+        'text' => 'Der Umbau ist abgeschlossen und unsere Arena wieder für euch geöffnet. Sichert euch 15 % Rabatt auf alle Spielpakete bis zum 31 August.',
         'highlight' => 'Gültig bis <b>21.08.2026</b>',
         'image' => 'resources/renovieren.avif',
         'imageAlt' => 'Renovierte Lasertag Arena',

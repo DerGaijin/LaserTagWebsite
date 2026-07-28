@@ -70,7 +70,7 @@ function openingRowClass(int $dayIndex, int $todayIndex): string
 						<div class="rounded-2xl border border-white/10 bg-black/25 p-3 text-center"><span class="block text-[28px] text-[#73ffff]">Gen8</span><span class="font-[Arial,Helvetica,sans-serif] text-sm text-white/70">Equipment</span></div>
 					</div>
 					<div class="flex flex-wrap gap-3 text-xl">
-						<a class="Button_Book Pulse_CTA px-7 py-3" href="preise/">Jetzt Buchen</a>
+						<a class="Button_Book Pulse_CTA px-7 py-3" href="reservieren/">Jetzt Buchen</a>
 						<a class="rounded-md border border-white/35 bg-white/10 px-7 py-3 text-white no-underline transition hover:bg-white/20"
 							href="galerie/">Arena ansehen</a>
 					</div>

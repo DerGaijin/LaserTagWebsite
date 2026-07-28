@@ -1,12 +1,12 @@
 <?php
 
-const SIMPLYBOOK_API_URL = 'https://user-api.simplybook.me';
+const SIMPLYBOOK_API_URL = 'https://user-api-v2.simplybook.me/public';
 const SIMPLYBOOK_UNIT_ID = 1;
 const SIMPLYBOOK_TOKEN_CACHE_SECONDS = 3600;
 const SIMPLYBOOK_SERVICE_CACHE_SECONDS = 300;
 
 $jsonErrorContextCallback = null;
-$simplyBookRpcLogger = null;
+$simplyBookApiLogger = null;
 
 function setJsonErrorContextCallback($callback)
 {
@@ -15,11 +15,11 @@ function setJsonErrorContextCallback($callback)
 	$jsonErrorContextCallback = is_callable($callback) ? $callback : null;
 }
 
-function setSimplyBookRpcLogger($callback)
+function setSimplyBookApiLogger($callback)
 {
-	global $simplyBookRpcLogger;
+	global $simplyBookApiLogger;
 
-	$simplyBookRpcLogger = is_callable($callback) ? $callback : null;
+	$simplyBookApiLogger = is_callable($callback) ? $callback : null;
 }
 
 function registerJsonFatalHandler($callback = null)
@@ -127,10 +127,13 @@ function validOfferIds()
 function simplyBookCredentials()
 {
 	$companyLogin = envValue('SIMPLYBOOK_COMPANY_LOGIN');
-	$apiKey = envValue('SIMPLYBOOK_API_KEY');
+	if ($companyLogin === '') {
+		$companyLogin = envValue('SIMPLYBOOK_COMPANY');
+	}
+	$apiKey = envValue('SIMPLYBOOK_WIDGET_API_KEY');
 
 	if ($companyLogin === '' || $apiKey === '') {
-		jsonResponse(['error' => 'SimplyBook credentials are missing.'], 500);
+		jsonResponse(['error' => 'SimplyBook company or widget API key is missing.'], 500);
 	}
 
 	return [$companyLogin, $apiKey];
@@ -138,7 +141,7 @@ function simplyBookCredentials()
 
 function tokenCachePath($companyLogin)
 {
-	return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'simplybook_token_' . md5($companyLogin) . '.json';
+	return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'simplybook_v2_token_' . md5($companyLogin) . '.json';
 }
 
 function readCachedToken($companyLogin)
@@ -158,11 +161,35 @@ function readCachedToken($companyLogin)
 	return (string) $data['token'];
 }
 
-function writeCachedToken($companyLogin, $token)
+function readCachedTokenCompany($companyLogin)
+{
+	$path = tokenCachePath($companyLogin);
+	$data = is_readable($path) ? json_decode((string) file_get_contents($path), true) : null;
+
+	return is_array($data) ? (string) ($data['company_login'] ?? $companyLogin) : $companyLogin;
+}
+
+function tokenExpiration($token)
+{
+	$segments = explode('.', (string) $token);
+	if (count($segments) === 3) {
+		$payload = strtr($segments[1], '-_', '+/');
+		$payload .= str_repeat('=', (4 - strlen($payload) % 4) % 4);
+		$claims = json_decode((string) base64_decode($payload, true), true);
+		if (is_array($claims) && isset($claims['exp']) && is_numeric($claims['exp'])) {
+			return max(time() + 60, (int) $claims['exp'] - 30);
+		}
+	}
+
+	return time() + SIMPLYBOOK_TOKEN_CACHE_SECONDS;
+}
+
+function writeCachedToken($companyLogin, $token, $tokenCompanyLogin = '')
 {
 	$data = json_encode([
 		'token' => $token,
-		'expires_at' => time() + SIMPLYBOOK_TOKEN_CACHE_SECONDS,
+		'company_login' => $tokenCompanyLogin !== '' ? $tokenCompanyLogin : $companyLogin,
+		'expires_at' => tokenExpiration($token),
 	]);
 
 	if ($data !== false) {
@@ -172,21 +199,31 @@ function writeCachedToken($companyLogin, $token)
 
 function getSimplyBookToken($companyLogin, $apiKey)
 {
+	return getSimplyBookAuth($companyLogin, $apiKey)['token'];
+}
+
+function getSimplyBookAuth($companyLogin, $apiKey)
+{
 	$token = readCachedToken($companyLogin);
 
 	if ($token !== '') {
-		return $token;
+		return ['token' => $token, 'company_login' => readCachedTokenCompany($companyLogin)];
 	}
 
-	$token = jsonRpcCall(SIMPLYBOOK_API_URL . '/login', 'getToken', [$companyLogin, $apiKey]);
-	writeCachedToken($companyLogin, (string) $token);
+	$response = simplyBookApiCall('/auth/token', 'POST', [], [
+		'company' => $companyLogin,
+		'key' => $apiKey,
+	]);
+	$token = simplyBookExtractToken($response);
+	$tokenCompanyLogin = trim((string) ($response['company_login'] ?? $response['company'] ?? $companyLogin));
+	writeCachedToken($companyLogin, $token, $tokenCompanyLogin);
 
-	return (string) $token;
+	return ['token' => $token, 'company_login' => $tokenCompanyLogin];
 }
 
 function serviceCachePath($companyLogin)
 {
-	return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'simplybook_services_' . md5($companyLogin) . '.json';
+	return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'simplybook_v2_services_' . md5($companyLogin) . '.json';
 }
 
 function readCachedServices($companyLogin)
@@ -226,11 +263,12 @@ function getSimplyBookServices($companyLogin, $apiKey)
 		return $services;
 	}
 
-	$token = getSimplyBookToken($companyLogin, $apiKey);
-	$services = jsonRpcCall(SIMPLYBOOK_API_URL, 'getEventList', [], [
-		'X-Company-Login: ' . $companyLogin,
-		'X-Token: ' . $token,
+	$auth = getSimplyBookAuth($companyLogin, $apiKey);
+	$response = simplyBookApiCall('/services', 'GET', [
+		'X-Company-Login: ' . $auth['company_login'],
+		'X-Token: ' . $auth['token'],
 	]);
+	$services = $response['data'] ?? $response['services'] ?? $response;
 	$services = is_array($services) ? $services : [];
 	writeCachedServices($companyLogin, $services);
 
@@ -263,22 +301,43 @@ function simplyBookServiceDescription($service)
 	return trim($description);
 }
 
-function jsonRpcCall($url, $method, $params = [], $headers = [])
+function simplyBookErrorMessage($response, $fallback)
 {
-	global $simplyBookRpcLogger;
-
-	if (is_callable($simplyBookRpcLogger)) {
-		$simplyBookRpcLogger('request', $url, $method, $params, null, null, '');
+	if (!is_array($response)) {
+		return $fallback;
 	}
 
-	$payload = json_encode([
-		'jsonrpc' => '2.0',
-		'method' => $method,
-		'params' => $params,
-		'id' => uniqid('simplybook_', true),
-	]);
+	foreach (['message', 'error', 'detail', 'title'] as $key) {
+		if (!isset($response[$key])) {
+			continue;
+		}
 
-	if ($payload === false) {
+		$value = $response[$key];
+		return is_scalar($value) ? (string) $value : (json_encode($value) ?: $fallback);
+	}
+
+	return $fallback;
+}
+
+function simplyBookApiCall($path, $method = 'GET', $headers = [], $payload = null, $query = [])
+{
+	global $simplyBookApiLogger;
+
+	$url = SIMPLYBOOK_API_URL . $path;
+	if ($query !== []) {
+		$url .= '?' . http_build_query($query);
+	}
+
+	if (is_callable($simplyBookApiLogger)) {
+		$simplyBookApiLogger('request', $url, $method, $payload, null, null, '');
+	}
+
+	$body = null;
+	if ($payload !== null) {
+		$body = json_encode($payload);
+	}
+
+	if ($body === false) {
 		throw new RuntimeException('Could not encode SimplyBook request.');
 	}
 
@@ -289,15 +348,19 @@ function jsonRpcCall($url, $method, $params = [], $headers = [])
 	}
 
 	curl_setopt_array($curl, [
-		CURLOPT_POST => true,
-		CURLOPT_POSTFIELDS => $payload,
-		CURLOPT_HTTPHEADER => array_merge([
+		CURLOPT_CUSTOMREQUEST => strtoupper($method),
+		CURLOPT_HTTPHEADER => array_merge(['Accept: application/json'], $headers, $body === null ? [] : [
 			'Content-Type: application/json',
-			'Content-Length: ' . strlen($payload),
-		], $headers),
+			'Content-Length: ' . strlen($body),
+		]),
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_TIMEOUT => 20,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_USERAGENT => 'Lasertag-Reservation/2.0',
 	]);
+	if ($body !== null) {
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
+	}
 
 	$caCertPath = envValue('SIMPLYBOOK_CA_CERT_PATH');
 	if ($caCertPath !== '') {
@@ -308,11 +371,11 @@ function jsonRpcCall($url, $method, $params = [], $headers = [])
 	}
 
 	$response = curl_exec($curl);
-	$statusCode = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+	$statusCode = (int) curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
 	$error = curl_error($curl);
 
-	if (is_callable($simplyBookRpcLogger)) {
-		$simplyBookRpcLogger('response', $url, $method, $params, $response, $statusCode, $error);
+	if (is_callable($simplyBookApiLogger)) {
+		$simplyBookApiLogger('response', $url, $method, $payload, $response, $statusCode, $error);
 	}
 
 	if ($response === false) {
@@ -325,16 +388,62 @@ function jsonRpcCall($url, $method, $params = [], $headers = [])
 		throw new RuntimeException('SimplyBook returned invalid JSON.');
 	}
 
-	if (isset($decoded['error'])) {
-		$message = is_array($decoded['error']) ? ($decoded['error']['message'] ?? 'Unknown API error') : (string) $decoded['error'];
-		throw new RuntimeException($message);
-	}
-
 	if ($statusCode >= 400) {
-		throw new RuntimeException('SimplyBook HTTP error: ' . $statusCode);
+		throw new RuntimeException(simplyBookErrorMessage($decoded, 'SimplyBook HTTP error: ' . $statusCode));
 	}
 
-	return $decoded['result'] ?? null;
+	return $decoded;
+}
+
+function simplyBookExtractToken($response)
+{
+	$token = is_array($response) ? (string) ($response['token'] ?? $response['access_token'] ?? '') : '';
+	if ($token === '') {
+		throw new RuntimeException('SimplyBook response did not include a token.');
+	}
+
+	return $token;
+}
+
+function simplyBookExtractClient($response)
+{
+	if (!is_array($response)) {
+		return [];
+	}
+
+	$client = is_array($response['client'] ?? null) ? $response['client'] : (is_array($response['data'] ?? null) ? $response['data'] : $response);
+	if (empty($client['id']) && empty($client['client_id'])) {
+		$token = (string) ($response['token'] ?? $response['access_token'] ?? '');
+		$segments = explode('.', $token);
+		if (count($segments) === 3) {
+			$payload = strtr($segments[1], '-_', '+/');
+			$payload .= str_repeat('=', (4 - strlen($payload) % 4) % 4);
+			$claims = json_decode((string) base64_decode($payload, true), true);
+			$claimId = is_array($claims['data'] ?? null) ? ($claims['data']['client'] ?? null) : null;
+			if (is_numeric($claimId)) {
+				$client['id'] = (int) $claimId;
+			}
+		}
+	}
+
+	return is_array($client) ? $client : [];
+}
+
+function startReservationSession()
+{
+	if (session_status() !== PHP_SESSION_ACTIVE) {
+		session_start();
+	}
+}
+
+function storeSimplyBookClientSession($companyLogin, $response)
+{
+	startReservationSession();
+	session_regenerate_id(true);
+	$_SESSION['simplybook_client_token'] = simplyBookExtractToken($response);
+	$_SESSION['simplybook_company_login'] = (string) ($response['company_login'] ?? $response['company'] ?? $companyLogin);
+	$client = simplyBookExtractClient($response);
+	$_SESSION['simplybook_client_id'] = (string) ($client['id'] ?? $client['client_id'] ?? '');
 }
 
 function publicClientData($client)
@@ -342,10 +451,16 @@ function publicClientData($client)
 	if (!is_array($client)) {
 		return [];
 	}
+	$name = trim((string) ($client['name'] ?? $client['full_name'] ?? ''));
+	if ($name === '') {
+		$firstName = (string) ($client['first_name'] ?? $client['firstname'] ?? '');
+		$lastName = (string) ($client['last_name'] ?? $client['lastname'] ?? '');
+		$name = trim($firstName . ' ' . $lastName);
+	}
 
 	return [
-		'id' => (string) ($client['id'] ?? ''),
-		'name' => (string) ($client['name'] ?? ''),
+		'id' => (string) ($client['id'] ?? $client['client_id'] ?? ''),
+		'name' => $name,
 		'email' => (string) ($client['email'] ?? $client['login'] ?? ''),
 		'phone' => (string) ($client['phone'] ?? ''),
 	];

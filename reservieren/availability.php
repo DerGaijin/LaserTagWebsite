@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/shared.php';
+require_once __DIR__ . '/Shared.php';
 
 const SIMPLYBOOK_AVAILABILITY_CACHE_SECONDS = 60;
 
@@ -8,7 +8,7 @@ $apiCallResults = [];
 
 registerJsonFatalHandler();
 
-setSimplyBookRpcLogger(function ($event, $url, $method, $params, $response) {
+setSimplyBookApiLogger(function ($event, $url, $method, $params, $response) {
 	global $apiCallResults;
 
 	if ($event !== 'response' || !is_string($response)) {
@@ -23,7 +23,7 @@ setSimplyBookRpcLogger(function ($event, $url, $method, $params, $response) {
 	$apiCallResults[] = [
 		'method' => $method,
 		'params' => $params,
-		'result' => $method === 'getToken' ? '[redacted]' : ($decoded['result'] ?? null),
+		'result' => strpos($url, '/auth/token') !== false ? '[redacted]' : $decoded,
 	];
 });
 
@@ -31,7 +31,7 @@ function availabilityCachePath($offerId, $date, $count)
 {
 	$key = md5($offerId . '|' . $date . '|' . $count . '|' . SIMPLYBOOK_UNIT_ID);
 
-	return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'simplybook_availability_' . $key . '.json';
+	return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'simplybook_v2_availability_' . $key . '.json';
 }
 
 function availabilityLockPath($offerId, $date, $count)
@@ -109,17 +109,31 @@ function waitForCachedAvailability($offerId, $date, $count)
 	return null;
 }
 
-function timesFromMatrix($matrix, $date)
+function timesFromResponse($response)
 {
 	$times = [];
-
-	if (!is_array($matrix) || !isset($matrix[$date]) || !is_array($matrix[$date])) {
-		return $times;
-	}
-
-	foreach ($matrix[$date] as $time) {
-		$times[(string) $time] = true;
-	}
+	$slots = is_array($response) ? ($response['data'] ?? $response['slots'] ?? $response['times'] ?? $response['available_times'] ?? $response) : [];
+	$collect = function ($value, $key = null) use (&$times, &$collect) {
+		if (is_string($value) && preg_match('/(?:^|T|\s)(\d{1,2}):(\d{2})(?::(\d{2}))?/', $value, $match)) {
+			$times[sprintf('%02d:%s%s', (int) $match[1], $match[2], isset($match[3]) ? ':' . $match[3] : '')] = true;
+			return;
+		}
+		if (!is_array($value)) {
+			return;
+		}
+		$time = $value['time'] ?? $value['start_time'] ?? $value['start'] ?? $value['from'] ?? null;
+		if (is_string($time) && preg_match('/(?:^|T|\s)(\d{1,2}):(\d{2})(?::(\d{2}))?/', $time, $match)) {
+			$times[sprintf('%02d:%s%s', (int) $match[1], $match[2], isset($match[3]) ? ':' . $match[3] : '')] = true;
+			return;
+		}
+		if (is_string($key) && preg_match('/^(\d{1,2}:\d{2}(?::\d{2})?)/', $key, $match)) {
+			$times[$match[1]] = true;
+		}
+		foreach ($value as $childKey => $child) {
+			$collect($child, $childKey);
+		}
+	};
+	$collect($slots);
 
 	return $times;
 }
@@ -162,14 +176,16 @@ try {
 		}
 	}
 
-	// Keep getStartTimeMatrix fast by asking SimplyBook for one selected day only.
-	$dateFrom = $date;
-	$dateTo = $date;
-
-	$token = getSimplyBookToken($companyLogin, $apiKey);
-	$authHeaders = ['X-Company-Login: ' . $companyLogin, 'X-Token: ' . $token];
-	$matrix = jsonRpcCall(SIMPLYBOOK_API_URL, 'getStartTimeMatrix', [$dateFrom, $dateTo, $offerId, SIMPLYBOOK_UNIT_ID, $count], $authHeaders);
-	$availableTimes = timesFromMatrix($matrix, $date);
+	$auth = getSimplyBookAuth($companyLogin, $apiKey);
+	$authHeaders = ['X-Company-Login: ' . $auth['company_login'], 'X-Token: ' . $auth['token']];
+	$response = simplyBookApiCall('/timeline/slots', 'GET', $authHeaders, null, [
+		'service_id' => $offerId,
+		'provider_id' => SIMPLYBOOK_UNIT_ID,
+		'from' => $date,
+		'to' => $date,
+		'count' => $count,
+	]);
+	$availableTimes = timesFromResponse($response);
 	$timesByDate = [$date => []];
 
 	ksort($availableTimes);

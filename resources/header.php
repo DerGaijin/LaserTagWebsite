@@ -19,8 +19,7 @@ function navClass(string $page, string $currentPage): string
             </a>
             <nav id="HeaderNavigation" class="flex w-full max-[910px]:flex-col max-[910px]:items-center">
                 <div class="w-full max-[910px]:hidden"></div>
-                <a href="<?= $relativeRoot ?>preise/" class="<?= navClass('preise', $currentPage) ?>">PREISE</a>
-                <a href="<?= $relativeRoot ?>reservieren/" class="<?= navClass('reservieren', $currentPage) ?>">RESERVIEREN</a>
+				<a href="<?= $relativeRoot ?>reservieren/" class="<?= navClass('reservieren', $currentPage) ?>">PREISE &amp; RESERVIEREN</a>
                 <a href="<?= $relativeRoot ?>galerie/" class="<?= navClass('galerie', $currentPage) ?>">GALERIE</a>
                 <a href="<?= $relativeRoot ?>infos/" class="<?= navClass('infos', $currentPage) ?>">INFOS</a>
                 <a href="<?= $relativeRoot ?>uber-uns/" class="<?= navClass('uber-uns', $currentPage) ?>">ÜBER UNS</a>

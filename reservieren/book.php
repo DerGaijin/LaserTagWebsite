@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/shared.php';
+require_once __DIR__ . '/Shared.php';
 
 registerJsonFatalHandler();
 
@@ -26,7 +26,14 @@ try {
 		jsonResponse(['error' => 'Bitte zuerst mit einem gültigen Kundenkonto einloggen oder registrieren.'], 400);
 	}
 
-	[$companyLogin, $apiKey] = simplyBookCredentials();
+	[$companyLogin] = simplyBookCredentials();
+	startReservationSession();
+	$sessionClientId = (string) ($_SESSION['simplybook_client_id'] ?? '');
+	$clientToken = (string) ($_SESSION['simplybook_client_token'] ?? '');
+	$clientCompanyLogin = (string) ($_SESSION['simplybook_company_login'] ?? $companyLogin);
+	if ($sessionClientId === '' || $clientToken === '' || !hash_equals($sessionClientId, $clientId)) {
+		jsonResponse(['error' => 'Die Anmeldung ist abgelaufen. Bitte erneut einloggen.'], 401);
+	}
 
 	$clientData = [
 		'id' => $clientId,
@@ -38,9 +45,24 @@ try {
 		$clientData['phone'] = $phone;
 	}
 
-	$token = getSimplyBookToken($companyLogin, $apiKey);
-	$authHeaders = ['X-Company-Login: ' . $companyLogin, 'X-Token: ' . $token];
-	$result = jsonRpcCall(SIMPLYBOOK_API_URL, 'book', [$offerId, SIMPLYBOOK_UNIT_ID, $date, $time, $clientData, [], $count], $authHeaders);
+	$result = simplyBookApiCall('/booking/item', 'POST', [
+		'X-Company-Login: ' . $clientCompanyLogin,
+		'X-Token: ' . $clientToken,
+	], [
+		'service_id' => (int) $offerId,
+		'provider_id' => SIMPLYBOOK_UNIT_ID,
+		'start_datetime' => $date . ' ' . (strlen($time) === 5 ? $time . ':00' : $time),
+		'count' => $count,
+		'client_id' => (int) $clientId,
+		'client' => $clientData,
+		'additional_fields' => [],
+		'terms' => [
+			'simplybook_terms' => true,
+			'user_terms' => true,
+			'cancellation_terms' => true,
+			'privacy_policy' => true,
+		],
+	]);
 
 	jsonResponse(['booking' => $result]);
 } catch (Throwable $exception) {

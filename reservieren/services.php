@@ -1,21 +1,22 @@
 <?php
 
-require_once __DIR__ . '/shared.php';
+require_once __DIR__ . '/Shared.php';
+require_once dirname(__DIR__) . '/resources/news.php';
 
 // Values not supplied by SimplyBook, keyed by service ID.
 const SERVICE_DETAILS = [
 	16 => ['price' => '27,90 €', 'priceNote' => 'pro Gast', 'note' => 'Bis zu 4 Runden möglich, 2 Runden garantiert.', 'category' => 'birthday'],
-	17 => ['price' => '32,90 €', 'priceNote' => 'pro Gast', 'note' => 'Bis zu 4 Runden möglich, 2 Runden garantiert.', 'category' => 'birthday'],
+	17 => ['price' => '32,90 €', 'priceNote' => 'pro Gast', 'note' => 'Bis zu 6 Runden möglich, 4 Runden garantiert.', 'category' => 'birthday', 'bestseller' => true],
 	18 => ['price' => '15,00 €', 'priceNote' => 'pro Person', 'category' => 'weekend', 'label' => 'Samstag & Sonntag'],
 	19 => ['price' => '27,00 €', 'priceNote' => 'pro Person', 'category' => 'weekend', 'label' => 'Samstag & Sonntag'],
-	20 => ['price' => '18,50 €', 'priceNote' => 'pro Person', 'category' => 'standard'],
-	21 => ['price' => '36,00 €', 'priceNote' => 'pro Person', 'category' => 'standard'],
+	20 => ['price' => '22,00 €', 'priceNote' => 'pro Person', 'category' => 'standard'],
+	21 => ['price' => '27,00 €', 'priceNote' => 'pro Person', 'category' => 'standard'],
 ];
 
 const SERVICE_CATEGORIES = [
-	'birthday' => ['eyebrow' => 'Feiern', 'title' => 'Geburtstagspakete'],
+	'birthday' => ['eyebrow' => 'Feiern', 'title' => 'Geburtstagspakete', 'note' => 'Bitte seid 10 Minuten vor Beginn da.'],
 	'weekend' => ['eyebrow' => 'Aktionen', 'title' => 'Flats am Wochenende'],
-	'standard' => ['eyebrow' => 'Spielzeit', 'title' => 'Standardbuchungen'],
+	'standard' => ['eyebrow' => 'Spielzeit', 'title' => 'Standardbuchungen', 'note' => 'Bitte seid 10 Minuten vor Beginn da.'],
 	'other' => ['eyebrow' => 'Weitere Angebote', 'title' => 'Weitere Spielzeiten'],
 ];
 
@@ -26,7 +27,7 @@ registerJsonFatalHandler();
 
 $apiCallResults = [];
 
-setSimplyBookRpcLogger(function ($event, $url, $method, $params, $response) {
+setSimplyBookApiLogger(function ($event, $url, $method, $params, $response) {
 	global $apiCallResults;
 
 	if ($event !== 'response' || !is_string($response)) {
@@ -49,23 +50,37 @@ try {
 	$cachedServices = readCachedServices($companyLogin);
 	$cached = $cachedServices !== null;
 	$sourceServices = $cachedServices ?? getSimplyBookServices($companyLogin, $apiKey);
+	$activeNews = activeNewsForPage('prices');
+	$discountPercent = max(array_map(static fn(array $newsItem): int => (int) ($newsItem['discountPercent'] ?? 0), $activeNews) ?: [0]);
 	$services = [];
 
-	foreach ($sourceServices as $service) {
-		if (!is_array($service) || !isset($service['id'])) {
+	foreach ($sourceServices as $key => $service) {
+		if (!is_array($service)) {
 			continue;
 		}
 
-		$serviceId = (int) $service['id'];
+		$rawServiceId = $service['id'] ?? $service['event_id'] ?? (is_int($key) ? '' : $key);
+		$serviceId = (int) $rawServiceId;
+		if (!in_array((string) $serviceId, validOfferIds(), true)) {
+			continue;
+		}
 		$details = SERVICE_DETAILS[$serviceId] ?? [];
 		$category = $details['category'] ?? 'other';
-		$services[] = array_merge([
-			'id' => (string) $service['id'],
-			'title' => trim((string) ($service['name'] ?? '')),
+		$serviceData = array_merge([
+			'id' => (string) $serviceId,
+			'title' => trim((string) ($service['name'] ?? $service['title'] ?? '')),
 			'duration' => formatSimplyBookServiceDuration($service['duration'] ?? ''),
 			'description' => simplyBookServiceDescription($service),
 			'category' => $category,
 		], $details);
+		if ($discountPercent > 0 && isset($serviceData['price'])) {
+			$serviceData['originalPrice'] = $serviceData['price'];
+			$normalizedPrice = str_replace(['€', '.', ','], ['', '', '.'], $serviceData['price']);
+			$discountedPrice = round((float) trim($normalizedPrice) * (100 - $discountPercent) / 100, 2);
+			$serviceData['price'] = number_format($discountedPrice, 2, ',', '.') . ' €';
+			$serviceData['discountPercent'] = $discountPercent;
+		}
+		$services[] = $serviceData;
 	}
 
 	jsonResponse([

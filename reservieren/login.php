@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/shared.php';
+require_once __DIR__ . '/Shared.php';
 
 registerJsonFatalHandler();
 
@@ -18,10 +18,17 @@ try {
 
 	[$companyLogin, $apiKey] = simplyBookCredentials();
 
-	$token = getSimplyBookToken($companyLogin, $apiKey);
-	$authHeaders = ['X-Company-Login: ' . $companyLogin, 'X-Token: ' . $token];
-	$client = jsonRpcCall(SIMPLYBOOK_API_URL, 'getClientInfoByLoginPassword', [$email, $password], $authHeaders);
+	$auth = getSimplyBookAuth($companyLogin, $apiKey);
+	$authHeaders = ['X-Company-Login: ' . $auth['company_login'], 'X-Token: ' . $auth['token']];
+	$loginResponse = simplyBookApiCall('/clients/login', 'POST', $authHeaders, [
+		'login' => $email,
+		'password' => $password,
+		'remember' => false,
+	]);
+	storeSimplyBookClientSession($auth['company_login'], $loginResponse);
+	$client = simplyBookExtractClient($loginResponse);
 	$clientData = publicClientData($client);
+	$clientData['email'] = $clientData['email'] !== '' ? $clientData['email'] : $email;
 
 	if ($clientData === [] || $clientData['id'] === '') {
 		jsonResponse(['error' => 'E-Mail oder Passwort ist nicht korrekt.'], 401);

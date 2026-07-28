@@ -201,7 +201,7 @@ $ageNote = 'mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-white/60';
                     <p class="<?= $bodyText ?> mt-3">Wenn ihr unsicher seid, welches Paket passt oder welche Regeln für
                         eure Gruppe gelten, meldet euch einfach vor der Reservierung.</p>
                 </div>
-                <a class="Button_Book justify-self-start px-7 py-3" href="../preise/">Preise ansehen</a>
+                <a class="Button_Book justify-self-start px-7 py-3" href="../reservieren/">Preise ansehen</a>
             </div>
         </section>
     </main>

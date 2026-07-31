@@ -124,11 +124,11 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 							</div>
 						</div>
 
-							<div class="rounded-[22px] border border-white/10 bg-black/25 p-4">
+							<div class="rounded-[22px] border border-white/10 bg-black/25 p-4" data-time-panel tabindex="-1">
 								<div class="flex items-end justify-between gap-3 max-[520px]:flex-col max-[520px]:items-start">
 									<div>
-										<p class="<?= $label ?>">Zeitfenster <span data-selected-day>am Samstag</span></p>
-										<p class="<?= $bodyText ?> mt-1 text-base">Kompakte Auswahl für Tage mit vielen Startzeiten.</p>
+										<p class="<?= $label ?>">Zeitfenster <span data-selected-day></span></p>
+										<p class="<?= $bodyText ?> mt-1 text-base">Wählt die gewünschte Startzeit aus.</p>
 									</div>
 								</div>
 								<div class="mt-3 grid max-h-[360px] gap-1.5 overflow-y-auto pr-1" data-time-list>
@@ -172,8 +172,12 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 								<p class="<?= $bodyText ?> mt-3 text-base">Nutzt euer SimplyBook-Konto, um den Termin ohne erneute Dateneingabe zu bestätigen.</p>
 
 								<div class="mt-5 grid grid-cols-2 gap-4 max-[700px]:grid-cols-1" data-login-form>
-									<div><label class="<?= $label ?>" for="login-email">E-Mail</label><input id="login-email" class="<?= $field ?>" type="email" name="login_email" placeholder="kunde@example.de" autocomplete="email" data-login-email /></div>
-									<div><label class="<?= $label ?>" for="login-password">Passwort</label><input id="login-password" class="<?= $field ?>" type="password" placeholder="Passwort" autocomplete="current-password" data-login-password /></div>
+									<div><label class="<?= $label ?>" for="login-email">E-Mail</label><input id="login-email" class="<?= $field ?>" type="email" name="login_email" autocomplete="email" data-login-email /></div>
+									<div>
+										<label class="<?= $label ?>" for="login-password">Passwort</label>
+										<input id="login-password" class="<?= $field ?>" type="password" autocomplete="current-password" data-login-password />
+										<button class="mt-2 font-[Arial,Helvetica,sans-serif] text-sm text-[#73ffff] underline decoration-[#00aaaa] underline-offset-4 transition hover:text-white" type="button" data-forgot-password>Passwort vergessen?</button>
+									</div>
 									<p class="hidden rounded-xl border border-white/10 bg-black/25 p-3 font-[Arial,Helvetica,sans-serif] text-sm max-[700px]:col-auto" data-login-message></p>
 									<div class="flex items-end"><button class="Button_Book w-full" type="button" data-login-submit>Einloggen</button></div>
 								</div>
@@ -197,9 +201,9 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 									<p class="<?= $bodyText ?> mt-3 text-base">Erstellt ein Konto für diese und spätere Reservierungen.</p>
 								</div>
 								<div class="mt-5 grid grid-cols-2 gap-4 max-[700px]:grid-cols-1" data-register-form>
-									<div><label class="<?= $label ?>" for="register-name">Name</label><input id="register-name" class="<?= $field ?>" type="text" name="client[name]" placeholder="Max Mustermann" autocomplete="name" data-register-name /></div>
-									<div><label class="<?= $label ?>" for="register-phone">Telefon</label><input id="register-phone" class="<?= $field ?>" type="tel" name="client[phone]" placeholder="0123 456789" autocomplete="tel" data-register-phone /></div>
-									<div class="col-span-2 max-[700px]:col-auto"><label class="<?= $label ?>" for="register-email">E-Mail</label><input id="register-email" class="<?= $field ?>" type="email" name="client[email]" placeholder="max@example.de" autocomplete="email" data-register-email /></div>
+									<div><label class="<?= $label ?>" for="register-name">Name</label><input id="register-name" class="<?= $field ?>" type="text" name="client[name]" autocomplete="name" data-register-name /></div>
+									<div><label class="<?= $label ?>" for="register-phone">Telefon</label><input id="register-phone" class="<?= $field ?>" type="tel" name="client[phone]" autocomplete="tel" data-register-phone /></div>
+									<div class="col-span-2 max-[700px]:col-auto"><label class="<?= $label ?>" for="register-email">E-Mail</label><input id="register-email" class="<?= $field ?>" type="email" name="client[email]" autocomplete="email" data-register-email /></div>
 									<div><label class="<?= $label ?>" for="register-password">Passwort</label><input id="register-password" class="<?= $field ?>" type="password" autocomplete="new-password" data-register-password /></div>
 									<div><label class="<?= $label ?>" for="register-password-confirm">Passwort wiederholen</label><input id="register-password-confirm" class="<?= $field ?>" type="password" autocomplete="new-password" data-register-password-confirm /></div>
 								</div>
@@ -255,6 +259,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					<p class="<?= $eyebrow ?> mt-6 justify-self-center">Reservierung notiert</p>
 					<h2 id="booking-success-title" class="mt-2 text-[38px] leading-tight text-[#73ffff] max-[560px]:text-[30px]">Eure Reservierung wurde notiert</h2>
 					<p class="<?= $bodyText ?> mt-4">Die Reservierung muss noch von unserem Team angenommen werden. Bitte achtet auf eure E-Mails für die Bestätigung und weitere Informationen.</p>
+					<p class="mt-3 font-[Arial,Helvetica,sans-serif] text-sm leading-6 text-white/70">Prüft bitte auch euren Spam-Ordner.</p>
 					<div class="mt-6 grid grid-cols-2 gap-3 font-[Arial,Helvetica,sans-serif] max-[620px]:grid-cols-1" data-success-summary></div>
 					<div class="mt-7 flex justify-center gap-3 max-[520px]:flex-col">
 						<a class="Button_Book" href="./">Neue Reservierung</a>
@@ -402,6 +407,22 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 				const tabs = Array.from(document.querySelectorAll("[data-wizard-tab]"));
 				const steps = Array.from(document.querySelectorAll("[data-wizard-step]"));
+				const scrollToRelevantContent = (element) => {
+					if (!element) {
+						return;
+					}
+
+					requestAnimationFrame(() => {
+						const fixedHeader = document.querySelector("#FixedHeaderContent");
+						const headerRect = fixedHeader?.getBoundingClientRect();
+						const headerOffset = headerRect && headerRect.bottom > 0 ? headerRect.bottom + 16 : 16;
+						const targetTop = window.scrollY + element.getBoundingClientRect().top - headerOffset;
+						window.scrollTo({
+							top: Math.max(0, targetTop),
+							behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+						});
+					});
+				};
 				steps.forEach((step) => step.classList.add("Booking_Step"));
 				tabs.forEach((tab) => {
 					if (!tab.querySelector("[data-step-check]")) {
@@ -438,7 +459,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					});
 					activateChoice(document.querySelector(`[data-wizard-tab="${step}"]`), tabs);
 					updateWizardTabAvailability();
-					window.scrollTo({ top: 0, behavior: "smooth" });
+					scrollToRelevantContent(steps.find((item) => item.dataset.wizardStep === step));
 				};
 				const requestStep = (step) => {
 					if (canOpenWizardStep(step)) {
@@ -493,6 +514,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const selectedDateInput = document.querySelector("[data-start-date]");
 				const offerIdInput = document.querySelector("[data-offer-id]");
 				const timeList = document.querySelector("[data-time-list]");
+				const timePanel = document.querySelector("[data-time-panel]");
 				const monthInput = document.querySelector("[data-month-input]");
 				const count = document.querySelector("[data-count]");
 				const confirmOffer = document.querySelector("[data-confirm-offer]");
@@ -592,13 +614,6 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				updateWizardTabAvailability();
 				const getSelectedTimes = () => availabilityByDate[toDateValue(selectedDate)] || [];
 				const getSlotTime = (slot) => typeof slot === "string" ? slot : slot.time;
-				const getAvailabilityLabel = (slot) => {
-					if (typeof slot === "string" || !slot.count) {
-						return "frei";
-					}
-
-					return "verfügbar für " + slot.count + " Personen";
-				};
 				const showTimeMessage = (message, title = "Hinweis", isLoading = false) => {
 					timeList.innerHTML = "";
 					const card = document.createElement("div");
@@ -675,8 +690,8 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						button.type = "button";
 						button.dataset.time = time;
 						button.setAttribute("aria-pressed", isSelected ? "true" : "false");
-						button.className = isSelected ? "flex items-center justify-between gap-3 rounded-xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 px-3 py-2 text-left text-[#73ffff] shadow-[0_0_16px_rgba(0,170,170,0.2)]" : "flex items-center justify-between gap-3 rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
-						button.innerHTML = '<span class="text-[18px] leading-none">' + time.slice(0, 5) + '</span><span class="font-[Arial,Helvetica,sans-serif] text-xs ' + (isSelected ? 'text-white/80' : 'text-white/60') + '">' + getAvailabilityLabel(slot) + '</span>';
+						button.className = isSelected ? "rounded-xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 px-3 py-2 text-left text-[18px] leading-none text-[#73ffff] shadow-[0_0_16px_rgba(0,170,170,0.2)]" : "rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left text-[18px] leading-none hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
+						button.textContent = time.slice(0, 5);
 						button.addEventListener("click", () => selectTime(slot));
 						timeList.appendChild(button);
 					});
@@ -720,8 +735,10 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						if (!isDisabled) {
 							button.addEventListener("click", () => {
 								updateSelectedDate(date);
+								timePanel.focus({ preventScroll: true });
 								renderCalendar();
 								loadAvailability();
+								scrollToRelevantContent(timePanel);
 							});
 						}
 						calendarGrid.appendChild(button);
@@ -866,6 +883,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const loginEmail = document.querySelector("[data-login-email]");
 				const loginPassword = document.querySelector("[data-login-password]");
 				const loginSubmit = document.querySelector("[data-login-submit]");
+				const forgotPassword = document.querySelector("[data-forgot-password]");
 				const loginMessage = document.querySelector("[data-login-message]");
 				const loginForm = document.querySelector("[data-login-form]");
 				const loggedInPanel = document.querySelector("[data-logged-in-panel]");
@@ -1051,6 +1069,37 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					}
 				};
 
+				const submitForgotPassword = async () => {
+					const email = loginEmail.value.trim();
+					if (!email || !loginEmail.checkValidity()) {
+						showLoginMessage("Bitte zuerst eine gültige E-Mail-Adresse eingeben.", true);
+						loginEmail.focus();
+						return;
+					}
+
+					forgotPassword.disabled = true;
+					forgotPassword.textContent = "E-Mail wird gesendet...";
+					showLoginMessage("Wir fordern eine E-Mail zum Zurücksetzen des Passworts an.");
+
+					try {
+						const formData = new FormData();
+						formData.append("email", email);
+
+						const response = await fetch("forgot-password.php", { method: "POST", body: formData });
+						const data = await readJsonResponse(response);
+						if (!response.ok || data.error) {
+							throw new Error(data.error || "Die E-Mail konnte nicht gesendet werden.");
+						}
+
+						showLoginMessage(data.message || "Bitte prüft euer E-Mail-Postfach.");
+					} catch (error) {
+						showLoginMessage(error.message || "Die E-Mail konnte nicht gesendet werden.", true);
+					} finally {
+						forgotPassword.disabled = false;
+						forgotPassword.textContent = "Passwort vergessen?";
+					}
+				};
+
 				const submitBooking = async (event) => {
 					event.preventDefault();
 
@@ -1094,6 +1143,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 				bookingForm.addEventListener("submit", submitBooking);
 				loginSubmit.addEventListener("click", submitLogin);
+				forgotPassword.addEventListener("click", submitForgotPassword);
 				loginLogout.addEventListener("click", resetLoggedInClient);
 				registerSubmit.addEventListener("click", submitRegister);
 				loginPassword.addEventListener("keydown", (event) => {

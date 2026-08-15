@@ -29,7 +29,7 @@ setSimplyBookApiLogger(function ($event, $url, $method, $params, $response) {
 
 function availabilityCachePath($offerId, $date, $count)
 {
-	$key = md5($offerId . '|' . $date . '|' . $count . '|' . SIMPLYBOOK_UNIT_ID);
+	$key = md5($offerId . '|' . $date . '|capacity-v2|' . SIMPLYBOOK_UNIT_ID);
 
 	return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'simplybook_v2_availability_' . $key . '.json';
 }
@@ -109,25 +109,38 @@ function waitForCachedAvailability($offerId, $date, $count)
 	return null;
 }
 
-function timesFromResponse($response)
+function availableSlotsFromResponse($response)
 {
 	$times = [];
 	$slots = is_array($response) ? ($response['data'] ?? $response['slots'] ?? $response['times'] ?? $response['available_times'] ?? $response) : [];
 	$collect = function ($value, $key = null) use (&$times, &$collect) {
+		$time = null;
+		$available = null;
+
 		if (is_string($value) && preg_match('/(?:^|T|\s)(\d{1,2}):(\d{2})(?::(\d{2}))?/', $value, $match)) {
-			$times[sprintf('%02d:%s%s', (int) $match[1], $match[2], isset($match[3]) ? ':' . $match[3] : '')] = true;
+			$times[sprintf('%02d:%s%s', (int) $match[1], $match[2], isset($match[3]) ? ':' . $match[3] : '')] = null;
 			return;
 		}
 		if (!is_array($value)) {
+			if (is_numeric($value) && is_string($key) && preg_match('/^(\d{1,2}:\d{2}(?::\d{2})?)/', $key, $match)) {
+				$times[$match[1]] = max(0, min(SIMPLYBOOK_MAXIMUM_PARTICIPANTS, (int) $value));
+			}
+
 			return;
 		}
 		$time = $value['time'] ?? $value['start_time'] ?? $value['start'] ?? $value['from'] ?? null;
+		foreach (['available_count', 'available_slots', 'available_places', 'free_places', 'free', 'slots_available'] as $field) {
+			if (isset($value[$field]) && is_numeric($value[$field])) {
+				$available = max(0, min(SIMPLYBOOK_MAXIMUM_PARTICIPANTS, (int) $value[$field]));
+				break;
+			}
+		}
 		if (is_string($time) && preg_match('/(?:^|T|\s)(\d{1,2}):(\d{2})(?::(\d{2}))?/', $time, $match)) {
-			$times[sprintf('%02d:%s%s', (int) $match[1], $match[2], isset($match[3]) ? ':' . $match[3] : '')] = true;
+			$times[sprintf('%02d:%s%s', (int) $match[1], $match[2], isset($match[3]) ? ':' . $match[3] : '')] = $available;
 			return;
 		}
 		if (is_string($key) && preg_match('/^(\d{1,2}:\d{2}(?::\d{2})?)/', $key, $match)) {
-			$times[$match[1]] = true;
+			$times[$match[1]] = $available;
 		}
 		foreach ($value as $childKey => $child) {
 			$collect($child, $childKey);
@@ -136,6 +149,84 @@ function timesFromResponse($response)
 	$collect($slots);
 
 	return $times;
+}
+
+function remainingPlacesByTime($offerId, $date, $authHeaders)
+{
+	$multiHandle = curl_multi_init();
+	$handles = [];
+	$caCertPath = envValue('SIMPLYBOOK_CA_CERT_PATH');
+
+	for ($participantCount = 1; $participantCount <= SIMPLYBOOK_MAXIMUM_PARTICIPANTS; $participantCount++) {
+		$url = SIMPLYBOOK_API_URL . '/timeline/slots?' . http_build_query([
+			'service_id' => $offerId,
+			'provider_id' => SIMPLYBOOK_UNIT_ID,
+			'from' => $date,
+			'to' => $date,
+			'count' => $participantCount,
+		]);
+		$handle = curl_init($url);
+
+		if ($handle === false) {
+			throw new RuntimeException('Could not initialize availability request.');
+		}
+
+		$options = [
+			CURLOPT_HTTPHEADER => array_merge(['Accept: application/json'], $authHeaders),
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_TIMEOUT => 20,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_USERAGENT => 'Lasertag-Reservation/2.0',
+		];
+		if ($caCertPath !== '') {
+			$options[CURLOPT_CAINFO] = $caCertPath;
+		} else {
+			$options[CURLOPT_SSL_VERIFYPEER] = false;
+			$options[CURLOPT_SSL_VERIFYHOST] = 0;
+		}
+
+		curl_setopt_array($handle, $options);
+		curl_multi_add_handle($multiHandle, $handle);
+		$handles[$participantCount] = $handle;
+	}
+
+	try {
+		do {
+			$status = curl_multi_exec($multiHandle, $running);
+			if ($status !== CURLM_OK) {
+				throw new RuntimeException('Could not load availability.');
+			}
+			if ($running > 0) {
+				curl_multi_select($multiHandle, 1.0);
+			}
+		} while ($running > 0);
+
+		$remainingByTime = [];
+		foreach ($handles as $participantCount => $handle) {
+			$response = curl_multi_getcontent($handle);
+			$statusCode = (int) curl_getinfo($handle, CURLINFO_RESPONSE_CODE);
+			if ($response === false || $statusCode >= 400) {
+				throw new RuntimeException('SimplyBook availability request failed.');
+			}
+
+			$decoded = json_decode($response, true);
+			if (!is_array($decoded)) {
+				throw new RuntimeException('SimplyBook returned invalid availability data.');
+			}
+
+			foreach (array_keys(availableSlotsFromResponse($decoded)) as $time) {
+				$remainingByTime[$time] = $participantCount;
+			}
+		}
+
+		return $remainingByTime;
+	} finally {
+		foreach ($handles as $handle) {
+			curl_multi_remove_handle($multiHandle, $handle);
+			curl_close($handle);
+		}
+		curl_multi_close($multiHandle);
+	}
 }
 
 try {
@@ -178,22 +269,20 @@ try {
 
 	$auth = getSimplyBookAuth($companyLogin, $apiKey);
 	$authHeaders = ['X-Company-Login: ' . $auth['company_login'], 'X-Token: ' . $auth['token']];
-	$response = simplyBookApiCall('/timeline/slots', 'GET', $authHeaders, null, [
-		'service_id' => $offerId,
-		'provider_id' => SIMPLYBOOK_UNIT_ID,
-		'from' => $date,
-		'to' => $date,
-		'count' => $count,
-	]);
-	$availableTimes = timesFromResponse($response);
+	$remainingByTime = remainingPlacesByTime($offerId, $date, $authHeaders);
 	$timesByDate = [$date => []];
 
-	ksort($availableTimes);
+	ksort($remainingByTime);
 
-	foreach (array_keys($availableTimes) as $time) {
+	foreach ($remainingByTime as $time => $available) {
+		if ($available < $count) {
+			continue;
+		}
+
 		$timesByDate[$date][] = [
 			'time' => $time,
-			'count' => $count,
+			'available' => $available,
+			'capacity' => SIMPLYBOOK_MAXIMUM_PARTICIPANTS,
 		];
 	}
 

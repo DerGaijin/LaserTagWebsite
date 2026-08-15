@@ -664,6 +664,8 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				updateWizardTabAvailability();
 				const getSelectedTimes = () => availabilityByDate[toDateValue(selectedDate)] || [];
 				const getSlotTime = (slot) => typeof slot === "string" ? slot : slot.time;
+				const getSlotAvailability = (slot) => typeof slot === "object" && Number.isFinite(Number(slot.available)) ? Number(slot.available) : null;
+				const getSlotCapacity = (slot) => typeof slot === "object" && Number.isFinite(Number(slot.capacity)) ? Number(slot.capacity) : 30;
 				const showTimeMessage = (message, title = "Hinweis", isLoading = false) => {
 					timeList.innerHTML = "";
 					const card = document.createElement("div");
@@ -735,13 +737,24 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 					times.forEach((slot) => {
 						const time = getSlotTime(slot);
+						const available = getSlotAvailability(slot);
 						const isSelected = selectedTimeInput.value === time;
 						const button = document.createElement("button");
 						button.type = "button";
 						button.dataset.time = time;
 						button.setAttribute("aria-pressed", isSelected ? "true" : "false");
 						button.className = isSelected ? "rounded-xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 px-3 py-2 text-left text-[18px] leading-none text-[#73ffff] shadow-[0_0_16px_rgba(0,170,170,0.2)]" : "rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-left text-[18px] leading-none hover:border-[#00aaaa]/70 hover:text-[#73ffff]";
-						button.textContent = time.slice(0, 5);
+						const timeLabel = document.createElement("span");
+						timeLabel.textContent = time.slice(0, 5);
+						button.appendChild(timeLabel);
+
+						if (available !== null) {
+							const availability = document.createElement("span");
+							availability.className = "ml-auto font-[Arial,Helvetica,sans-serif] text-xs font-bold uppercase tracking-[0.08em] text-inherit/70";
+							availability.textContent = available + "/" + getSlotCapacity(slot) + " Frei";
+							button.classList.add("flex", "items-center", "gap-3");
+							button.appendChild(availability);
+						}
 						button.addEventListener("click", () => selectTime(slot));
 						timeList.appendChild(button);
 					});

@@ -22,6 +22,11 @@ try {
 		jsonResponse(['error' => 'Bitte Angebot, Datum und Startzeit auswählen.'], 400);
 	}
 
+	$minimumParticipants = minimumParticipantsForOffer($offerId);
+	if ($count < $minimumParticipants) {
+		jsonResponse(['error' => 'Dieses Geburtstagspaket ist ab ' . $minimumParticipants . ' Personen buchbar.'], 400);
+	}
+
 	if ($clientId === '' || $name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		jsonResponse(['error' => 'Bitte zuerst mit einem gültigen Kundenkonto einloggen oder registrieren.'], 400);
 	}

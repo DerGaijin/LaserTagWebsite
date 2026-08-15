@@ -14,7 +14,7 @@ const SERVICE_DETAILS = [
 ];
 
 const SERVICE_CATEGORIES = [
-	'birthday' => ['eyebrow' => 'Feiern', 'title' => 'Geburtstagspakete', 'note' => 'Bitte seid 10 Minuten vor Beginn da.'],
+	'birthday' => ['eyebrow' => 'Feiern', 'title' => 'Geburtstagspakete', 'note' => 'Ab 6 Personen. Bitte seid 10 Minuten vor Beginn da.'],
 	'weekend' => ['eyebrow' => 'Aktionen', 'title' => 'Flats am Wochenende'],
 	'standard' => ['eyebrow' => 'Spielzeit', 'title' => 'Standardbuchungen', 'note' => 'Bitte seid 10 Minuten vor Beginn da.'],
 	'other' => ['eyebrow' => 'Weitere Angebote', 'title' => 'Weitere Spielzeiten'],
@@ -72,6 +72,7 @@ try {
 			'duration' => formatSimplyBookServiceDuration($service['duration'] ?? ''),
 			'description' => simplyBookServiceDescription($service),
 			'category' => $category,
+			'minParticipants' => minimumParticipantsForOffer($serviceId),
 		], $details);
 		if ($discountPercent > 0 && isset($serviceData['price'])) {
 			$serviceData['originalPrice'] = $serviceData['price'];

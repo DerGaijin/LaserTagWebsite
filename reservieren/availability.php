@@ -144,7 +144,7 @@ try {
 
 	$offerId = (string) ($_GET['offer_id'] ?? '6');
 	$date = (string) ($_GET['date'] ?? date('Y-m-d'));
-	$count = max(1, (int) ($_GET['count'] ?? 1));
+	$count = max(minimumParticipantsForOffer($offerId), (int) ($_GET['count'] ?? 1));
 
 	if (!in_array($offerId, validOfferIds(), true) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
 		jsonResponse(['error' => 'Invalid availability request.'], 400);

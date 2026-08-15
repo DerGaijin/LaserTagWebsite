@@ -4,6 +4,10 @@ const SIMPLYBOOK_API_URL = 'https://user-api-v2.simplybook.me/public';
 const SIMPLYBOOK_UNIT_ID = 1;
 const SIMPLYBOOK_TOKEN_CACHE_SECONDS = 3600;
 const SIMPLYBOOK_SERVICE_CACHE_SECONDS = 300;
+const MINIMUM_PARTICIPANTS_BY_OFFER = [
+	'16' => 6,
+	'17' => 6,
+];
 
 $jsonErrorContextCallback = null;
 $simplyBookApiLogger = null;
@@ -122,6 +126,11 @@ function requireCurlExtension()
 function validOfferIds()
 {
 	return ['16', '17', '18', '19', '20', '21'];
+}
+
+function minimumParticipantsForOffer($offerId)
+{
+	return MINIMUM_PARTICIPANTS_BY_OFFER[(string) $offerId] ?? 1;
 }
 
 function simplyBookCredentials()

@@ -34,21 +34,25 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				<div><p class="<?= $label ?>">Spieler</p><p class="mt-1 text-[#73ffff]"><span data-summary-count>1</span> <span data-summary-count-unit>Person</span></p></div>
 			</aside>
 
-			<nav class="<?= $section ?> grid grid-cols-4 gap-3 max-[900px]:grid-cols-2 max-[520px]:grid-cols-1" aria-label="Buchungsschritte">
+			<nav class="<?= $section ?> grid grid-cols-5 gap-3 max-[1050px]:grid-cols-3 max-[700px]:grid-cols-2 max-[520px]:grid-cols-1" aria-label="Buchungsschritte">
 				<button class="rounded-2xl border-2 border-[#00aaaa] bg-[#00aaaa]/20 p-4 text-left text-[#73ffff] shadow-[0_0_22px_rgba(0,170,170,0.22)]" type="button" data-wizard-tab="offer" aria-pressed="true">
 					<span class="<?= $label ?> block">Schritt 1</span>
 					<span class="mt-1 block text-[24px]">Angebot</span>
 				</button>
-				<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-left text-white/70" type="button" data-wizard-tab="schedule">
+				<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-left text-white/70" type="button" data-wizard-tab="participants">
 					<span class="<?= $label ?> block">Schritt 2</span>
+					<span class="mt-1 block text-[24px]">Teilnehmer</span>
+				</button>
+				<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-left text-white/70" type="button" data-wizard-tab="schedule">
+					<span class="<?= $label ?> block">Schritt 3</span>
 					<span class="mt-1 block text-[24px]">Termin</span>
 				</button>
 				<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-left text-white/70" type="button" data-wizard-tab="account">
-					<span class="<?= $label ?> block">Schritt 3</span>
+					<span class="<?= $label ?> block">Schritt 4</span>
 					<span class="mt-1 block text-[24px]">Konto</span>
 				</button>
 				<button class="rounded-2xl border border-white/10 bg-black/30 p-4 text-left text-white/70" type="button" data-wizard-tab="confirm">
-					<span class="<?= $label ?> block">Schritt 4</span>
+					<span class="<?= $label ?> block">Schritt 5</span>
 					<span class="mt-1 block text-[24px]">Bestätigen</span>
 				</button>
 			</nav>
@@ -70,10 +74,45 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					</section>
 				</section>
 
+				<section class="<?= $panel ?> hidden overflow-hidden border border-white/10" data-wizard-step="participants">
+					<div class="grid min-h-[410px] grid-cols-[0.82fr_1.18fr] max-[900px]:grid-cols-1">
+						<aside class="relative overflow-hidden border-r border-white/10 bg-[radial-gradient(circle_at_18%_24%,rgba(115,255,255,.18),transparent_25%),radial-gradient(circle_at_82%_82%,rgba(0,170,170,.26),transparent_36%),rgba(0,0,0,.28)] p-7 max-[775px]:border-r-0 max-[775px]:border-b max-[775px]:p-5">
+							<div class="relative">
+								<p class="<?= $eyebrow ?>">Schritt 2</p>
+								<h2 class="mt-2 text-[38px] leading-[.95] text-[#73ffff] max-[775px]:text-[31px]">Wie viele seid ihr?</h2>
+								<p class="<?= $bodyText ?> mt-5 max-w-[390px] text-base">Die Gruppengröße bestimmt, welche Startzeiten für euch verfügbar sind.</p>
+								<div class="mt-8 border-t border-[#73ffff]/25 pt-5">
+									<p class="<?= $label ?>">Gewähltes Angebot</p>
+									<p class="mt-2 text-[23px] leading-tight text-white" data-participants-offer>Bitte Angebot wählen</p>
+								</div>
+							</div>
+						</aside>
+
+						<div class="flex flex-col justify-center p-7 max-[775px]:p-5">
+							<div class="mx-auto w-full max-w-[510px]">
+								<div>
+									<div class="flex items-center justify-between gap-4"><p class="<?= $label ?>">Teamgröße</p><span class="rounded-full border border-[#73ffff]/35 bg-[#73ffff]/10 px-3 py-1 font-[Arial,Helvetica,sans-serif] text-sm text-[#73ffff]">Spieler</span></div>
+									<div class="mt-5 grid grid-cols-[52px_1fr_52px] items-center gap-3">
+										<button class="flex h-[52px] w-[52px] items-center justify-center rounded-xl border border-white/20 bg-black/30 text-[28px] leading-none text-white transition hover:border-[#73ffff] hover:text-[#73ffff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#73ffff]" type="button" data-count-down aria-label="Teilnehmerzahl verringern">-</button>
+										<div class="border-x border-white/10 text-center"><input class="w-full bg-transparent text-center text-[58px] leading-none text-[#73ffff] outline-none" type="number" name="count" value="1" min="1" data-count readonly aria-label="Anzahl Teilnehmer" /><span class="mt-1 block font-[Arial,Helvetica,sans-serif] text-xs uppercase tracking-[0.2em] text-white/55">Teilnehmer</span></div>
+										<button class="flex h-[52px] w-[52px] items-center justify-center rounded-xl border border-[#00aaaa] bg-[#00aaaa]/10 text-[28px] leading-none text-[#73ffff] transition hover:bg-[#00aaaa]/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#73ffff]" type="button" data-count-up aria-label="Teilnehmerzahl erhöhen">+</button>
+									</div>
+								</div>
+								<p class="mt-4 hidden rounded-2xl border border-[#73ffff]/30 bg-[#73ffff]/10 px-4 py-3 font-[Arial,Helvetica,sans-serif] text-sm leading-6 text-[#73ffff]" data-min-participants></p>
+								<p class="mt-5 text-center font-[Arial,Helvetica,sans-serif] text-sm leading-6 text-white/60">Passt die Anzahl jetzt an. Im nächsten Schritt zeigen wir euch passende freie Zeiten.</p>
+								<div class="mt-6 flex justify-between gap-3 max-[520px]:flex-col-reverse">
+									<button class="rounded-2xl border border-white/15 bg-black/30 px-5 py-3 text-white/80 transition hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-go-step="offer">Angebot ändern</button>
+									<button class="Button_Book" type="button" data-go-step="schedule">Termin wählen</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
 				<section class="<?= $panel ?> hidden border border-white/10 p-6 max-[775px]:p-4" data-wizard-step="schedule">
 					<div class="mb-6 flex items-start justify-between gap-4 max-[760px]:flex-col">
 						<div>
-							<p class="<?= $eyebrow ?>">Schritt 2</p>
+							<p class="<?= $eyebrow ?>">Schritt 3</p>
 							<h2 class="mt-2 text-[32px] leading-tight max-[775px]:text-[26px]">Wann wollt ihr spielen?</h2>
 							<p class="<?= $bodyText ?> mt-3">Ausgewählt: <span class="text-[#73ffff]" data-offer-title>Bitte Angebot wählen</span></p>
 						</div>
@@ -115,15 +154,6 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						</div>
 
 						<aside class="flex flex-col gap-5">
-							<div class="rounded-[22px] border border-white/10 bg-black/25 p-4">
-							<p class="<?= $label ?>">Teilnehmer</p>
-							<div class="mt-3 flex items-center justify-between rounded-2xl border border-white/15 bg-black/30 p-3">
-								<button class="h-10 w-10 rounded-full border border-white/20 text-xl" type="button" data-count-down>-</button>
-								<input class="w-20 bg-transparent text-center text-[30px] text-[#73ffff] outline-none" type="number" name="count" value="1" min="1" data-count readonly />
-								<button class="h-10 w-10 rounded-full border border-[#00aaaa] text-xl text-[#73ffff]" type="button" data-count-up>+</button>
-							</div>
-						</div>
-
 							<div class="rounded-[22px] border border-white/10 bg-black/25 p-4" data-time-panel tabindex="-1">
 								<div class="flex items-end justify-between gap-3 max-[520px]:flex-col max-[520px]:items-start">
 									<div>
@@ -137,13 +167,13 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						</div>
 						</aside>
 					</div>
-					<div class="mt-6 flex justify-end"><button class="Button_Book" type="button" data-go-step="account">Weiter zum Konto</button></div>
+					<div class="mt-6 flex justify-between gap-3 max-[520px]:flex-col-reverse"><button class="rounded-2xl border border-white/15 bg-black/30 px-5 py-3 text-white/80 transition hover:border-[#00aaaa] hover:text-[#73ffff]" type="button" data-go-step="participants">Teilnehmer ändern</button><button class="Button_Book" type="button" data-go-step="account">Weiter zum Konto</button></div>
 				</section>
 
 				<section class="<?= $panel ?> hidden overflow-hidden border border-white/10 p-0" data-wizard-step="account">
 					<div class="grid grid-cols-[0.78fr_1fr] max-[980px]:grid-cols-1">
 						<aside class="border-r border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(0,170,170,0.24),transparent_42%),rgba(0,0,0,0.22)] p-6 max-[775px]:p-4 max-[980px]:border-r-0 max-[980px]:border-b">
-							<p class="<?= $eyebrow ?>">Schritt 3</p>
+							<p class="<?= $eyebrow ?>">Schritt 4</p>
 							<h2 class="mt-2 text-[34px] leading-tight text-[#73ffff] max-[775px]:text-[28px]">Wer bucht?</h2>
 							<p class="<?= $bodyText ?> mt-3 text-base">Wählt aus, ob ihr ein bestehendes Konto nutzen oder ein neues Konto erstellen wollt.</p>
 
@@ -216,7 +246,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 
 				<section class="<?= $panel ?> hidden border border-white/10 p-6 max-[775px]:p-4" data-wizard-step="confirm">
 					<div class="mb-6 flex items-center justify-between gap-4 max-[700px]:flex-col max-[700px]:items-start">
-						<div><p class="<?= $eyebrow ?>">Schritt 4</p><h2 class="mt-2 text-[32px] leading-tight max-[775px]:text-[26px]">Buchung prüfen und bestätigen</h2></div>
+						<div><p class="<?= $eyebrow ?>">Schritt 5</p><h2 class="mt-2 text-[32px] leading-tight max-[775px]:text-[26px]">Buchung prüfen und bestätigen</h2></div>
 						<span class="<?= $stepPill ?>">Letzter Schritt</span>
 					</div>
 
@@ -231,7 +261,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 								<div class="col-span-2 rounded-2xl border border-white/10 bg-black/25 p-4 max-[560px]:col-auto">
 									<p class="<?= $label ?>">Kundenkonto</p>
 									<p class="mt-2 text-lg text-[#73ffff]" data-confirm-client-name>Nicht eingeloggt</p>
-									<p class="mt-1 text-sm text-white/70" data-confirm-client-email>Bitte in Schritt 3 einloggen.</p>
+									<p class="mt-1 text-sm text-white/70" data-confirm-client-email>Bitte in Schritt 4 einloggen.</p>
 									<p class="mt-1 hidden text-sm text-white/70" data-confirm-client-phone></p>
 								</div>
 							</div>
@@ -286,7 +316,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const renderOffers = (services, categories) => {
 					const groupedServices = new Map();
 					services.forEach((service) => {
-						offers[service.id] = { title: service.title || "Angebot", description: service.description || "" };
+						offers[service.id] = { title: service.title || "Angebot", description: service.description || "", minParticipants: Number(service.minParticipants) || 1 };
 						const category = categories[service.category] ? service.category : "other";
 						groupedServices.set(category, [...(groupedServices.get(category) || []), service]);
 					});
@@ -438,6 +468,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				let updateWizardTabAvailability = () => {};
 				let canOpenWizardStep = () => true;
 				let currentStep = "offer";
+				let participantStepComplete = false;
 				const initialStep = steps.find((item) => item.dataset.wizardStep === currentStep);
 				if (initialStep) {
 					initialStep.classList.add("is-visible");
@@ -467,7 +498,13 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					}
 				};
 
-				document.querySelectorAll("[data-go-step]").forEach((button) => button.addEventListener("click", () => requestStep(button.dataset.goStep)));
+				document.querySelectorAll("[data-go-step]").forEach((button) => button.addEventListener("click", () => {
+					if (button.dataset.goStep === "schedule" && currentStep === "participants") {
+						participantStepComplete = true;
+						loadAvailability();
+					}
+					requestStep(button.dataset.goStep);
+				}));
 				tabs.forEach((tab) => tab.addEventListener("click", () => requestStep(tab.dataset.wizardTab)));
 
 				const setOfferUrl = (offerId) => {
@@ -484,6 +521,12 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					}
 					document.querySelector("[data-offer-title]").textContent = offer.title;
 					document.querySelector("[data-offer-id]").value = offerId;
+					count.min = offer.minParticipants;
+					if (Number(count.value) < offer.minParticipants) {
+						count.value = offer.minParticipants;
+					}
+					minParticipantsMessage.textContent = offer.minParticipants > 1 ? "Mindestens " + offer.minParticipants + " Personen für dieses Angebot." : "";
+					minParticipantsMessage.classList.toggle("hidden", offer.minParticipants <= 1);
 					document.querySelectorAll("[data-offer-card]").forEach((card) => {
 						const isActive = card.dataset.offerCard === offerId;
 						card.classList.toggle("ring-2", isActive);
@@ -492,8 +535,9 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					if (updateUrl) {
 						setOfferUrl(offerId);
 					}
-					goToStep("schedule");
-					loadAvailability();
+					participantsOffer.textContent = offer.title;
+					participantStepComplete = false;
+					goToStep("participants");
 				};
 
 				offerSections.addEventListener("click", (event) => {
@@ -517,6 +561,8 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				const timePanel = document.querySelector("[data-time-panel]");
 				const monthInput = document.querySelector("[data-month-input]");
 				const count = document.querySelector("[data-count]");
+				const minParticipantsMessage = document.querySelector("[data-min-participants]");
+				const participantsOffer = document.querySelector("[data-participants-offer]");
 				const confirmOffer = document.querySelector("[data-confirm-offer]");
 				const confirmCount = document.querySelector("[data-confirm-count]");
 				const confirmCountUnit = document.querySelector("[data-confirm-count-unit]");
@@ -568,7 +614,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					summaryCountUnit.textContent = Number(count.value) === 1 ? "Person" : "Personen";
 					updateWizardTabAvailability();
 				};
-				const wizardStepOrder = ["offer", "schedule", "account", "confirm"];
+				const wizardStepOrder = ["offer", "participants", "schedule", "account", "confirm"];
 				canOpenWizardStep = (step) => {
 					const targetIndex = wizardStepOrder.indexOf(step);
 					const currentIndex = wizardStepOrder.indexOf(currentStep);
@@ -581,8 +627,12 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 						return true;
 					}
 
-					if (step === "schedule") {
+					if (step === "participants") {
 						return Boolean(offerIdInput.value);
+					}
+
+					if (step === "schedule") {
+						return Boolean(offerIdInput.value && participantStepComplete);
 					}
 
 					if (step === "account") {
@@ -836,16 +886,20 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 				loadAvailability();
 
 				const updateCount = (value) => {
-					const nextValue = Math.max(1, value);
+					const minimumParticipants = offers[offerIdInput.value]?.minParticipants || 1;
+					const nextValue = Math.max(minimumParticipants, value);
 
 					if (Number(count.value) === nextValue) {
 						return;
 					}
 
 					count.value = nextValue;
+					if (currentStep === "participants") {
+						participantStepComplete = false;
+					}
 					updateConfirmationSummary();
 
-					if (offerIdInput.value) {
+					if (offerIdInput.value && currentStep === "schedule") {
 						clearTimeout(countChangeTimer);
 						countChangeTimer = setTimeout(loadAvailability, 450);
 					}
@@ -946,7 +1000,7 @@ $defaultMonth = (new DateTimeImmutable('today'))->format('Y-m');
 					clientIdInput.value = "";
 					loginPassword.value = "";
 					confirmClientName.textContent = "Nicht eingeloggt";
-					confirmClientEmail.textContent = "Bitte in Schritt 3 einloggen.";
+					confirmClientEmail.textContent = "Bitte in Schritt 4 einloggen.";
 					confirmClientPhone.textContent = "";
 					confirmClientPhone.classList.add("hidden");
 					loginMessage.classList.add("hidden");

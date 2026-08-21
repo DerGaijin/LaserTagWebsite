@@ -29,7 +29,7 @@ setSimplyBookApiLogger(function ($event, $url, $method, $params, $response) {
 
 function availabilityCachePath($offerId, $date, $count)
 {
-	$key = md5($offerId . '|' . $date . '|capacity-v2|' . SIMPLYBOOK_UNIT_ID);
+	$key = md5($offerId . '|' . $date . '|' . $count . '|' . SIMPLYBOOK_UNIT_ID);
 
 	return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'simplybook_v2_availability_' . $key . '.json';
 }
@@ -153,80 +153,89 @@ function availableSlotsFromResponse($response)
 
 function remainingPlacesByTime($offerId, $date, $authHeaders)
 {
-	$multiHandle = curl_multi_init();
-	$handles = [];
+	$remainingByTime = [];
 	$caCertPath = envValue('SIMPLYBOOK_CA_CERT_PATH');
+	$participantCounts = range(1, SIMPLYBOOK_MAXIMUM_PARTICIPANTS);
 
-	for ($participantCount = 1; $participantCount <= SIMPLYBOOK_MAXIMUM_PARTICIPANTS; $participantCount++) {
-		$url = SIMPLYBOOK_API_URL . '/timeline/slots?' . http_build_query([
-			'service_id' => $offerId,
-			'provider_id' => SIMPLYBOOK_UNIT_ID,
-			'from' => $date,
-			'to' => $date,
-			'count' => $participantCount,
-		]);
-		$handle = curl_init($url);
+	// Three batches preserve accurate counts without the previous 30-connection burst.
+	foreach (array_chunk($participantCounts, 10) as $counts) {
+		$multiHandle = curl_multi_init();
+		$handles = [];
 
-		if ($handle === false) {
-			throw new RuntimeException('Could not initialize availability request.');
+		try {
+			foreach ($counts as $participantCount) {
+				$url = SIMPLYBOOK_API_URL . '/timeline/slots?' . http_build_query([
+					'service_id' => $offerId,
+					'provider_id' => SIMPLYBOOK_UNIT_ID,
+					'from' => $date,
+					'to' => $date,
+					'count' => $participantCount,
+				]);
+				$handle = curl_init($url);
+
+				if ($handle === false) {
+					throw new RuntimeException('Could not initialize availability request.');
+				}
+
+				$options = [
+					CURLOPT_HTTPHEADER => array_merge(['Accept: application/json'], $authHeaders),
+					CURLOPT_RETURNTRANSFER => true,
+					CURLOPT_TIMEOUT => 20,
+					CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+					CURLOPT_USERAGENT => 'Lasertag-Reservation/2.0',
+				];
+				if ($caCertPath !== '') {
+					$options[CURLOPT_CAINFO] = $caCertPath;
+				} else {
+					$options[CURLOPT_SSL_VERIFYPEER] = false;
+					$options[CURLOPT_SSL_VERIFYHOST] = 0;
+				}
+
+				curl_setopt_array($handle, $options);
+				curl_multi_add_handle($multiHandle, $handle);
+				$handles[$participantCount] = $handle;
+			}
+
+			do {
+				$status = curl_multi_exec($multiHandle, $running);
+				if ($status !== CURLM_OK) {
+					throw new RuntimeException('Could not load availability.');
+				}
+				if ($running > 0) {
+					curl_multi_select($multiHandle, 1.0);
+				}
+			} while ($running > 0);
+
+			foreach ($handles as $participantCount => $handle) {
+				$response = curl_multi_getcontent($handle);
+				$statusCode = (int) curl_getinfo($handle, CURLINFO_RESPONSE_CODE);
+				if ($response === false) {
+					throw new RuntimeException('SimplyBook availability request failed: ' . curl_error($handle));
+				}
+				if ($statusCode >= 400) {
+					$decoded = json_decode($response, true);
+					throw new RuntimeException(simplyBookErrorMessage($decoded, 'SimplyBook HTTP error: ' . $statusCode));
+				}
+
+				$decoded = json_decode($response, true);
+				if (!is_array($decoded)) {
+					throw new RuntimeException('SimplyBook returned invalid availability data.');
+				}
+
+				foreach (array_keys(availableSlotsFromResponse($decoded)) as $time) {
+					$remainingByTime[$time] = $participantCount;
+				}
+			}
+		} finally {
+			foreach ($handles as $handle) {
+				curl_multi_remove_handle($multiHandle, $handle);
+				curl_close($handle);
+			}
+			curl_multi_close($multiHandle);
 		}
-
-		$options = [
-			CURLOPT_HTTPHEADER => array_merge(['Accept: application/json'], $authHeaders),
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_TIMEOUT => 20,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_USERAGENT => 'Lasertag-Reservation/2.0',
-		];
-		if ($caCertPath !== '') {
-			$options[CURLOPT_CAINFO] = $caCertPath;
-		} else {
-			$options[CURLOPT_SSL_VERIFYPEER] = false;
-			$options[CURLOPT_SSL_VERIFYHOST] = 0;
-		}
-
-		curl_setopt_array($handle, $options);
-		curl_multi_add_handle($multiHandle, $handle);
-		$handles[$participantCount] = $handle;
 	}
 
-	try {
-		do {
-			$status = curl_multi_exec($multiHandle, $running);
-			if ($status !== CURLM_OK) {
-				throw new RuntimeException('Could not load availability.');
-			}
-			if ($running > 0) {
-				curl_multi_select($multiHandle, 1.0);
-			}
-		} while ($running > 0);
-
-		$remainingByTime = [];
-		foreach ($handles as $participantCount => $handle) {
-			$response = curl_multi_getcontent($handle);
-			$statusCode = (int) curl_getinfo($handle, CURLINFO_RESPONSE_CODE);
-			if ($response === false || $statusCode >= 400) {
-				throw new RuntimeException('SimplyBook availability request failed.');
-			}
-
-			$decoded = json_decode($response, true);
-			if (!is_array($decoded)) {
-				throw new RuntimeException('SimplyBook returned invalid availability data.');
-			}
-
-			foreach (array_keys(availableSlotsFromResponse($decoded)) as $time) {
-				$remainingByTime[$time] = $participantCount;
-			}
-		}
-
-		return $remainingByTime;
-	} finally {
-		foreach ($handles as $handle) {
-			curl_multi_remove_handle($multiHandle, $handle);
-			curl_close($handle);
-		}
-		curl_multi_close($multiHandle);
-	}
+	return $remainingByTime;
 }
 
 try {

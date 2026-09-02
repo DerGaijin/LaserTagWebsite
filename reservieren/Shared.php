@@ -207,6 +207,15 @@ function writeCachedToken($companyLogin, $token, $tokenCompanyLogin = '')
 	}
 }
 
+function deleteCachedToken($companyLogin)
+{
+	$path = tokenCachePath($companyLogin);
+
+	if (is_file($path)) {
+		unlink($path);
+	}
+}
+
 function getSimplyBookToken($companyLogin, $apiKey)
 {
 	return getSimplyBookAuth($companyLogin, $apiKey)['token'];
@@ -274,10 +283,24 @@ function getSimplyBookServices($companyLogin, $apiKey)
 	}
 
 	$auth = getSimplyBookAuth($companyLogin, $apiKey);
-	$response = simplyBookApiCall('/services', 'GET', [
-		'X-Company-Login: ' . $auth['company_login'],
-		'X-Token: ' . $auth['token'],
-	]);
+
+	try {
+		$response = simplyBookApiCall('/services', 'GET', [
+			'X-Company-Login: ' . $auth['company_login'],
+			'X-Token: ' . $auth['token'],
+		]);
+	} catch (RuntimeException $exception) {
+		if (stripos($exception->getMessage(), 'token expired') === false) {
+			throw $exception;
+		}
+
+		deleteCachedToken($companyLogin);
+		$auth = getSimplyBookAuth($companyLogin, $apiKey);
+		$response = simplyBookApiCall('/services', 'GET', [
+			'X-Company-Login: ' . $auth['company_login'],
+			'X-Token: ' . $auth['token'],
+		]);
+	}
 	$services = $response['data'] ?? $response['services'] ?? $response;
 	$services = is_array($services) ? $services : [];
 	writeCachedServices($companyLogin, $services);

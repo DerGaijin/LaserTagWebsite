@@ -27,6 +27,19 @@ $newsItems = [
         'startDate' => '2026-08-13',
         'endDate' => '2026-08-31',
     ],
+    [
+        'label' => 'Wichtiger Hinweis',
+        'title' => 'Kartenzahlung aktuell nicht möglich',
+        'text' => 'Aktuell ist bei uns leider keine Kartenzahlung möglich. Bitte bringt für euren Besuch ausreichend Bargeld mit. Vielen Dank für euer Verständnis.',
+        'highlight' => '<b>Nur Barzahlung möglich</b>',
+        'image' => 'resources/fotoblend-banknotes-7850299_1920.jpg',
+        'imageAlt' => 'Hinweis zur Kartenzahlung',
+        'showOnHome' => true,
+        'showOnPrices' => true,
+        'discountPercent' => 0,
+        'startDate' => '2026-10-01',
+        'endDate' => '2029-01-01',
+    ],
 ];
 
 function activeNewsForPage(string $page): array
